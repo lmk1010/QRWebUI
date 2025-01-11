@@ -31,17 +31,29 @@ export default function Home() {
         },
     ];
 
-    // 根据尺寸标识返回对应的 Tailwind 类名，包括高度
     const getCardClass = (size: string) => {
         switch (size) {
             case 'large':
-                return 'md:col-span-2 md:row-span-2 min-h-60 sm:min-h-72 md:min-h-96 lg:min-h-120 xl:min-h-144'; // 添加多个断点的高度
+                return 'md:col-span-2 md:row-span-2 min-h-200px'; // 每行 100px，高度 2 * 100px = 200px
             case 'wide':
-                return 'md:col-span-2 md:row-span-1 min-h-72'; // 18rem, 288px
+                return 'md:col-span-2 md:row-span-1 min-h-100px'; // 每行 100px，高度 1 * 100px = 100px
             case 'small':
-                return 'md:col-span-1 md:row-span-1 min-h-80'; // 20rem, 320px
+                return 'md:col-span-1 md:row-span-1 min-h-100px'; // 每行 100px，高度 1 * 100px = 100px
             default:
-                return 'min-h-60'; // 15rem, 240px
+                return 'min-h-100'; // 15rem, 240px
+        }
+    };
+
+    const getCardSizeProps = (size: string) => {
+        switch (size) {
+            case 'large':
+                return { isLarge: true, isWide: false, isSmall: false };
+            case 'wide':
+                return { isLarge: false, isWide: true, isSmall: false };
+            case 'small':
+                return { isLarge: false, isWide: false, isSmall: true };
+            default:
+                return { isLarge: false, isWide: false, isSmall: false };
         }
     };
 
@@ -52,12 +64,8 @@ export default function Home() {
 
             {/* 主体内容 */}
             <main className="flex-grow container mx-auto px-4 py-8">
-                <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
-                    欢迎来到我们的主页
-                </h1>
-
                 {/* 使用 CSS Grid 实现布局，并增加 gap-8 */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-custom-8 gap-8">
                     {cards.map((card, index) => (
                         <Card
                             key={index}
@@ -65,7 +73,7 @@ export default function Home() {
                             description={card.description}
                             imageUrl={card.imageUrl}
                             className={getCardClass(card.size)}
-                            isLarge={card.size === 'large'} // 传递 isLarge 属性
+                            {...getCardSizeProps(card.size)} // 传递尺寸相关的 props
                         />
                     ))}
                 </div>
