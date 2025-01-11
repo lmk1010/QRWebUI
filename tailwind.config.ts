@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import aspectRatio from '@tailwindcss/aspect-ratio';
 
 export default {
   // 告诉 Tailwind 去哪里扫描 class
@@ -12,10 +13,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+      borderRadius: {
+        'extra-large': '1.5rem',       // 24px
+        't-extra-large': '1.5rem',     // 24px, specifically for top corners
       },
     },
   },
-  plugins: [],
+  plugins: [aspectRatio],
 } satisfies Config;
