@@ -1,6 +1,6 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// 需要确保这里导入了 globals.css
 import "./styles/globals.css";
 
 const geistSans = Geist({
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
                                        children,
-                                   }: {
+                                   }: Readonly<{
     children: React.ReactNode;
-}) {
+}>) {
     return (
         <html lang="en">
         <body

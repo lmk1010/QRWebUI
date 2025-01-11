@@ -1,3 +1,15 @@
+/* src/app/styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* 自定义全局样式 */
+body {
+    @apply bg-gray-100;
+}
+
+/* 可选：调整网格的高度 */
+.grid > div {
+    /* 例如，设置最小高度 */
+    min-height: 200px;
+}
