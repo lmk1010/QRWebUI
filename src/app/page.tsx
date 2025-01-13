@@ -12,20 +12,20 @@ export default function Home() {
             size: 'large', // 自定义尺寸标识
         },
         {
-            title: 'Service Two',
+            title: 'PQR Example',
             description: 'This is the description for Service Two, providing detailed information about the service.',
             imageUrl: '/assets/pexels-B.png',
             size: 'wide', // 自定义尺寸标识
         },
         {
-            title: 'Service Three',
-            description: 'This is the description for Service Three, providing detailed information about the service.',
+            title: 'This is the description for Service Two',
+            description: 'About Us.',
             imageUrl: '/assets/pexels-C.png',
             size: 'small', // 自定义尺寸标识
         },
         {
-            title: 'Service Four',
-            description: 'This is the description for Service Four, providing detailed information about the service.',
+            title: 'This is the description for Service Two',
+            description: 'Contact Us.',
             imageUrl: '/assets/pexels-D.png',
             size: 'small', // 自定义尺寸标识
         },

@@ -10,15 +10,14 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'; // 确保导入路�
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    // @ts-ignore
     return (
-        <nav className="bg-white">
+        <nav className="bg-white"> {/* 确保背景为白色 */}
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 {/* 左侧：Logo 和 菜单 */}
                 <div className="flex items-center space-x-6">
                     {/* Logo */}
                     <div className="text-2xl font-bold text-gray-800">
-                        <Link href="/">MyLogo</Link>
+                        <Link href="/">PQR </Link>
                     </div>
 
                     {/* 菜单 */}
@@ -73,9 +72,12 @@ const Navbar = () => {
                     </ul>
                 </div>
 
-                {/* 右侧：长按钮 */}
+                {/* 右侧长按钮 */}
                 <div className="hidden md:block">
-                    <Link href="#cta" className="inline-block px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition-colors duration-300">
+                    <Link
+                        href="#cta"
+                        className="inline-block px-6 py-2 bg-gradient-to-r from-gray-400 to-gray-600 text-white font-semibold rounded-full hover:from-gray-500 hover:to-gray-700 transition-colors duration-300"
+                    >
                         Register Now
                     </Link>
                 </div>
@@ -86,6 +88,7 @@ const Navbar = () => {
                         onClick={() => setIsOpen(!isOpen)}
                         className="text-gray-600 hover:text-gray-800 focus:outline-none"
                         aria-label="Toggle menu"
+                        aria-expanded={isOpen}
                     >
                         {isOpen ? (
                             <XIcon className="h-6 w-6" />
@@ -160,7 +163,7 @@ const Navbar = () => {
                             <li>
                                 <Link
                                     href="#cta"
-                                    className="block text-center w-full px-3 py-2 rounded-full text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
+                                    className="block text-center w-full px-3 py-2 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
                                 >
                                     Register Now
                                 </Link>

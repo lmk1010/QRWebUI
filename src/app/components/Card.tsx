@@ -1,6 +1,8 @@
 // src/components/Card.tsx
 import React from 'react';
 import Image from 'next/image';
+import { FaInfoCircle } from 'react-icons/fa'; // 引入图标库
+import { FaArrowRight } from 'react-icons/fa'; // 引入右箭头图标
 
 interface CardProps {
     title: string;
@@ -26,9 +28,6 @@ const Card: React.FC<CardProps> = ({ title, description, imageUrl, className, is
                         className="rounded-extra-large"
                         priority
                     />
-
-                    {/* 半透明覆盖层 */}
-                    <div className="absolute inset-0 bg-black opacity-40 rounded-extra-large transition-opacity duration-500 ease-in-out"></div>
                 </>
             )}
 
@@ -37,38 +36,46 @@ const Card: React.FC<CardProps> = ({ title, description, imageUrl, className, is
                 {isLarge ? (
                     <>
                         {/* 顶部两行艺术化文字 */}
-                        <div className="mb-4 space-y-4 mt-8">
-                            <h3 className="text-3xl font-extra-black tracking-wide">{title}</h3>
-                            <h3 className="text-3xl font-extra-black tracking-wide">{description}</h3>
+                        <div className="mb-4 space-y-4 mt-10">
+                            <h3 className="text-5xl font-extra-black tracking-wide">{title}</h3>
+                            <h3 className="text-5xl font-extra-black tracking-wide">{description}</h3>
                         </div>
 
                         {/* 底部左侧圆角按钮 */}
                         <div className="self-start w-56 mb-6">
-                            <button className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3 rounded-full hover:from-blue-600 hover:to-blue-800 transition-colors duration-500 ease-in-out w-full">
+                            <button className="flex items-center justify-center bg-gradient-to-r from-yellow-400 to-green-500 text-white px-6 py-3 rounded-full hover:from-yellow-500 hover:to-green-600 transition-colors duration-500 ease-in-out w-full">
                                 Start Customizing <span className="ml-2">→</span>
                             </button>
                         </div>
                     </>
                 ) : isWide ? (
                     <>
-                        {/* 顶部文字 */}
-                        <h3 className="text-2xl font-bold tracking-wide">{title}</h3>
-                        {/* 底部按钮 */}
-                        <div className="self-start w-56 mb-6">
-                            <button
-                                className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-blue-700 text-white px-6 py-3 rounded-full hover:from-blue-600 hover:to-blue-800 transition-colors duration-500 ease-in-out w-full">
-                                Start Customizing <span className="ml-2">→</span>
-                            </button>
+                        <div className="flex flex-col items-start">
+                            {/* 顶部文字 */}
+                            <h3 className="text-5xl font-bold tracking-wide text-black mt-10">{title}</h3>
+                            {/* 底部按钮 */}
+                            <div className="w-56 mt-6">
+                                <button
+                                    className="flex items-center justify-center bg-gradient-to-r from-pink-500 to-pink-700 text-white px-6 py-3 rounded-full hover:from-pink-600 hover:to-pink-800 transition-colors duration-500 ease-in-out w-full">
+                                    Start Customizing <span className="ml-2">→</span>
+                                </button>
+                            </div>
                         </div>
                     </>
                 ) : (
                     <>
-                        <h3 className="text-2xl font-semibold">{title}</h3>
-                        <p className="mt-2">{description}</p>
-                        <button
-                            className="mt-4 inline-flex items-center bg-blue-600 bg-opacity-80 text-white px-4 py-2 rounded-full hover:bg-blue-700 transition-colors duration-500 ease-in-out">
-                            了解更多 <span className="ml-2">→</span>
-                        </button>
+                        {/* 顶部区域：左侧小文字，右侧图标 */}
+                        <div className="flex justify-between items-center w-full mt-3">
+                            <p className="text-lg font-semibold ">{title}</p>
+                            <button aria-label="More Information">
+                                <FaArrowRight className="text-black text-2xl cursor-pointer hover:text-gray-500"/>
+                            </button>
+                        </div>
+
+                        {/* 底部文字描述 */}
+                        <div className="mt-auto">
+                            <h3 className="text-4xl font-extra-black tracking-wide mr-3 ">{description}</h3>
+                        </div>
                     </>
                 )}
             </div>
