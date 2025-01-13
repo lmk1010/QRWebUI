@@ -12,20 +12,20 @@ export default function Home() {
             size: 'large', // 自定义尺寸标识
         },
         {
-            title: '服务二',
-            description: '这是服务二的描述，提供详细的服务信息。',
+            title: 'Service Two',
+            description: 'This is the description for Service Two, providing detailed information about the service.',
             imageUrl: '/assets/pexels-B.png',
             size: 'wide', // 自定义尺寸标识
         },
         {
-            title: '服务三',
-            description: '这是服务三的描述，提供详细的服务信息。',
+            title: 'Service Three',
+            description: 'This is the description for Service Three, providing detailed information about the service.',
             imageUrl: '/assets/pexels-C.png',
             size: 'small', // 自定义尺寸标识
         },
         {
-            title: '服务四',
-            description: '这是服务四的描述，提供详细的服务信息。',
+            title: 'Service Four',
+            description: 'This is the description for Service Four, providing detailed information about the service.',
             imageUrl: '/assets/pexels-D.png',
             size: 'small', // 自定义尺寸标识
         },
@@ -58,12 +58,12 @@ export default function Home() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen"> {/* Flex 布局，垂直方向 */}
+        <div className="flex flex-col min-h-screen bg-white"> {/* 添加 bg-white 使整个页面背景为白色 */}
             {/* 导航栏 */}
-            <Navbar />
+            <Navbar/>
 
             {/* 主体内容 */}
-            <main className="flex-grow container mx-auto px-4 py-8">
+            <main className="flex-grow container mx-auto px-4 py-8 flex flex-col justify-center"> {/* 使用 flex 布局，垂直方向居中 */}
                 {/* 使用 CSS Grid 实现布局，并增加 gap-8 */}
                 <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-custom-8 gap-8">
                     {cards.map((card, index) => (
@@ -79,12 +79,12 @@ export default function Home() {
                 </div>
             </main>
 
-            {/* 页脚（Footer） */}
-            <footer className="bg-gray-800 text-white py-6">
-                <div className="container mx-auto text-center">
-                    © {new Date().getFullYear()} MyCompany. All rights reserved.
-                </div>
-            </footer>
+            {/*/!* 页脚（Footer） *!/*/}
+            {/*<footer className="bg-gray-800 text-white py-6">*/}
+            {/*    <div className="container mx-auto text-center">*/}
+            {/*        © {new Date().getFullYear()} MyCompany. All rights reserved.*/}
+            {/*    </div>*/}
+            {/*</footer>*/}
         </div>
     );
 }
