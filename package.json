@@ -13,6 +13,7 @@
     "@heroicons/react": "^1.0.6",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "framer-motion": "^11.17.0",
+    "gsap": "^3.12.5",
     "next": "15.1.4",
     "qrcode.react": "^4.2.0",
     "react": "^19.0.0",
