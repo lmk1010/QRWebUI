@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Card from './components/Card';
 import QRCard from './components/QRCard';
 import { gsap } from 'gsap';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export default function Home() {
     // 状态：是否显示 QRCard
@@ -17,39 +18,39 @@ export default function Home() {
             title: 'Personalized. QR Code.',
             description: 'Unique. Aesthetic.',
             imageUrl: '/assets/pexels-A.png',
-            size: 'large', // 自定义尺寸标识
+            size: 'large',
         },
         {
             title: 'PQR Example',
             description: 'This is the description for Service Two, providing detailed information about the service.',
             imageUrl: '/assets/pexels-B.png',
-            size: 'wide', // 自定义尺寸标识
+            size: 'wide',
         },
         {
             title: 'This is the description for Service Two',
             description: 'About Us.',
             imageUrl: '/assets/pexels-C.png',
-            size: 'small', // 自定义尺寸标识
+            size: 'small',
         },
         {
             title: 'This is the description for Service Two',
             description: 'Contact Us.',
             imageUrl: '/assets/pexels-D.png',
-            size: 'small', // 自定义尺寸标识
+            size: 'small',
         },
     ];
 
-    // 根据尺寸获取卡片的 CSS 类名
+    // 根据尺寸获取卡片的类名
     const getCardClass = (size: string) => {
         switch (size) {
             case 'large':
-                return 'md:col-span-2 md:row-span-2 min-h-[200px]'; // 每行 100px，高度 2 * 100px = 200px
+                return 'md:col-span-2 md:row-span-2 min-h-[200px]';
             case 'wide':
-                return 'md:col-span-2 md:row-span-1 min-h-[100px]'; // 每行 100px，高度 1 * 100px = 100px
+                return 'md:col-span-2 md:row-span-1 min-h-[100px]';
             case 'small':
-                return 'md:col-span-1 md:row-span-1 min-h-[100px]'; // 每行 100px，高度 1 * 100px = 100px
+                return 'md:col-span-1 md:row-span-1 min-h-[100px]';
             default:
-                return 'min-h-100'; // 15rem, 240px
+                return 'min-h-[100px]';
         }
     };
 
@@ -67,11 +68,11 @@ export default function Home() {
         }
     };
 
-    // 处理大卡片按钮点击，触发碎裂动画
+    // 当大卡片按钮被点击时，先执行碎裂动画，再显示二维码卡片
     const handleLargeCardButtonClick = () => {
         if (cardsRef.current) {
-            const cards = cardsRef.current.children;
-            gsap.to(cards, {
+            const cardsElements = cardsRef.current.children;
+            gsap.to(cardsElements, {
                 duration: 1,
                 scale: 0,
                 rotation: 360,
@@ -94,34 +95,49 @@ export default function Home() {
 
             {/* 主体内容 */}
             <main className="flex-grow container mx-auto px-4 py-8 flex flex-col justify-center">
-                {!showQRCard ? (
-                    <div
-                        ref={cardsRef}
-                        className="grid grid-cols-1 md:grid-cols-4 gap-8 md:grid-rows-custom-8 gap-8"
-                    >
-                        {cards.map((card, index) => (
-                            <Card
-                                key={index}
-                                title={card.title}
-                                description={card.description}
-                                imageUrl={card.imageUrl}
-                                className={getCardClass(card.size)}
-                                {...getCardSizeProps(card.size)}
-                                onLargeCardButtonClick={handleLargeCardButtonClick} // 传递回调
+                <AnimatePresence mode="wait">
+                    {!showQRCard ? (
+                        // 四个卡片的区域
+                        <motion.div
+                            key="cards"
+                            ref={cardsRef}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.5 }}
+                            className="grid grid-cols-1 md:grid-cols-4 gap-8 md:grid-rows-custom-8 gap-8"
+                        >
+                            {cards.map((card, index) => (
+                                <Card
+                                    key={index}
+                                    title={card.title}
+                                    description={card.description}
+                                    imageUrl={card.imageUrl}
+                                    className={getCardClass(card.size)}
+                                    {...getCardSizeProps(card.size)}
+                                    onLargeCardButtonClick={handleLargeCardButtonClick}
+                                />
+                            ))}
+                        </motion.div>
+                    ) : (
+                        // 二维码卡片的区域
+                        <motion.div
+                            key="qrCard"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <QRCard
+                                onClose={() => {
+                                    // 关闭二维码卡片 -> 将 showQRCard 设为 false
+                                    setShowQRCard(false);
+                                }}
                             />
-                        ))}
-                    </div>
-                ) : (
-                    <QRCard onClose={() => setShowQRCard(false)} />
-                )}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </main>
-
-            {/* 页脚（可选） */}
-            {/* <footer className="bg-gray-800 text-white py-6">
-                <div className="container mx-auto text-center">
-                    © {new Date().getFullYear()} MyCompany. All rights reserved.
-                </div>
-            </footer> */}
         </div>
     );
 }
