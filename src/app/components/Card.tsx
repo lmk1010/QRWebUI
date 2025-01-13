@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { FaInfoCircle } from 'react-icons/fa'; // 引入图标库
 import { FaArrowRight } from 'react-icons/fa'; // 引入右箭头图标
+import Logo from '../../../public/assets/QRExample.png'; // 根据实际路径调整
 
 interface CardProps {
     title: string;
@@ -50,15 +51,22 @@ const Card: React.FC<CardProps> = ({ title, description, imageUrl, className, is
                     </>
                 ) : isWide ? (
                     <>
-                        <div className="flex flex-col items-start">
-                            {/* 顶部文字 */}
-                            <h3 className="text-5xl font-bold tracking-wide text-black mt-10">{title}</h3>
-                            {/* 底部按钮 */}
-                            <div className="w-56 mt-6">
-                                <button
-                                    className="flex items-center justify-center bg-gradient-to-r from-pink-500 to-pink-700 text-white px-6 py-3 rounded-full hover:from-pink-600 hover:to-pink-800 transition-colors duration-500 ease-in-out w-full">
-                                    Start Customizing <span className="ml-2">→</span>
-                                </button>
+                        <div className="flex flex-col md:flex-row items-start relative">
+                            {/* 左侧：标题和按钮 */}
+                            <div className="flex flex-col items-start">
+                                {/* 顶部文字 */}
+                                <h3 className="text-5xl font-bold tracking-wide text-black mt-10">{title}</h3>
+                                {/* 底部按钮 */}
+                                <div className="w-56 mt-6">
+                                    <button
+                                        className="flex items-center justify-center bg-gradient-to-r from-pink-500 to-pink-700 text-white px-6 py-3 rounded-full hover:from-pink-600 hover:to-pink-800 transition-colors duration-500 ease-in-out w-full">
+                                        Start Customizing <span className="ml-2">→</span>
+                                    </button>
+                                </div>
+                            </div>
+                            {/* 右侧：Logo 图片 */}
+                            <div className="md:ml-4 md:mb-6">
+                                <Image src={Logo} alt="Logo" width={300} height={300}/>
                             </div>
                         </div>
                     </>
