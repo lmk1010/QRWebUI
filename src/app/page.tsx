@@ -6,6 +6,7 @@ import Card from './components/Card';
 import QRCard from './components/QRCard';
 import { gsap } from 'gsap';
 import { AnimatePresence, motion } from 'framer-motion';
+import QRCodePage from '../../src/app/components/QRCodePage'; // 关键：导入父组件
 
 export default function Home() {
     // 状态：是否显示 QRCard
@@ -122,15 +123,15 @@ export default function Home() {
                     ) : (
                         // 二维码卡片的区域
                         <motion.div
-                            key="qrCard"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ duration: 0.5 }}
+                            key="qrPage"
+                            initial={{opacity: 0, scale: 0.8}}
+                            animate={{opacity: 1, scale: 1}}
+                            exit={{opacity: 0, scale: 0.8}}
+                            transition={{duration: 0.5}}
                         >
-                            <QRCard
+                            <QRCodePage
                                 onClose={() => {
-                                    // 关闭二维码卡片 -> 将 showQRCard 设为 false
+                                    // 点击“返回”按钮时，回到卡片列表
                                     setShowQRCard(false);
                                 }}
                             />

@@ -1,69 +1,56 @@
 // src/components/QRCard.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import QRCode from 'react-qr-code';
 
 import FeatureCard from './FeatureCard';
 import CustomizationModal, { CustomOptions } from './CustomizationModal';
-
-// 引入我们定义好的分类数据
-import { mainCategories, subCategories, MainCategory, SubCategory } from './categories';
+import { mainCategories, subCategories, SubCategory } from './categories';
 
 interface QRCardProps {
     onClose: () => void;
+    onGenerateResult: (value: string) => void; // 必须是函数
+    onCustomizationChange: (opts: CustomOptions) => void;
+    customOptions: CustomOptions;
 }
 
-const QRCard: React.FC<QRCardProps> = ({ onClose }) => {
-    // 选中的“大类”
+const QRCard: React.FC<QRCardProps> = ({
+                                           onClose,
+                                           onGenerateResult,
+                                           onCustomizationChange,
+                                           customOptions
+                                       }) => {
     const [selectedMainType, setSelectedMainType] = useState<string | null>(null);
-
-    // 选中的“子功能”
     const [selectedSubType, setSelectedSubType] = useState<string | null>(null);
-
-    // 用户输入
     const [customText, setCustomText] = useState('');
-
-    // 最终生成的二维码内容
-    const [generatedValue, setGeneratedValue] = useState('');
-
-    // 定制化弹窗选项
-    const [customOptions, setCustomOptions] = useState<CustomOptions>({
-        shapeStyle: 'square',
-        fgColor: '#000000',
-        bgColor: '#ffffff',
-        logoFile: null,
-        size: 200,
-        margin: 4,
-    });
     const [isCustomizationOpen, setIsCustomizationOpen] = useState(false);
 
-    // 生成二维码
-    const handleGenerate = () => {
-        // 简单示例：将大类和子功能 + 用户输入拼合
-        if (!selectedMainType || !selectedSubType) return;
-        const value = `[${selectedMainType}-${selectedSubType}] ${customText}`;
-        setGeneratedValue(value);
-    };
-
-    // 定制化选项确认
-    const handleConfirmCustomization = (opts: CustomOptions) => {
-        setCustomOptions(opts);
-    };
-
-    // 重置子功能
+    // 选择大类
     const handleSelectMainCategory = (mainType: string) => {
         setSelectedMainType(mainType);
-        setSelectedSubType(null);  // 切换大类后，重置子功能
+        setSelectedSubType(null);
     };
 
-    // 根据选中的大类，获取对应的子功能列表
+    // 根据当前大类，列出子功能
     const currentSubCategories: SubCategory[] = selectedMainType
         ? subCategories[selectedMainType] || []
         : [];
 
+    // 点击生成二维码
+    const handleGenerate = () => {
+        if (!selectedMainType || !selectedSubType) return;
+        const value = `[${selectedMainType}-${selectedSubType}] ${customText}`;
+        // 将生成结果抛给父级
+        onGenerateResult(value);
+    };
+
+    // 用户确认定制化设置
+    const handleConfirmCustomization = (opts: CustomOptions) => {
+        onCustomizationChange(opts);
+    };
+
     return (
         <motion.div
-            className="relative bg-white rounded-xl shadow-lg p-8 flex flex-col items-center max-w-4xl mx-auto"
+            className="relative bg-white rounded-xl shadow-lg p-8 flex flex-col items-center w-full max-w-xl"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
@@ -87,7 +74,7 @@ const QRCard: React.FC<QRCardProps> = ({ onClose }) => {
                 </svg>
             </button>
 
-            {/* 大类选择 (在此示例中使用 FeatureCard 进行展示) */}
+            {/* 大类选择 */}
             <div className="mt-8 w-full">
                 <h2 className="text-xl font-bold mb-4 text-center">请选择二维码大类</h2>
                 <div className="mb-6 flex flex-row flex-wrap gap-4 justify-center">
@@ -106,9 +93,7 @@ const QRCard: React.FC<QRCardProps> = ({ onClose }) => {
             {/* 子功能选择 */}
             {selectedMainType && (
                 <div className="w-full">
-                    <h3 className="text-lg font-semibold text-center mb-4">
-                        请选择子功能
-                    </h3>
+                    <h3 className="text-lg font-semibold text-center mb-4">请选择子功能</h3>
                     <div className="mb-6 flex flex-row flex-wrap gap-4 justify-center">
                         {currentSubCategories.map((sub) => (
                             <FeatureCard
@@ -123,7 +108,7 @@ const QRCard: React.FC<QRCardProps> = ({ onClose }) => {
                 </div>
             )}
 
-            {/* 输入表单：只有在“子功能”被选中时显示 */}
+            {/* 输入表单 */}
             {selectedSubType && (
                 <div className="w-full max-w-md mb-4">
                     <label className="block mb-2 text-sm font-medium text-gray-700">
@@ -150,21 +135,6 @@ const QRCard: React.FC<QRCardProps> = ({ onClose }) => {
                             定制化设置
                         </button>
                     </div>
-                </div>
-            )}
-
-            {/* 二维码显示 */}
-            {generatedValue && (
-                <div className="flex flex-col items-center mb-4">
-                    <QRCode
-                        value={generatedValue}
-                        fgColor={customOptions.fgColor}
-                        bgColor={customOptions.bgColor}
-                        size={customOptions.size}
-                    />
-                    <p className="mt-2 text-sm text-gray-500">
-                        预览: {generatedValue}
-                    </p>
                 </div>
             )}
 
