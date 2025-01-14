@@ -1,4 +1,3 @@
-// src/components/QRCard.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -39,7 +38,6 @@ const QRCard: React.FC<QRCardProps> = ({
     const handleGenerate = () => {
         if (!selectedMainType || !selectedSubType) return;
         const value = `[${selectedMainType}-${selectedSubType}] ${customText}`;
-        // 将生成结果抛给父级
         onGenerateResult(value);
     };
 
@@ -50,11 +48,11 @@ const QRCard: React.FC<QRCardProps> = ({
 
     return (
         <motion.div
-            className="relative bg-white rounded-xl shadow-lg p-8 flex flex-col items-center w-full max-w-xl"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.5 }}
+            className="relative bg-white rounded-xl shadow-lg p-8 flex flex-col items-center w-full" // 使用 w-full 占满父容器宽度
+            initial={{opacity: 0, scale: 0.8}}
+            animate={{opacity: 1, scale: 1}}
+            exit={{opacity: 0, scale: 0.8}}
+            transition={{duration: 0.5}}
         >
             {/* 关闭按钮 */}
             <button
@@ -70,14 +68,14 @@ const QRCard: React.FC<QRCardProps> = ({
                     stroke="currentColor"
                     strokeWidth={2}
                 >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
 
             {/* 大类选择 */}
-            <div className="mt-8 w-full">
-                <h2 className="text-xl font-bold mb-4 text-center">请选择二维码大类</h2>
-                <div className="mb-6 flex flex-row flex-wrap gap-4 justify-center">
+            <div className="mt-8 w-full mb-6">
+                <h2 className="text-xl font-bold mb-6 text-center">请选择二维码大类</h2>
+                <div className="grid grid-cols-4 gap-4" style={{ gridAutoRows: '1fr' }}>
                     {mainCategories.map((cat) => (
                         <FeatureCard
                             key={cat.type}
@@ -88,13 +86,14 @@ const QRCard: React.FC<QRCardProps> = ({
                         />
                     ))}
                 </div>
+
             </div>
 
             {/* 子功能选择 */}
             {selectedMainType && (
                 <div className="w-full">
-                    <h3 className="text-lg font-semibold text-center mb-4">请选择子功能</h3>
-                    <div className="mb-6 flex flex-row flex-wrap gap-4 justify-center">
+                    <h3 className="text-lg font-semibold text-center mb-6">请选择子功能</h3>
+                    <div className="grid grid-cols-4 gap-4 justify-center">
                         {currentSubCategories.map((sub) => (
                             <FeatureCard
                                 key={sub.type}
@@ -110,7 +109,7 @@ const QRCard: React.FC<QRCardProps> = ({
 
             {/* 输入表单 */}
             {selectedSubType && (
-                <div className="w-full max-w-md mb-4">
+                <div className="w-full max-w-md mb-6 mt-8">
                     <label className="block mb-2 text-sm font-medium text-gray-700">
                         请输入内容
                     </label>

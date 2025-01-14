@@ -1,19 +1,17 @@
-// src/pages/QRCodePage.tsx
-"use client"; // 如果你也在 app/ 目录下，需要加
+"use client";
 
 import React, { useState } from 'react';
+import { FiArrowLeft } from 'react-icons/fi';
 import QrPreviewCard from '../components/QrPreviewCard';
 import QRCard from '../components/QRCard';
 import { CustomOptions } from '../components/CustomizationModal';
 
 interface QRCodePageProps {
-    onClose?: () => void; // 可选：若想从外部控制“关闭”，就加上
+    onClose?: () => void;
 }
 
 export default function QRCodePage({ onClose }: QRCodePageProps) {
-    // 存放二维码内容
     const [qrValue, setQrValue] = useState('');
-    // 存放定制化选项
     const [customOptions, setCustomOptions] = useState<CustomOptions>({
         shapeStyle: 'square',
         fgColor: '#000000',
@@ -23,57 +21,63 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
         margin: 4,
     });
 
-    // 上传Logo
     const handleUploadLogo = () => {
         alert('上传Logo逻辑待实现');
     };
 
-    // 二维码美化
     const handleBeautify = () => {
         alert('二维码美化逻辑待实现');
     };
 
-    // 用户生成二维码时，更新 qrValue
     const handleGenerateResult = (value: string) => {
         setQrValue(value);
     };
 
-    // 用户修改定制化设置
     const handleCustomizationChange = (opts: CustomOptions) => {
         setCustomOptions(opts);
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 p-6 flex flex-col items-center">
-            <h1 className="text-2xl font-bold mb-4">二维码生成示例 (QRCodePage)</h1>
-
-            {/* 如果想要一个“关闭”按钮 */}
+        <div className="min-h-screen bg-white flex flex-col items-center relative">
             {onClose && (
                 <button
                     onClick={onClose}
-                    className="mb-4 px-4 py-2 rounded bg-red-500 text-white"
+                    className="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-600 p-2 rounded-full shadow transition"
+                    aria-label="返回或关闭"
                 >
-                    返回或关闭
+                    <FiArrowLeft size={20} />
                 </button>
             )}
 
-            <div className="flex flex-row gap-8">
-                {/* 左侧：配置并生成二维码 */}
-                <QRCard
-                    onClose={() => console.log('也可以在这里处理关闭')}
-                    onGenerateResult={handleGenerateResult}
-                    onCustomizationChange={handleCustomizationChange}
-                    customOptions={customOptions}
-                />
+            {/* 标题部分 */}
+            <h1 className="text-2xl font-bold mt-8 mb-12">二维码生成示例 (QRCodePage)</h1>
 
-                {/* 右侧：二维码预览卡片 */}
-                <div className="w-full max-w-sm">
-                    <QrPreviewCard
-                        generatedValue={qrValue}
+            <div className="flex flex-row gap-8 w-full px-4">
+                {/* 左侧：配置并生成二维码 */}
+                <div className="flex-grow w-full">
+                    <QRCard
+                        onClose={() => console.log('也可以在这里处理关闭')}
+                        onGenerateResult={handleGenerateResult}
+                        onCustomizationChange={handleCustomizationChange}
                         customOptions={customOptions}
-                        onUploadLogo={handleUploadLogo}
-                        onBeautify={handleBeautify}
                     />
+                </div>
+
+                {/* 右侧：二维码预览卡片或提示信息 */}
+                <div className="w-full max-w-sm flex items-center justify-center">
+                    {qrValue ? (
+                        <QrPreviewCard
+                            generatedValue={qrValue}
+                            customOptions={customOptions}
+                            onUploadLogo={handleUploadLogo}
+                            onBeautify={handleBeautify}
+                        />
+                    ) : (
+                        <div className="text-gray-500 text-sm text-center flex flex-col items-center justify-center">
+                            <p>尚未生成二维码</p>
+                            <p>请在左侧选择大类、子功能并输入内容。</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
