@@ -31,7 +31,7 @@ export const mainCategories: MainCategory[] = [
     {
         type: 'multi',
         title: '互动 / 多场景',
-        description: '表单, 批量生码, 更多工具',
+        description: '表单, 批量生码',
     },
 ];
 
@@ -53,6 +53,6 @@ export const subCategories: Record<string, SubCategory[]> = {
     multi: [
         { type: 'form', title: '表单', description: '问卷/报名链接二维码' },
         { type: 'batch', title: '批量生码', description: '一次性生成多个二维码' },
-        { type: 'others', title: '更多工具', description: 'Wi-Fi、地图、加密二维码...' },
+        { type: 'others', title: '更多工具', description: 'Wi-Fi、地图.....' },
     ],
 };

@@ -45,18 +45,20 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                     className="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-600 p-2 rounded-full shadow transition"
                     aria-label="返回或关闭"
                 >
-                    <FiArrowLeft size={20} />
+                    <FiArrowLeft size={20}/>
                 </button>
             )}
 
-            {/* 标题部分 */}
-            <h1 className="text-2xl font-bold mt-8 mb-12">二维码生成示例 (QRCodePage)</h1>
+            <div className="text-center mt-8 mb-12">
+                <h1 className="text-2xl font-bold">二维码生成示例 (QRCodePage)</h1>
+                {/* 添加一个分割线 */}
+                <hr className="mt-4 w-200 mx-auto border-b-2 border-blue-500"/>
+            </div>
 
-            <div className="flex flex-row gap-8 w-full px-4">
+            <div className="flex flex-row items-stretch gap-8 w-full px-4">
                 {/* 左侧：配置并生成二维码 */}
                 <div className="flex-grow w-full">
                     <QRCard
-                        onClose={() => console.log('也可以在这里处理关闭')}
                         onGenerateResult={handleGenerateResult}
                         onCustomizationChange={handleCustomizationChange}
                         customOptions={customOptions}
@@ -64,7 +66,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                 </div>
 
                 {/* 右侧：二维码预览卡片或提示信息 */}
-                <div className="w-full max-w-sm flex items-center justify-center">
+                <div className="w-full max-w-sm flex">
                     {qrValue ? (
                         <QrPreviewCard
                             generatedValue={qrValue}
