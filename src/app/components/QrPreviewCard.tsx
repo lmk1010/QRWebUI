@@ -1,9 +1,7 @@
-// src/components/QrPreviewCard.tsx
-import React, { useRef } from 'react';
-import QRCode from 'react-qr-code';
-import { CustomOptions } from './CustomizationModal';
-// 如果使用 html-to-image
+import React, { useRef, useMemo } from 'react';
 import { toPng } from 'html-to-image';
+import { QRCode } from 'react-qrcode-logo';  // <-- 改为 react-qrcode-logo
+import { CustomOptions } from './CustomizationModal';
 
 interface QrPreviewCardProps {
     generatedValue: string;         // 生成的二维码内容
@@ -20,7 +18,6 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                                                      }) => {
     const cardRef = useRef<HTMLDivElement>(null);
 
-    // 下载二维码图片
     const handleDownloadImage = async () => {
         if (!cardRef.current) return;
         try {
@@ -34,6 +31,14 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
         }
     };
 
+    // 生成 logo 图片的临时 URL（如果上传了文件）
+    const logoSrc = useMemo(() => {
+        if (customOptions.logoFile) {
+            return URL.createObjectURL(customOptions.logoFile);
+        }
+        return undefined;
+    }, [customOptions.logoFile]);
+
     // 如果没有生成内容，则不显示卡片
     if (!generatedValue) {
         return (
@@ -42,6 +47,8 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             </div>
         );
     }
+
+    const isCircle = customOptions.shapeStyle === 'circle';
 
     return (
         <div
@@ -57,12 +64,31 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             </div>
 
             {/* 二维码展示 */}
-            <QRCode
-                value={generatedValue}
-                fgColor={customOptions.fgColor}
-                bgColor={customOptions.bgColor}
-                size={customOptions.size}
-            />
+            <div
+                style={{
+                    padding: customOptions.margin,
+                    borderRadius: isCircle ? '50%' : '0%',
+                    backgroundColor: customOptions.bgColor,
+                }}
+            >
+                <QRCode
+                    // 必选：二维码内容
+                    value={generatedValue}
+                    // 颜色与尺寸
+                    fgColor={customOptions.fgColor}
+                    bgColor={customOptions.bgColor}
+                    size={customOptions.size}
+                    // 让二维码本身也能呈现圆形外观
+                    style={{
+                        borderRadius: isCircle ? '50%' : '0%',
+                    }}
+                    // ======== 以下是 react-qrcode-logo 提供的专有属性 ========
+                    logoImage={logoSrc}         // 传入 Logo 的图片URL
+                    logoWidth={customOptions.size * 0.25} // Logo 宽度为二维码大小的25%
+                    removeQrCodeBehindLogo      // 移除 Logo 背后的二维码区域（防止重叠影响识别）
+                />
+            </div>
+
             <p className="text-gray-500 text-xs mt-6">
                 QR Code, {customOptions.size}×{customOptions.size}px
             </p>

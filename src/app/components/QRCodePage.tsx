@@ -1,5 +1,4 @@
-"use client";
-
+// src/app/QRCodePage.tsx
 import React, { useState } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import QrPreviewCard from '../components/QrPreviewCard';
@@ -11,7 +10,9 @@ interface QRCodePageProps {
 }
 
 export default function QRCodePage({ onClose }: QRCodePageProps) {
+    // 保存二维码内容
     const [qrValue, setQrValue] = useState('');
+    // 保存定制化配置
     const [customOptions, setCustomOptions] = useState<CustomOptions>({
         shapeStyle: 'square',
         fgColor: '#000000',
@@ -29,11 +30,14 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
         alert('二维码美化逻辑待实现');
     };
 
+    // 生成二维码的回调
     const handleGenerateResult = (value: string) => {
         setQrValue(value);
     };
 
+    // 当 CustomizationModal 点击「确认」时，从 QRCard 里会调用这个函数
     const handleCustomizationChange = (opts: CustomOptions) => {
+        // 更新父组件本地状态
         setCustomOptions(opts);
     };
 
@@ -51,7 +55,6 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
 
             <div className="text-center mt-8 mb-12">
                 <h1 className="text-2xl font-bold">二维码生成示例 (QRCodePage)</h1>
-                {/* 添加一个分割线 */}
                 <hr className="mt-4 w-200 mx-auto border-b-2 border-blue-500"/>
             </div>
 
