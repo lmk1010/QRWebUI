@@ -49,7 +49,7 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             ref={cardRef}
         >
             {/* 标题行 */}
-            <div className="mb-2 text-gray-700 text-sm self-start">
+            <div className="mb-12 text-gray-700 text-sm self-start">
                 标签样式：<span className="font-bold">基本样式</span>
                 <a href="#" className="text-blue-500 ml-2">
                     切换 &gt;
@@ -63,12 +63,12 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                 bgColor={customOptions.bgColor}
                 size={customOptions.size}
             />
-            <p className="text-gray-500 text-xs mt-2">
+            <p className="text-gray-500 text-xs mt-6">
                 QR Code, {customOptions.size}×{customOptions.size}px
             </p>
 
             {/* 功能按钮 */}
-            <div className="mt-4 flex flex-col w-full space-y-2">
+            <div className="mt-10 flex flex-col w-full space-y-2">
                 <button
                     onClick={onUploadLogo}
                     className="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors"

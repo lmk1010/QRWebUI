@@ -1,151 +1,62 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import QRCategoryCard from './QRCategoryCard';
+import QRInputCard from './QRInputCard';
+import { CustomOptions } from './CustomizationModal';
 
-import FeatureCard from './FeatureCard';
-import CustomizationModal, { CustomOptions } from './CustomizationModal';
-import { mainCategories, subCategories, SubCategory } from './categories';
-
-interface QRCardProps {
-    onClose: () => void;
-    onGenerateResult: (value: string) => void; // 必须是函数
-    onCustomizationChange: (opts: CustomOptions) => void;
-    customOptions: CustomOptions;
-}
-
-const QRCard: React.FC<QRCardProps> = ({
-                                           onClose,
-                                           onGenerateResult,
-                                           onCustomizationChange,
-                                           customOptions
-                                       }) => {
+const QRPage: React.FC = () => {
+    // 全局管理：选中大类/子功能
     const [selectedMainType, setSelectedMainType] = useState<string | null>(null);
     const [selectedSubType, setSelectedSubType] = useState<string | null>(null);
-    const [customText, setCustomText] = useState('');
-    const [isCustomizationOpen, setIsCustomizationOpen] = useState(false);
 
-    // 选择大类
-    const handleSelectMainCategory = (mainType: string) => {
-        setSelectedMainType(mainType);
-        setSelectedSubType(null);
+    const [customOptions, setCustomOptions] = useState<CustomOptions>({
+        shapeStyle: 'square',   // 初始样式：方形
+        fgColor: '#000000',     // 默认前景色：黑色
+        bgColor: '#FFFFFF',     // 默认背景色：白色
+        logoFile: null,         // 默认无 Logo 文件
+        size: 256,              // 默认二维码大小
+        margin: 4,              // 默认二维码边距
+    });
+
+    // 点击生成的回调
+    const handleGenerateResult = (value: string) => {
+        console.log("生成二维码内容：", value);
+        // 你可以在这儿将 value 交给二维码组件，或做其他操作...
     };
 
-    // 根据当前大类，列出子功能
-    const currentSubCategories: SubCategory[] = selectedMainType
-        ? subCategories[selectedMainType] || []
-        : [];
-
-    // 点击生成二维码
-    const handleGenerate = () => {
-        if (!selectedMainType || !selectedSubType) return;
-        const value = `[${selectedMainType}-${selectedSubType}] ${customText}`;
-        onGenerateResult(value);
+    // 定制化设置变更
+    const handleCustomizationChange = (opts: CustomOptions) => {
+        setCustomOptions(opts);
     };
 
-    // 用户确认定制化设置
-    const handleConfirmCustomization = (opts: CustomOptions) => {
-        onCustomizationChange(opts);
+    // 关闭事件
+    const handleClose = () => {
+        console.log("关闭了QRCategoryCard");
+        // 你可以在这里处理关闭逻辑，比如隐藏组件
     };
 
     return (
-        <motion.div
-            className="relative bg-white rounded-xl shadow-lg p-8 flex flex-col items-center w-full" // 使用 w-full 占满父容器宽度
-            initial={{opacity: 0, scale: 0.8}}
-            animate={{opacity: 1, scale: 1}}
-            exit={{opacity: 0, scale: 0.8}}
-            transition={{duration: 0.5}}
-        >
-            {/* 关闭按钮 */}
-            <button
-                onClick={onClose}
-                className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-200 transition-colors"
-                aria-label="Close"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 text-gray-600"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-            </button>
-
-            {/* 大类选择 */}
-            <div className="mt-8 w-full mb-6">
-                <h2 className="text-xl font-bold mb-6 text-center">请选择二维码大类</h2>
-                <div className="grid grid-cols-4 gap-4" style={{ gridAutoRows: '1fr' }}>
-                    {mainCategories.map((cat) => (
-                        <FeatureCard
-                            key={cat.type}
-                            title={cat.title}
-                            description={cat.description}
-                            isActive={selectedMainType === cat.type}
-                            onClick={() => handleSelectMainCategory(cat.type)}
-                        />
-                    ))}
-                </div>
-
-            </div>
-
-            {/* 子功能选择 */}
-            {selectedMainType && (
-                <div className="w-full">
-                    <h3 className="text-lg font-semibold text-center mb-6">请选择子功能</h3>
-                    <div className="grid grid-cols-4 gap-4 justify-center">
-                        {currentSubCategories.map((sub) => (
-                            <FeatureCard
-                                key={sub.type}
-                                title={sub.title}
-                                description={sub.description}
-                                isActive={selectedSubType === sub.type}
-                                onClick={() => setSelectedSubType(sub.type)}
-                            />
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            {/* 输入表单 */}
-            {selectedSubType && (
-                <div className="w-full max-w-md mb-6 mt-8">
-                    <label className="block mb-2 text-sm font-medium text-gray-700">
-                        请输入内容
-                    </label>
-                    <input
-                        type="text"
-                        className="w-full p-2 border border-gray-300 rounded mb-4"
-                        placeholder="如：链接、文本、文件地址、等等..."
-                        value={customText}
-                        onChange={(e) => setCustomText(e.target.value)}
-                    />
-                    <div className="flex space-x-2">
-                        <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
-                            onClick={handleGenerate}
-                        >
-                            生成二维码
-                        </button>
-                        <button
-                            className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors"
-                            onClick={() => setIsCustomizationOpen(true)}
-                        >
-                            定制化设置
-                        </button>
-                    </div>
-                </div>
-            )}
-
-            {/* 定制化弹窗 */}
-            <CustomizationModal
-                isOpen={isCustomizationOpen}
-                defaultOptions={customOptions}
-                onClose={() => setIsCustomizationOpen(false)}
-                onConfirm={handleConfirmCustomization}
+        <div className="p-8">
+            {/* 上方：选择大类/子功能 */}
+            <QRCategoryCard
+                onClose={handleClose}
+                selectedMainType={selectedMainType}
+                selectedSubType={selectedSubType}
+                onSelectMainCategory={(mainType) => setSelectedMainType(mainType)}
+                onSelectSubCategory={(subType) => setSelectedSubType(subType)}
             />
-        </motion.div>
+
+            {/* 下方：输入表单卡片（只有在选中子功能后才显示） */}
+            {selectedSubType && (
+                <QRInputCard
+                    selectedMainType={selectedMainType}
+                    selectedSubType={selectedSubType}
+                    onGenerateResult={handleGenerateResult}
+                    onCustomizationChange={handleCustomizationChange}
+                    customOptions={customOptions}
+                />
+            )}
+        </div>
     );
 };
 
-export default QRCard;
+export default QRPage;
