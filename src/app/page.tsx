@@ -3,7 +3,6 @@
 import React, { useState, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Card from './components/Card';
-import QRCard from './components/QRCard';
 import { gsap } from 'gsap';
 import { AnimatePresence, motion } from 'framer-motion';
 import QRCodePage from '../../src/app/components/QRCodePage'; // 关键：导入父组件

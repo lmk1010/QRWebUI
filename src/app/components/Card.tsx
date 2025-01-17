@@ -22,7 +22,6 @@ const Card: React.FC<CardProps> = ({
                                        className,
                                        isLarge,
                                        isWide,
-                                       isSmall,
                                        onLargeCardButtonClick,
                                    }) => {
     return (
