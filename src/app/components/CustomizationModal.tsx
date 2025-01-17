@@ -11,7 +11,16 @@ export interface CustomOptions {
     content: string;            // 二维码内容
 }
 
-const CustomizationModal: React.FC = () => {
+interface CustomizationModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onConfirm: (options: CustomOptions) => void;
+}
+
+const CustomizationModal: React.FC<CustomizationModalProps> = ({
+                                                                   isOpen,
+                                                                   onClose,
+                                                               }) => {
     const [options, setOptions] = useState<CustomOptions>({
         dotStyle: "square",
         fgColor: "#000000",
@@ -79,7 +88,11 @@ const CustomizationModal: React.FC = () => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-6 overflow-auto">
+        <div
+            className={`fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-6 overflow-auto transition-opacity duration-300 ${
+                isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+        >
             <div className="bg-white p-6 rounded-lg w-full max-w-5xl shadow-lg relative flex">
                 {/* 左侧配置区域 */}
                 <div className="w-2/3 pr-6 border-r">
@@ -189,6 +202,15 @@ const CustomizationModal: React.FC = () => {
                     <div ref={qrCodeContainer}></div>
                 </div>
             </div>
+
+            {/* 关闭弹窗按钮 */}
+            <button
+                onClick={onClose}
+                className="absolute top-4 right-4 p-2 bg-gray-300 rounded-full"
+                aria-label="Close"
+            >
+                X
+            </button>
         </div>
     );
 };

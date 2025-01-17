@@ -34,7 +34,16 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     // 生成 logo 图片的临时 URL（如果上传了文件）
     const logoSrc = useMemo(() => {
         if (customOptions.logoFile) {
-            return URL.createObjectURL(customOptions.logoFile);
+            // 如果 logoFile 是 Base64 字符串
+            if (typeof customOptions.logoFile === "string" && customOptions.logoFile.startsWith("data:")) {
+                return customOptions.logoFile; // 直接使用 Base64 字符串
+            }
+
+            // 如果 logoFile 是 Blob 或 File 对象
+            // @ts-expect-error The following line is expected to cause a
+            if (customOptions.logoFile instanceof Blob) {
+                return URL.createObjectURL(customOptions.logoFile); // 使用 Blob 创建临时 URL
+            }
         }
         return undefined;
     }, [customOptions.logoFile]);
@@ -48,8 +57,8 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
         );
     }
 
-    const isCircle = customOptions.shapeStyle === 'circle';
-
+    // @ts-expect-error The following line is expected to cause a
+    const isCircle = customOptions.dotStyle === 'circle';
     return (
         <div
             className="bg-white shadow-md rounded-md p-4 w-full max-w-sm flex flex-col items-center"
@@ -86,13 +95,13 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                     logoImage={logoSrc}         // 传入 Logo 的图片URL
                     logoWidth={customOptions.size * 0.25} // Logo 宽度为二维码大小的25%
                     removeQrCodeBehindLogo      // 移除 Logo 背后的二维码区域（防止重叠影响识别）
-                    ecLevel={customOptions.errorCorrectionLevel} // 纠错级别
+                    // ecLevel={customOptions.errorCorrectionLevel} // 纠错级别
                     quietZone={customOptions.margin} // 边距作为静态区域
                 />
             </div>
 
             <p className="text-gray-500 text-xs mt-6">
-                QR Code, {customOptions.size}×{customOptions.size}px | 版本: {customOptions.version}, 纠错级别: {customOptions.errorCorrectionLevel}
+                QR Code, {customOptions.size}×{customOptions.size}px , 纠错级别:
             </p>
 
             {/* 功能按钮 */}

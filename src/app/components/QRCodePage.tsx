@@ -14,12 +14,12 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     const [qrValue, setQrValue] = useState('');
     // 保存定制化配置
     const [customOptions, setCustomOptions] = useState<CustomOptions>({
-        shapeStyle: 'square',
+        content: "",   dotStyle: "square",
         fgColor: '#000000',
         bgColor: '#ffffff',
         logoFile: null,
         size: 200,
-        margin: 4,
+        margin: 4
     });
 
     const handleUploadLogo = () => {

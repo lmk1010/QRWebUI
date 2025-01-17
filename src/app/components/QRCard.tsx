@@ -22,7 +22,6 @@ const DEFAULT_SUB_TYPE = 'text';
 const QRCard: React.FC<QRCardProps> = ({
                                            onGenerateResult,
                                            onCustomizationChange,
-                                           customOptions
                                        }) => {
     // 进入后默认就是 选中“基础功能” + “文本”
     const [selectedMainType, setSelectedMainType] = useState<string | null>(DEFAULT_MAIN_TYPE);
@@ -144,7 +143,6 @@ const QRCard: React.FC<QRCardProps> = ({
             {/* 定制化弹窗 */}
             <CustomizationModal
                 isOpen={isCustomizationOpen}
-                defaultOptions={customOptions}
                 onClose={() => setIsCustomizationOpen(false)}
                 onConfirm={handleConfirmCustomization}
             />

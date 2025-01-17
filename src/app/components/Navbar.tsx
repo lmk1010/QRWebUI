@@ -1,26 +1,19 @@
-// src/components/Navbar.tsx
-
-"use client";
-
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { useState } from 'react';
 import { Transition } from '@headlessui/react';
-import { MenuIcon, XIcon } from '@heroicons/react/outline'; // 确保导入路径正确
+import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="bg-white"> {/* 确保背景为白色 */}
+        <nav className="bg-white">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                {/* 左侧：Logo 和 菜单 */}
                 <div className="flex items-center space-x-6">
-                    {/* Logo */}
                     <div className="text-2xl font-bold text-gray-800">
-                        <Link href="/">PQR </Link>
+                        <Link href="/">PQR</Link>
                     </div>
 
-                    {/* 菜单 */}
                     <ul className="hidden md:flex space-x-6">
                         <li>
                             <Link href="#home" className="text-gray-600 hover:text-gray-800">
@@ -45,7 +38,6 @@ const Navbar = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                            {/* 下拉菜单 */}
                             <ul className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                                 <li>
                                     <Link href="#service1" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
@@ -72,7 +64,6 @@ const Navbar = () => {
                     </ul>
                 </div>
 
-                {/* 右侧长按钮 */}
                 <div className="hidden md:block">
                     <Link
                         href="#cta"
@@ -82,7 +73,6 @@ const Navbar = () => {
                     </Link>
                 </div>
 
-                {/* 移动端菜单按钮 */}
                 <div className="md:hidden">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
@@ -99,7 +89,6 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* 移动端菜单 */}
             <Transition
                 show={isOpen}
                 enter="transition ease-out duration-200 transform"
@@ -110,7 +99,10 @@ const Navbar = () => {
                 leaveTo="opacity-0 -translate-y-2"
             >
                 {(ref) => (
-                    <div ref={ref} className="md:hidden bg-white">
+                    <div
+                        ref={ref as React.RefObject<HTMLDivElement>}  // 显式转换为 HTMLDivElement 类型
+                        className="md:hidden bg-white"
+                    >
                         <ul className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             <li>
                                 <Link href="#home" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
@@ -135,7 +127,6 @@ const Navbar = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </button>
-                                {/* 移动端下拉菜单 */}
                                 <ul className="mt-2 space-y-1 pl-4">
                                     <li>
                                         <Link href="#service1" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
@@ -159,7 +150,6 @@ const Navbar = () => {
                                     Contact Us
                                 </Link>
                             </li>
-                            {/* 移动端的长按钮 */}
                             <li>
                                 <Link
                                     href="#cta"
@@ -174,7 +164,6 @@ const Navbar = () => {
             </Transition>
         </nav>
     );
-
 };
 
 export default Navbar;
