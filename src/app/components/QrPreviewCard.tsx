@@ -86,11 +86,13 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                     logoImage={logoSrc}         // 传入 Logo 的图片URL
                     logoWidth={customOptions.size * 0.25} // Logo 宽度为二维码大小的25%
                     removeQrCodeBehindLogo      // 移除 Logo 背后的二维码区域（防止重叠影响识别）
+                    ecLevel={customOptions.errorCorrectionLevel} // 纠错级别
+                    quietZone={customOptions.margin} // 边距作为静态区域
                 />
             </div>
 
             <p className="text-gray-500 text-xs mt-6">
-                QR Code, {customOptions.size}×{customOptions.size}px
+                QR Code, {customOptions.size}×{customOptions.size}px | 版本: {customOptions.version}, 纠错级别: {customOptions.errorCorrectionLevel}
             </p>
 
             {/* 功能按钮 */}

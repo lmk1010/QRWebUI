@@ -141,7 +141,6 @@ const QRCard: React.FC<QRCardProps> = ({
                     </div>
                 </div>
             )}
-
             {/* 定制化弹窗 */}
             <CustomizationModal
                 isOpen={isCustomizationOpen}
