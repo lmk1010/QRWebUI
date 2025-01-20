@@ -1,6 +1,7 @@
 "use client";
 // src/app/page.tsx
 import React, { useState, useRef } from 'react';
+import { useEffect } from "react";
 import Navbar from './components/Navbar';
 import Card from './components/Card';
 import { gsap } from 'gsap';
@@ -9,7 +10,27 @@ import QRCodePage from '../../src/app/components/QRCodePage'; // 关键：导入
 import About from './components/About'; // 导入 About 组件
 import Contact from './components/Contact'; // Contact 组件
 
+
 export default function Page() {
+    useEffect(() => {
+        // Check if the code is running on the client-side (browser)
+        if (typeof window !== 'undefined') {
+            const handlePopState = () => {
+                // When the user clicks the back button, reload to the homepage
+                window.location.reload();
+            };
+
+            // Add the popstate event listener to capture back navigation
+            window.addEventListener('popstate', handlePopState);
+
+            // Cleanup the event listener when the component unmounts
+            return () => {
+                window.removeEventListener('popstate', handlePopState);
+            };
+        }
+    }, []); // Empty dependency array to run only once after component mounts
+
+
     // 状态：是否显示 QRCard 或 About
     const [showQRCard, setShowQRCard] = useState(false);
     const [showAbout, setShowAbout] = useState(false); // 控制 About 页面显示
@@ -32,13 +53,13 @@ export default function Page() {
             size: 'wide',
         },
         {
-            title: 'This is the description for Service Two',
+            title: 'QR code generation tool for business, lifestyle, and personal use',
             description: 'About Us.',
             imageUrl: '/assets/pexels-C.png',
             size: 'small',
         },
         {
-            title: 'This is the description for Service Two',
+            title: 'If you need support, please contact us.',
             description: 'Contact Us.',
             imageUrl: '/assets/pexels-D.png',
             size: 'small',
@@ -154,6 +175,8 @@ export default function Page() {
                                     className={getCardClass(card.size)}
                                     {...getCardSizeProps(card.size)}
                                     onLargeCardButtonClick={handleLargeCardButtonClick}
+                                    onContactClick={handleContactClick} // 传递回调
+                                    onAboutClick={handleAboutClick} // 传递回调
                                 />
                             ))}
                         </motion.div>

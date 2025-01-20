@@ -1,4 +1,3 @@
-// src/app/components/Card.tsx
 import React from 'react';
 import Image from 'next/image';
 import { FaArrowRight } from 'react-icons/fa';
@@ -13,6 +12,8 @@ interface CardProps {
     isWide?: boolean;
     isSmall?: boolean;
     onLargeCardButtonClick?: () => void;
+    onContactClick?: () => void; // 新增的 onContactClick 回调
+    onAboutClick?: () => void; // 新增的 onAboutClick 回调
 }
 
 const Card: React.FC<CardProps> = ({
@@ -23,9 +24,22 @@ const Card: React.FC<CardProps> = ({
                                        isLarge,
                                        isWide,
                                        onLargeCardButtonClick,
+                                       onContactClick, // 传递的回调
+                                       onAboutClick,   // 传递的回调
                                    }) => {
+
+    // 处理点击卡片时的跳转
+    const handleCardClick = () => {
+        if (description.toLowerCase().includes('contact') && onContactClick) {
+            onContactClick(); // 执行传递的回调
+        }else if (description.toLowerCase().includes('about us') && onAboutClick) {
+            onAboutClick(); // 执行传递的回调
+        }
+    };
+
     return (
         <div
+            onClick={handleCardClick} // 添加点击事件，点击卡片任意位置时触发跳转
             className={`relative bg-white rounded-2xl shadow-md overflow-hidden transition-transform transition-shadow duration-500 ease-in-out transform hover:scale-105 hover:shadow-2xl ${className}`}
         >
             {imageUrl && (
@@ -79,13 +93,13 @@ const Card: React.FC<CardProps> = ({
                                     <button
                                         className="flex items-center justify-center bg-gradient-to-r from-pink-500 to-pink-700 text-white px-6 py-3 rounded-full hover:from-pink-600 hover:to-pink-800 transition-colors duration-500 ease-in-out w-full"
                                     >
-                                        Start Customization <span className="ml-2">→</span>
+                                        View Example <span className="ml-2">→</span>
                                     </button>
                                 </div>
                             </div>
                             {/* 右侧：Logo 图片 */}
                             <div className="md:ml-4 md:mb-6">
-                                <Image src={Logo} alt="Logo" width={150} height={150} />
+                                <Image src={Logo} alt="Logo" width={300} height={300} />
                             </div>
                         </div>
                     </>
@@ -108,7 +122,6 @@ const Card: React.FC<CardProps> = ({
             </div>
         </div>
     );
-
 };
 
 export default Card;
