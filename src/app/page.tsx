@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import QRCodePage from '../../src/app/components/QRCodePage'; // 关键：导入父组件
 import About from './components/About'; // 导入 About 组件
 
-export default function Home() {
+export default function Page() {
     // 状态：是否显示 QRCard 或 About
     const [showQRCard, setShowQRCard] = useState(false);
     const [showAbout, setShowAbout] = useState(false); // 控制 About 页面显示

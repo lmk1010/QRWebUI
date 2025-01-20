@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
-// @ts-ignore
-const Navbar = ({ onAboutClick }) => {
+// Define a type for the props, including the onAboutClick function
+interface NavbarProps {
+    onAboutClick: () => void; // onAboutClick is a function that doesn't take any arguments and doesn't return anything
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onAboutClick }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [showFeatureAlert, setShowFeatureAlert] = useState(false); // 用于显示新功能提示
 
     // 点击 logo 时刷新页面
     const handleLogoClick = () => {
@@ -16,9 +21,10 @@ const Navbar = ({ onAboutClick }) => {
         window.location.reload();
     };
 
-    // 点击 About Us 时跳转并刷新页面
-    const handleAboutClick = () => {
-        window.location.href = '/about';  // 直接跳转到 /about 页面并刷新
+    // 处理点击 More Features 的操作
+    const handleMoreFeaturesClick = () => {
+        setShowFeatureAlert(true); // 显示新功能提示
+        setTimeout(() => setShowFeatureAlert(false), 800); // 0.8秒后隐藏提示
     };
 
     return (
@@ -34,55 +40,31 @@ const Navbar = ({ onAboutClick }) => {
                             <a
                                 href="#home"
                                 className="text-gray-600 hover:text-gray-800"
-                                onClick={handleHomeClick} // 这里添加点击事件
+                                onClick={handleHomeClick}
                             >
                                 Home
                             </a>
                         </li>
-                        {/* 使用 handleAboutClick 来跳转到 about.tsx 页面并刷新 */}
                         <li>
                             <a
                                 href="#about"
                                 className="text-gray-600 hover:text-gray-800"
                                 onClick={(e) => {
-                                    e.preventDefault(); // 阻止默认跳转
+                                    e.preventDefault();
                                     onAboutClick(); // 执行传递的回调
                                 }}
                             >
                                 About Us
                             </a>
                         </li>
-                        <li className="relative group">
-                            <button className="text-gray-600 hover:text-gray-800 flex items-center focus:outline-none">
-                                Services
-                                <svg
-                                    className="ml-1 h-4 w-4"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                                          d="M19 9l-7 7-7-7"/>
-                                </svg>
+                        <li>
+                            {/* 修改后的 More Features */}
+                            <button
+                                className="text-gray-600 hover:text-gray-800 flex items-center focus:outline-none"
+                                onClick={handleMoreFeaturesClick} // 点击时显示提示
+                            >
+                                More Features
                             </button>
-                            <ul className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                                <li>
-                                    <a href="#service1" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
-                                        Service 1
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#service2" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
-                                        Service 2
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#service3" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
-                                        Service 3
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li>
                             <a href="#contact" className="text-gray-600 hover:text-gray-800">
@@ -117,6 +99,15 @@ const Navbar = ({ onAboutClick }) => {
                 </div>
             </div>
 
+            {/* 新功能提示（居中）并有一定距离顶部 */}
+            {showFeatureAlert && (
+                <div className="absolute left-0 right-0 top-4 flex items-center justify-center z-50">
+                    <div className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg text-lg font-semibold">
+                        New feature coming soon. Stay tuned!
+                    </div>
+                </div>
+            )}
+
             <Transition
                 show={isOpen}
                 enter="transition ease-out duration-200 transform"
@@ -128,7 +119,7 @@ const Navbar = ({ onAboutClick }) => {
             >
                 {(ref) => (
                     <div
-                        ref={ref as React.RefObject<HTMLDivElement>}  // 显式转换为 HTMLDivElement 类型
+                        ref={ref as React.RefObject<HTMLDivElement>}
                         className="md:hidden bg-white"
                     >
                         <ul className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -136,54 +127,37 @@ const Navbar = ({ onAboutClick }) => {
                                 <a
                                     href="#home"
                                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800"
-                                    onClick={handleHomeClick} // 同样添加点击事件
+                                    onClick={handleHomeClick}
                                 >
                                     Home
                                 </a>
                             </li>
-                            {/* 使用 handleAboutClick 跳转到 about.tsx 页面并刷新 */}
                             <li>
                                 <a
                                     href="#about"
-                                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800"
-                                    onClick={handleAboutClick}  // 这里是跳转到 About 页面并刷新
+                                    className="text-gray-600 hover:text-gray-800"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        onAboutClick(); // 执行传递的回调
+                                    }}
                                 >
                                     About Us
                                 </a>
                             </li>
-                            <li className="relative group">
-                                <button className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800 focus:outline-none">
-                                    Services
-                                    <svg
-                                        className="ml-1 h-4 w-4 inline"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                    </svg>
+                            <li>
+                                {/* 移除了下拉框，修改为 "More Features" */}
+                                <button
+                                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                                    onClick={handleMoreFeaturesClick} // 点击时显示提示
+                                >
+                                    More Features
                                 </button>
-                                <ul className="mt-2 space-y-1 pl-4">
-                                    <li>
-                                        <a href="#service1" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                                            Service 1
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#service2" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                                            Service 2
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#service3" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
-                                            Service 3
-                                        </a>
-                                    </li>
-                                </ul>
                             </li>
                             <li>
-                                <a href="#contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                                <a
+                                    href="#contact"
+                                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                                >
                                     Contact Us
                                 </a>
                             </li>
