@@ -11,6 +11,11 @@ const Navbar = () => {
         window.location.reload();
     };
 
+    // 点击 Home 刷新页面
+    const handleHomeClick = () => {
+        window.location.reload();
+    };
+
     return (
         <nav className="bg-white">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -21,9 +26,13 @@ const Navbar = () => {
 
                     <ul className="hidden md:flex space-x-6">
                         <li>
-                            <Link href="#home" className="text-gray-600 hover:text-gray-800">
+                            <a
+                                href="#home"
+                                className="text-gray-600 hover:text-gray-800"
+                                onClick={handleHomeClick} // 这里添加点击事件
+                            >
                                 Home
-                            </Link>
+                            </a>
                         </li>
                         <li>
                             <Link href="#about" className="text-gray-600 hover:text-gray-800">
@@ -110,9 +119,13 @@ const Navbar = () => {
                     >
                         <ul className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                             <li>
-                                <Link href="#home" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                                <a
+                                    href="#home"
+                                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                                    onClick={handleHomeClick} // 同样添加点击事件
+                                >
                                     Home
-                                </Link>
+                                </a>
                             </li>
                             <li>
                                 <Link href="#about" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
