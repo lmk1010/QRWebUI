@@ -20,6 +20,7 @@ interface CustomizationModalProps {
 const CustomizationModal: React.FC<CustomizationModalProps> = ({
                                                                    isOpen,
                                                                    onClose,
+                                                                   onConfirm,
                                                                }) => {
     const [options, setOptions] = useState<CustomOptions>({
         dotStyle: "square",
@@ -203,14 +204,22 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                 </div>
             </div>
 
-            {/* 关闭弹窗按钮 */}
-            <button
-                onClick={onClose}
-                className="absolute top-4 right-4 p-2 bg-gray-300 rounded-full"
-                aria-label="Close"
-            >
-                X
-            </button>
+            {/* 关闭和确定按钮 */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-4">
+                <button
+                    onClick={onClose}
+                    className="p-2 bg-gray-300 rounded-full"
+                    aria-label="Close"
+                >
+                    关闭
+                </button>
+                <button
+                    onClick={() => onConfirm(options)} // 在此触发确认操作
+                    className="p-2 bg-blue-500 text-white rounded-full"
+                >
+                    确定
+                </button>
+            </div>
         </div>
     );
 };

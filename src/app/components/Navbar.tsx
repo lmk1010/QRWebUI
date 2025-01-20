@@ -6,12 +6,17 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline';
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    // 点击 logo 时刷新页面
+    const handleLogoClick = () => {
+        window.location.reload();
+    };
+
     return (
         <nav className="bg-white">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <div className="flex items-center space-x-6">
-                    <div className="text-2xl font-bold text-gray-800">
-                        <Link href="/">PQR</Link>
+                    <div className="text-2xl font-bold text-gray-800 cursor-pointer" onClick={handleLogoClick}>
+                        PQR
                     </div>
 
                     <ul className="hidden md:flex space-x-6">
