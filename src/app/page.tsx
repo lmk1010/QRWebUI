@@ -6,10 +6,12 @@ import Card from './components/Card';
 import { gsap } from 'gsap';
 import { AnimatePresence, motion } from 'framer-motion';
 import QRCodePage from '../../src/app/components/QRCodePage'; // 关键：导入父组件
+import About from './components/About'; // 导入 About 组件
 
 export default function Home() {
-    // 状态：是否显示 QRCard
+    // 状态：是否显示 QRCard 或 About
     const [showQRCard, setShowQRCard] = useState(false);
+    const [showAbout, setShowAbout] = useState(false); // 控制 About 页面显示
     const cardsRef = useRef<HTMLDivElement>(null);
 
     // 卡片数据
@@ -22,7 +24,7 @@ export default function Home() {
         },
         {
             title: 'PQR Example',
-            description: 'This is the description for Service Two, providing detailed information about the service.',
+            description: 'This is the description for Service Two, providing detailed information About.tsx the service.',
             imageUrl: '/assets/pexels-B.png',
             size: 'wide',
         },
@@ -88,16 +90,32 @@ export default function Home() {
         }
     };
 
+    // 处理点击 About Us 时的操作
+    const handleAboutClick = () => {
+        setShowAbout(true); // 显示 About 页面
+    };
+
     return (
         <div className="flex flex-col min-h-screen bg-white">
             {/* 导航栏 */}
-            <Navbar />
+            <Navbar onAboutClick={handleAboutClick} /> {/* 传递事件给 Navbar */}
 
             {/* 主体内容 */}
             <main className="flex-grow container mx-auto px-4 py-8 flex flex-col justify-center">
                 <AnimatePresence mode="wait">
-                    {!showQRCard ? (
-                        // 四个卡片的区域
+                    {showAbout ? (
+                        // 显示 About 页面
+                        <motion.div
+                            key="about"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <About /> {/* 显示 About.tsx 组件 */}
+                        </motion.div>
+                    ) : !showQRCard ? (
+                        // 显示四个卡片
                         <motion.div
                             key="cards"
                             ref={cardsRef}
@@ -120,13 +138,13 @@ export default function Home() {
                             ))}
                         </motion.div>
                     ) : (
-                        // 二维码卡片的区域
+                        // 显示二维码卡片
                         <motion.div
                             key="qrPage"
-                            initial={{opacity: 0, scale: 0.8}}
-                            animate={{opacity: 1, scale: 1}}
-                            exit={{opacity: 0, scale: 0.8}}
-                            transition={{duration: 0.5}}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.5 }}
                         >
                             <QRCodePage
                                 onClose={() => {

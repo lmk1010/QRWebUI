@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
-const Navbar = () => {
+// @ts-ignore
+const Navbar = ({ onAboutClick }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     // 点击 logo 时刷新页面
@@ -11,9 +11,14 @@ const Navbar = () => {
         window.location.reload();
     };
 
-    // 点击 Home 刷新页面
+    // 点击 Home 时刷新页面
     const handleHomeClick = () => {
         window.location.reload();
+    };
+
+    // 点击 About Us 时跳转并刷新页面
+    const handleAboutClick = () => {
+        window.location.href = '/about';  // 直接跳转到 /about 页面并刷新
     };
 
     return (
@@ -34,10 +39,18 @@ const Navbar = () => {
                                 Home
                             </a>
                         </li>
+                        {/* 使用 handleAboutClick 来跳转到 about.tsx 页面并刷新 */}
                         <li>
-                            <Link href="#about" className="text-gray-600 hover:text-gray-800">
+                            <a
+                                href="#about"
+                                className="text-gray-600 hover:text-gray-800"
+                                onClick={(e) => {
+                                    e.preventDefault(); // 阻止默认跳转
+                                    onAboutClick(); // 执行传递的回调
+                                }}
+                            >
                                 About Us
-                            </Link>
+                            </a>
                         </li>
                         <li className="relative group">
                             <button className="text-gray-600 hover:text-gray-800 flex items-center focus:outline-none">
@@ -49,42 +62,43 @@ const Navbar = () => {
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                          d="M19 9l-7 7-7-7"/>
                                 </svg>
                             </button>
                             <ul className="absolute left-0 mt-2 w-40 bg-white rounded-md shadow-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                                 <li>
-                                    <Link href="#service1" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
+                                    <a href="#service1" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
                                         Service 1
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li>
-                                    <Link href="#service2" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
+                                    <a href="#service2" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
                                         Service 2
-                                    </Link>
+                                    </a>
                                 </li>
                                 <li>
-                                    <Link href="#service3" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
+                                    <a href="#service3" className="block px-4 py-2 text-gray-600 hover:bg-gray-100">
                                         Service 3
-                                    </Link>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <Link href="#contact" className="text-gray-600 hover:text-gray-800">
+                            <a href="#contact" className="text-gray-600 hover:text-gray-800">
                                 Contact Us
-                            </Link>
+                            </a>
                         </li>
                     </ul>
                 </div>
 
                 <div className="hidden md:block">
-                    <Link
+                    <a
                         href="#cta"
                         className="inline-block px-6 py-2 bg-gradient-to-r from-gray-400 to-gray-600 text-white font-semibold rounded-full hover:from-gray-500 hover:to-gray-700 transition-colors duration-300"
                     >
                         Register Now
-                    </Link>
+                    </a>
                 </div>
 
                 <div className="md:hidden">
@@ -127,10 +141,15 @@ const Navbar = () => {
                                     Home
                                 </a>
                             </li>
+                            {/* 使用 handleAboutClick 跳转到 about.tsx 页面并刷新 */}
                             <li>
-                                <Link href="#about" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                                <a
+                                    href="#about"
+                                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                                    onClick={handleAboutClick}  // 这里是跳转到 About 页面并刷新
+                                >
                                     About Us
-                                </Link>
+                                </a>
                             </li>
                             <li className="relative group">
                                 <button className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800 focus:outline-none">
@@ -147,34 +166,34 @@ const Navbar = () => {
                                 </button>
                                 <ul className="mt-2 space-y-1 pl-4">
                                     <li>
-                                        <Link href="#service1" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                                        <a href="#service1" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
                                             Service 1
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li>
-                                        <Link href="#service2" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                                        <a href="#service2" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
                                             Service 2
-                                        </Link>
+                                        </a>
                                     </li>
                                     <li>
-                                        <Link href="#service3" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                                        <a href="#service3" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
                                             Service 3
-                                        </Link>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <Link href="#contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
+                                <a href="#contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800">
                                     Contact Us
-                                </Link>
+                                </a>
                             </li>
                             <li>
-                                <Link
+                                <a
                                     href="#cta"
                                     className="block text-center w-full px-3 py-2 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
                                 >
                                     Register Now
-                                </Link>
+                                </a>
                             </li>
                         </ul>
                     </div>
