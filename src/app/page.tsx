@@ -7,11 +7,14 @@ import { gsap } from 'gsap';
 import { AnimatePresence, motion } from 'framer-motion';
 import QRCodePage from '../../src/app/components/QRCodePage'; // 关键：导入父组件
 import About from './components/About'; // 导入 About 组件
+import Contact from './components/Contact'; // Contact 组件
 
 export default function Page() {
     // 状态：是否显示 QRCard 或 About
     const [showQRCard, setShowQRCard] = useState(false);
     const [showAbout, setShowAbout] = useState(false); // 控制 About 页面显示
+    const [showContact, setShowContact] = useState(false);
+
     const cardsRef = useRef<HTMLDivElement>(null);
 
     // 卡片数据
@@ -93,12 +96,18 @@ export default function Page() {
     // 处理点击 About Us 时的操作
     const handleAboutClick = () => {
         setShowAbout(true); // 显示 About 页面
+        setShowContact(false);
     };
+
+    const handleContactClick = () => {
+        setShowAbout(false); // 显示 About 页面
+        setShowContact(true);
+    }
 
     return (
         <div className="flex flex-col min-h-screen bg-white">
             {/* 导航栏 */}
-            <Navbar onAboutClick={handleAboutClick} /> {/* 传递事件给 Navbar */}
+            <Navbar onAboutClick={handleAboutClick} onContactClick={handleContactClick} />
 
             {/* 主体内容 */}
             <main className="flex-grow container mx-auto px-4 py-8 flex flex-col justify-center">
@@ -113,6 +122,17 @@ export default function Page() {
                             transition={{ duration: 0.5 }}
                         >
                             <About /> {/* 显示 About.tsx 组件 */}
+                        </motion.div>
+                    ) : showContact ? (
+                        // 显示 Contact 页面
+                        <motion.div
+                            key="contact"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <Contact /> {/* 显示 Contact.tsx 组件 */}
                         </motion.div>
                     ) : !showQRCard ? (
                         // 显示四个卡片

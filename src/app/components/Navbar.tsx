@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
-// Define a type for the props, including the onAboutClick function
+// Define a type for the props, including the onAboutClick and onContactClick functions
 interface NavbarProps {
     onAboutClick: () => void; // onAboutClick is a function that doesn't take any arguments and doesn't return anything
+    onContactClick: () => void; // onContactClick is also a function with the same type
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onAboutClick }) => {
+const Navbar: React.FC<NavbarProps> = ({ onAboutClick, onContactClick }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [showFeatureAlert, setShowFeatureAlert] = useState(false); // 用于显示新功能提示
 
@@ -67,7 +68,14 @@ const Navbar: React.FC<NavbarProps> = ({ onAboutClick }) => {
                             </button>
                         </li>
                         <li>
-                            <a href="#contact" className="text-gray-600 hover:text-gray-800">
+                            <a
+                                href="#contact"
+                                className="text-gray-600 hover:text-gray-800"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    onContactClick(); // 点击时执行 onContactClick 回调
+                                }}
+                            >
                                 Contact Us
                             </a>
                         </li>
@@ -157,6 +165,10 @@ const Navbar: React.FC<NavbarProps> = ({ onAboutClick }) => {
                                 <a
                                     href="#contact"
                                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        onContactClick(); // 执行传递的回调
+                                    }}
                                 >
                                     Contact Us
                                 </a>

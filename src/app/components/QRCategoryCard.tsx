@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 import FeatureCard from './FeatureCard';
-import { mainCategories, subCategories, SubCategory } from './categories';
+import { mainCategories, subCategories, SubCategory } from './Categories';
 
 interface QRCategoryCardProps {
     onClose: () => void;
