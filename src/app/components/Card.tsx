@@ -63,7 +63,7 @@ const Card: React.FC<CardProps> = ({
                                 onClick={onLargeCardButtonClick} // 绑定点击事件
                                 className="flex items-center justify-center bg-gradient-to-r from-yellow-400 to-green-500 text-white px-6 py-3 rounded-full hover:from-yellow-500 hover:to-green-600 transition-colors duration-500 ease-in-out w-full"
                             >
-                                开始定制 <span className="ml-2">→</span>
+                                Start Customization <span className="ml-2">→</span>
                             </button>
                         </div>
                     </>
@@ -79,7 +79,7 @@ const Card: React.FC<CardProps> = ({
                                     <button
                                         className="flex items-center justify-center bg-gradient-to-r from-pink-500 to-pink-700 text-white px-6 py-3 rounded-full hover:from-pink-600 hover:to-pink-800 transition-colors duration-500 ease-in-out w-full"
                                     >
-                                        开始定制 <span className="ml-2">→</span>
+                                        Start Customization <span className="ml-2">→</span>
                                     </button>
                                 </div>
                             </div>
