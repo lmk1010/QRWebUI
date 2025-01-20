@@ -15,44 +15,44 @@ export interface MainCategory {
 export const mainCategories: MainCategory[] = [
     {
         type: 'basic',
-        title: '基础功能',
-        description: '文本, 网址',
+        title: 'Basic Features',
+        description: 'Text, URLs',
     },
     {
         type: 'media',
-        title: '媒体内容',
-        description: '文件, 图片, 音视频',
+        title: 'Media Content',
+        description: 'Files, Images, Audio/Video',
     },
     {
         type: 'contact',
-        title: '社交 / 联系方式',
-        description: '名片, 微信',
+        title: 'Social / Contact Info',
+        description: 'Business cards, WeChat',
     },
     {
         type: 'multi',
-        title: '互动 / 多场景',
-        description: '表单, 批量生码',
+        title: 'Interactive / Multi-Scenario',
+        description: 'Forms, Bulk QR generation',
     },
 ];
 
 // 子功能列表
 export const subCategories: Record<string, SubCategory[]> = {
     basic: [
-        { type: 'text', title: '文本', description: '输入纯文本内容' },
-        { type: 'url', title: '网址', description: '输入网站链接' },
+        { type: 'text', title: 'Text', description: 'Enter plain text content' },
+        { type: 'url', title: 'URL', description: 'Enter website link' },
     ],
     media: [
-        { type: 'file', title: '文件', description: '生成文件下载链接' },
-        { type: 'image', title: '图片', description: '图片链接二维码' },
-        { type: 'audio', title: '音视频', description: '音视频播放链接二维码' },
+        { type: 'file', title: 'File', description: 'Generate file download link' },
+        { type: 'image', title: 'Image', description: 'QR code for image link' },
+        { type: 'audio', title: 'Audio/Video', description: 'QR code for audio/video playback link' },
     ],
     contact: [
-        { type: 'vcard', title: '名片', description: '电子名片二维码 (vCard)' },
-        { type: 'wechat', title: '微信', description: '公众号 / 个人 / 群二维码' },
+        { type: 'vcard', title: 'Business Card', description: 'Electronic business card QR code (vCard)' },
+        { type: 'wechat', title: 'WeChat', description: 'Official account / Personal / Group QR codes' },
     ],
     multi: [
-        { type: 'form', title: '表单', description: '问卷/报名链接二维码' },
-        { type: 'batch', title: '批量生码', description: '一次性生成多个二维码' },
-        { type: 'others', title: '更多工具', description: 'Wi-Fi、地图.....' },
+        { type: 'form', title: 'Form', description: 'Survey/Registration QR code' },
+        { type: 'batch', title: 'Bulk QR', description: 'Generate multiple QR codes at once' },
+        { type: 'others', title: 'More Tools', description: 'Wi-Fi, Map, etc.' },
     ],
 };

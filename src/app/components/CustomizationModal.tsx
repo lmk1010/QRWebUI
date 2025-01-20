@@ -5,7 +5,7 @@ export interface CustomOptions {
     dotStyle: "square" | "dots"; // 支持的点样式
     fgColor: string;            // 前景色
     bgColor: string;            // 背景色
-    logoFile?: string | null;   // Logo 文件（Base64 格式）
+    logoFile?: string | null;  // Logo file (Base64 string or File object)
     size: number;               // 二维码大小
     margin: number;             // 二维码边距
     content: string;            // 二维码内容

@@ -54,12 +54,12 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
             )}
 
             <div className="text-center mt-8 mb-12">
-                <h1 className="text-2xl font-bold">二维码生成示例 (QRCodePage)</h1>
+                <h1 className="text-2xl font-bold">QR Code Generation</h1>
                 <hr className="mt-4 w-200 mx-auto border-b-2 border-blue-500"/>
             </div>
 
             <div className="flex flex-row items-stretch gap-8 w-full px-4">
-                {/* 左侧：配置并生成二维码 */}
+            {/* 左侧：配置并生成二维码 */}
                 <div className="flex-grow w-full">
                     <QRCard
                         onGenerateResult={handleGenerateResult}
