@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import FeatureCard from './FeatureCard';
-import CustomizationModal, { CustomOptions } from './CustomizationModal';
 import { mainCategories, subCategories, SubCategory } from './Categories';
 
 interface QRCardProps {
     onGenerateResult: (value: string) => void;
-    onCustomizationChange: (opts: CustomOptions) => void;
-    customOptions: CustomOptions;
 }
 
 // Assuming in categories.ts:
@@ -20,13 +17,11 @@ const DEFAULT_SUB_TYPE = 'text';
 
 const QRCard: React.FC<QRCardProps> = ({
                                            onGenerateResult,
-                                           onCustomizationChange,
                                        }) => {
     // Default to "Basic Features" + "Text"
     const [selectedMainType, setSelectedMainType] = useState<string | null>(DEFAULT_MAIN_TYPE);
     const [selectedSubType, setSelectedSubType] = useState<string | null>(DEFAULT_SUB_TYPE);
     const [customText, setCustomText] = useState('');
-    const [isCustomizationOpen, setIsCustomizationOpen] = useState(false);
 
     // Select main category
     const handleSelectMainCategory = (mainType: string) => {
@@ -44,11 +39,6 @@ const QRCard: React.FC<QRCardProps> = ({
         if (!selectedMainType || !selectedSubType) return;
         const value = `[${selectedMainType}-${selectedSubType}] ${customText}`;
         onGenerateResult(value);
-    };
-
-    // Handle customization confirmation
-    const handleConfirmCustomization = (opts: CustomOptions) => {
-        onCustomizationChange(opts);
     };
 
     return (
@@ -107,36 +97,23 @@ const QRCard: React.FC<QRCardProps> = ({
                     <label className="block mb-2 text-sm font-medium text-gray-700">
                         Enter content
                     </label>
-                    <input
-                        type="text"
-                        className="w-full p-2 border border-gray-300 rounded mb-4"
-                        placeholder="e.g., link, text, file URL, etc."
-                        value={customText}
-                        onChange={(e) => setCustomText(e.target.value)}
-                    />
-                    <div className="flex space-x-2">
+                    <div className="flex items-center space-x-2">
+                        <input
+                            type="text"
+                            className="w-2/3 p-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500"
+                            placeholder="e.g., link, text, file URL, etc."
+                            value={customText}
+                            onChange={(e) => setCustomText(e.target.value)}
+                        />
                         <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                            className="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition-colors w-1/3"
                             onClick={handleGenerate}
                         >
-                            Generate QR Code
-                        </button>
-                        <button
-                            className="bg-gray-200 text-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors"
-                            onClick={() => setIsCustomizationOpen(true)}
-                        >
-                            Customization Settings
+                            Generate
                         </button>
                     </div>
                 </div>
             )}
-
-            {/* Customization Modal */}
-            <CustomizationModal
-                isOpen={isCustomizationOpen}
-                onClose={() => setIsCustomizationOpen(false)}
-                onConfirm={handleConfirmCustomization}
-            />
         </motion.div>
     );
 };

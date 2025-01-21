@@ -1,39 +1,49 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import QRCodeStyling from "qr-code-styling"; // 默认导入
 
 export interface CustomOptions {
     dotStyle: "square" | "dots"; // 支持的点样式
     fgColor: string;            // 前景色
     bgColor: string;            // 背景色
-    logoFile?: string | null;  // Logo file (Base64 string or File object)
+    logoFile?: string | null;   // Logo file (Base64 string or File object)
     size: number;               // 二维码大小
     margin: number;             // 二维码边距
     content: string;            // 二维码内容
 }
 
 interface CustomizationModalProps {
+    customOptions: CustomOptions;  // Initial options
     isOpen: boolean;
     onClose: () => void;
     onConfirm: (options: CustomOptions) => void;
 }
 
 const CustomizationModal: React.FC<CustomizationModalProps> = ({
+                                                                   customOptions,
                                                                    isOpen,
                                                                    onClose,
                                                                    onConfirm,
                                                                }) => {
+    // 提供默认值，防止 undefined 错误
     const [options, setOptions] = useState<CustomOptions>({
-        dotStyle: "square",
-        fgColor: "#000000",
-        bgColor: "#ffffff",
-        logoFile: null,
-        size: 300,
-        margin: 10,
-        content: "实时预览二维码",
+        dotStyle: customOptions?.dotStyle || "square",
+        fgColor: customOptions?.fgColor || "#000000",
+        bgColor: customOptions?.bgColor || "#ffffff",
+        logoFile: customOptions?.logoFile || null,
+        size: customOptions?.size || 300,
+        margin: customOptions?.margin || 10,
+        content: customOptions?.content || "实时预览二维码",
     });
 
     const qrCode = useRef<QRCodeStyling | null>(null);
     const qrCodeContainer = useRef<HTMLDivElement>(null);
+
+    // 每次传入新的 customOptions 时，更新内部的 options 状态
+    useEffect(() => {
+        if (customOptions) {
+            setOptions(customOptions);
+        }
+    }, [customOptions]);
 
     useEffect(() => {
         if (!qrCode.current) {
@@ -86,6 +96,11 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
             };
             reader.readAsDataURL(file);
         }
+    };
+
+    const handleConfirm = () => {
+        onConfirm(options); // 将修改后的选项传递给父组件
+        onClose();           // 关闭模态框
     };
 
     return (
@@ -214,7 +229,7 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                     关闭
                 </button>
                 <button
-                    onClick={() => onConfirm(options)} // 在此触发确认操作
+                    onClick={handleConfirm} // 在此触发确认操作
                     className="p-2 bg-blue-500 text-white rounded-full"
                 >
                     确定

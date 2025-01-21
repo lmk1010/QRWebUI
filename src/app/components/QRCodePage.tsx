@@ -79,9 +79,10 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                         />
                     ) : (
                         <div className="text-gray-500 text-sm text-center flex flex-col items-center justify-center">
-                            <p>尚未生成二维码</p>
-                            <p>请在左侧选择大类、子功能并输入内容。</p>
+                            <p>QR code not generated yet</p>
+                            <p>Please select a category and subfunction on the left and enter the content.</p>
                         </div>
+
                     )}
                 </div>
             </div>

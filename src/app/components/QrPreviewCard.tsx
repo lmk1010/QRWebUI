@@ -1,13 +1,13 @@
-import React, { useRef, useMemo } from 'react';
-import { CustomOptions } from './CustomizationModal';
-import { QRCode } from 'react-qrcode-logo';  // <-- Changed to react-qrcode-logo
+import React, { useState, useRef, useMemo } from 'react';
+import { QRCode } from 'react-qrcode-logo';
 import { toPng } from 'html-to-image';
+import CustomizationModal, { CustomOptions } from './CustomizationModal';  // 引入 CustomizationModal
 
 interface QrPreviewCardProps {
-    generatedValue: string;         // Generated QR code content
-    customOptions: CustomOptions;   // Customization settings (colors, size, etc.)
-    onUploadLogo?: () => void;      // Callback for uploading a logo
-    onBeautify?: () => void;        // Callback for beautifying the QR code
+    generatedValue: string;
+    customOptions: CustomOptions;
+    onUploadLogo?: () => void;
+    onBeautify?: () => void;
 }
 
 const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
@@ -16,13 +16,15 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                                                          onUploadLogo,
                                                          onBeautify,
                                                      }) => {
+    const [logoFile, setLogoFile] = useState<string | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 状态控制弹框
     const cardRef = useRef<HTMLDivElement>(null);
-    const qrCodeRef = useRef<HTMLDivElement>(null); // Reference for QR Code only
+    const qrCodeRef = useRef<HTMLDivElement>(null);
 
     const handleDownloadImage = async () => {
         if (!qrCodeRef.current) return;
         try {
-            const dataUrl = await toPng(qrCodeRef.current); // Capture only the QR code
+            const dataUrl = await toPng(qrCodeRef.current);
             const link = document.createElement('a');
             link.download = 'qrcode.png';
             link.href = dataUrl;
@@ -32,18 +34,40 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
         }
     };
 
-// Generate temporary URL for logo image (if uploaded)
-    const logoSrc = useMemo(() => {
-        if (customOptions.logoFile) {
-            if (typeof customOptions.logoFile === "string" && customOptions.logoFile.startsWith("data:")) {
-                return customOptions.logoFile; // Use Base64 string directly
-            }
+    const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setLogoFile(reader.result as string);
+            };
+            reader.readAsDataURL(file);
         }
-        return undefined;
-    }, [customOptions.logoFile]);
+    };
 
+    const logoSrc = useMemo(() => {
+        return logoFile || (customOptions.logoFile && typeof customOptions.logoFile === 'string' ? customOptions.logoFile : undefined);
+    }, [logoFile, customOptions.logoFile]);
 
-    // Do not show card if no generated value
+    const isCircle = customOptions.dotStyle === 'dots';
+
+    // 打开定制化设置弹框
+    const openCustomizationModal = () => {
+        setIsModalOpen(true);
+    };
+
+    // 关闭定制化设置弹框
+    const closeCustomizationModal = () => {
+        setIsModalOpen(false);
+    };
+
+    // 确认定制化选项
+    const handleCustomizationConfirm = (newOptions: CustomOptions) => {
+        // 更新父组件传入的样式
+        onBeautify?.(); // 回调外部事件
+        closeCustomizationModal();
+    };
+
     if (!generatedValue) {
         return (
             <div className="text-gray-500 text-sm">
@@ -52,7 +76,6 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
         );
     }
 
-    const isCircle = customOptions.dotStyle === 'dots';
     return (
         <div
             className="bg-white shadow-md rounded-md p-4 w-full max-w-sm flex flex-col items-center"
@@ -61,7 +84,7 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             {/* Title Row */}
             <div className="mb-12 text-gray-700 text-sm self-start">
                 Style: <span className="font-bold">Basic Style</span>
-                <a href="#" className="text-blue-500 ml-2">
+                <a href="#" className="text-blue-500 ml-2" onClick={openCustomizationModal}>
                     Switch &gt;
                 </a>
             </div>
@@ -73,18 +96,18 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                     borderRadius: isCircle ? '50%' : '0%',
                     backgroundColor: customOptions.bgColor,
                 }}
-                ref={qrCodeRef} // Reference for capturing QR code area only
+                ref={qrCodeRef}
             >
                 <QRCode
-                    value={generatedValue}         // QR code content
-                    fgColor={customOptions.fgColor} // Foreground color
-                    bgColor={customOptions.bgColor} // Background color
-                    size={customOptions.size}       // Size
-                    style={{ borderRadius: isCircle ? '50%' : '0%' }} // Apply rounded appearance to the QR code itself
-                    logoImage={logoSrc}            // Logo image URL
-                    logoWidth={customOptions.size * 0.25} // Logo width is 25% of QR code size
-                    removeQrCodeBehindLogo        // Remove QR code behind logo to prevent overlap
-                    quietZone={customOptions.margin} // Margin as quiet zone
+                    value={generatedValue}
+                    fgColor={customOptions.fgColor}
+                    bgColor={customOptions.bgColor}
+                    size={customOptions.size}
+                    style={{ borderRadius: isCircle ? '50%' : '0%' }}
+                    logoImage={logoSrc}
+                    logoWidth={customOptions.size * 0.25}
+                    removeQrCodeBehindLogo
+                    quietZone={customOptions.margin}
                 />
             </div>
 
@@ -94,14 +117,21 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
 
             {/* Action Buttons */}
             <div className="mt-10 flex flex-col w-full space-y-2">
-                <button
-                    onClick={onUploadLogo}
-                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors"
+                <label
+                    htmlFor="logo-upload"
+                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded cursor-pointer hover:bg-gray-200 transition-colors text-center"
                 >
                     Upload Logo
-                </button>
+                </label>
+                <input
+                    type="file"
+                    id="logo-upload"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="hidden"
+                />
                 <button
-                    onClick={onBeautify}
+                    onClick={openCustomizationModal}  // 点击弹出定制化设置弹框
                     className="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors"
                 >
                     Beautify QR Code
@@ -123,6 +153,14 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                     Download other formats
                 </button>
             </div>
+
+            {/* Customization Modal */}
+            <CustomizationModal
+                isOpen={isModalOpen}
+                onClose={closeCustomizationModal}
+                onConfirm={handleCustomizationConfirm}
+                customOptions={customOptions}
+            />
         </div>
     );
 };
