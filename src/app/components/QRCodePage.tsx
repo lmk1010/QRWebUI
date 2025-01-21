@@ -14,7 +14,8 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     const [qrValue, setQrValue] = useState('');
     // 保存定制化配置
     const [customOptions] = useState<CustomOptions>({
-        content: "",   dotStyle: "square",
+        content: "",
+        dotStyle: "square",
         fgColor: '#000000',
         bgColor: '#ffffff',
         logoFile: null,
@@ -26,14 +27,12 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
         alert('上传Logo逻辑待实现');
     };
 
-    const handleBeautify = () => {
-    };
+    const handleBeautify = () => {};
 
     // 生成二维码的回调
     const handleGenerateResult = (value: string) => {
         setQrValue(value);
     };
-
 
     return (
         <div className="min-h-screen bg-white flex flex-col items-center relative">
@@ -43,17 +42,18 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                     className="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-600 p-2 rounded-full shadow transition"
                     aria-label="返回或关闭"
                 >
-                    <FiArrowLeft size={20}/>
+                    <FiArrowLeft size={20} />
                 </button>
             )}
 
             <div className="text-center mt-8 mb-12">
                 <h1 className="text-2xl font-bold">QR Code Generation</h1>
-                <hr className="mt-4 w-200 mx-auto border-b-2 border-blue-500"/>
+                <hr className="mt-4 w-200 mx-auto border-b-2 border-blue-500" />
             </div>
 
-            <div className="flex flex-row items-stretch gap-8 w-full px-4">
-            {/* 左侧：配置并生成二维码 */}
+            {/* Flex container: Use row layout on large screens, column layout on small screens */}
+            <div className="flex flex-col sm:flex-row items-stretch gap-8 w-full px-4">
+                {/* 左侧：配置并生成二维码 */}
                 <div className="flex-grow w-full">
                     <QRCard
                         onGenerateResult={handleGenerateResult}
@@ -74,7 +74,6 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                             <p>QR code not generated yet</p>
                             <p>Please select a category and subfunction on the left and enter the content.</p>
                         </div>
-
                     )}
                 </div>
             </div>
