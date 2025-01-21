@@ -13,7 +13,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     // 保存二维码内容
     const [qrValue, setQrValue] = useState('');
     // 保存定制化配置
-    const [customOptions, setCustomOptions] = useState<CustomOptions>({
+    const [customOptions] = useState<CustomOptions>({
         content: "",   dotStyle: "square",
         fgColor: '#000000',
         bgColor: '#ffffff',
@@ -27,7 +27,6 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     };
 
     const handleBeautify = () => {
-        alert('二维码美化逻辑待实现');
     };
 
     // 生成二维码的回调
@@ -35,11 +34,6 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
         setQrValue(value);
     };
 
-    // 当 CustomizationModal 点击「确认」时，从 QRCard 里会调用这个函数
-    const handleCustomizationChange = (opts: CustomOptions) => {
-        // 更新父组件本地状态
-        setCustomOptions(opts);
-    };
 
     return (
         <div className="min-h-screen bg-white flex flex-col items-center relative">
@@ -63,8 +57,6 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                 <div className="flex-grow w-full">
                     <QRCard
                         onGenerateResult={handleGenerateResult}
-                        onCustomizationChange={handleCustomizationChange}
-                        customOptions={customOptions}
                     />
                 </div>
 

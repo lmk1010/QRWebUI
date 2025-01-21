@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import QRCodeStyling from "qr-code-styling"; // 默认导入
+import { QRCode } from "react-qrcode-logo"; // 导入 react-qrcode-logo
 
 export interface CustomOptions {
     dotStyle: "square" | "dots"; // 支持的点样式
@@ -24,69 +24,15 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                                                                    onClose,
                                                                    onConfirm,
                                                                }) => {
-    // 提供默认值，防止 undefined 错误
-    const [options, setOptions] = useState<CustomOptions>({
-        dotStyle: customOptions?.dotStyle || "square",
-        fgColor: customOptions?.fgColor || "#000000",
-        bgColor: customOptions?.bgColor || "#ffffff",
-        logoFile: customOptions?.logoFile || null,
-        size: customOptions?.size || 300,
-        margin: customOptions?.margin || 10,
-        content: customOptions?.content || "实时预览二维码",
-    });
-
-    const qrCode = useRef<QRCodeStyling | null>(null);
+    const [options, setOptions] = useState<CustomOptions>(customOptions);
     const qrCodeContainer = useRef<HTMLDivElement>(null);
 
     // 每次传入新的 customOptions 时，更新内部的 options 状态
     useEffect(() => {
-        if (customOptions) {
-            setOptions(customOptions);
-        }
+        setOptions(customOptions);
     }, [customOptions]);
 
-    useEffect(() => {
-        if (!qrCode.current) {
-            qrCode.current = new QRCodeStyling({
-                width: options.size,
-                height: options.size,
-                data: options.content,
-                margin: options.margin,
-                dotsOptions: {
-                    type: options.dotStyle,
-                    color: options.fgColor,
-                },
-                backgroundOptions: {
-                    color: options.bgColor,
-                },
-                image: options.logoFile || undefined,
-                imageOptions: {
-                    crossOrigin: "anonymous",
-                    margin: 5,
-                },
-            });
-        } else {
-            qrCode.current.update({
-                data: options.content,
-                width: options.size,
-                height: options.size,
-                margin: options.margin,
-                dotsOptions: {
-                    type: options.dotStyle,
-                    color: options.fgColor,
-                },
-                backgroundOptions: {
-                    color: options.bgColor,
-                },
-                image: options.logoFile || undefined,
-            });
-        }
-
-        if (qrCodeContainer.current) {
-            qrCode.current.append(qrCodeContainer.current);
-        }
-    }, [options]);
-
+    // 处理Logo上传
     const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
@@ -98,6 +44,7 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
         }
     };
 
+    // 确定按钮点击，传递配置回父组件
     const handleConfirm = () => {
         onConfirm(options); // 将修改后的选项传递给父组件
         onClose();           // 关闭模态框
@@ -215,7 +162,18 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                 {/* 右侧实时预览 */}
                 <div className="w-1/3 pl-6 flex flex-col items-center justify-center">
                     <h3 className="text-lg font-semibold mb-4">实时预览</h3>
-                    <div ref={qrCodeContainer}></div>
+                    <div ref={qrCodeContainer}>
+                        <QRCode
+                            value={options.content}
+                            fgColor={options.fgColor}
+                            bgColor={options.bgColor}
+                            size={options.size}
+                            logoImage={options.logoFile || undefined}
+                            logoWidth={options.size * 0.25}
+                            removeQrCodeBehindLogo
+                            quietZone={options.margin}
+                        />
+                    </div>
                 </div>
             </div>
 

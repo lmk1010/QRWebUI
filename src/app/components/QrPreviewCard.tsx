@@ -13,11 +13,11 @@ interface QrPreviewCardProps {
 const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                                                          generatedValue,
                                                          customOptions,
-                                                         onUploadLogo,
                                                          onBeautify,
                                                      }) => {
+    const [options, setCustomOptions] = useState<CustomOptions>(customOptions); // 初始化 customOptions 状态
     const [logoFile, setLogoFile] = useState<string | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);  // 状态控制弹框
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 控制弹框是否打开
     const cardRef = useRef<HTMLDivElement>(null);
     const qrCodeRef = useRef<HTMLDivElement>(null);
 
@@ -46,10 +46,10 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     };
 
     const logoSrc = useMemo(() => {
-        return logoFile || (customOptions.logoFile && typeof customOptions.logoFile === 'string' ? customOptions.logoFile : undefined);
-    }, [logoFile, customOptions.logoFile]);
+        return logoFile || (options.logoFile && typeof options.logoFile === 'string' ? options.logoFile : undefined);
+    }, [logoFile, options.logoFile]);
 
-    const isCircle = customOptions.dotStyle === 'dots';
+    const isCircle = options.dotStyle === 'dots';
 
     // 打开定制化设置弹框
     const openCustomizationModal = () => {
@@ -63,8 +63,8 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
 
     // 确认定制化选项
     const handleCustomizationConfirm = (newOptions: CustomOptions) => {
-        // 更新父组件传入的样式
-        onBeautify?.(); // 回调外部事件
+        setCustomOptions(newOptions); // 更新 customOptions 状态
+        onBeautify?.(); // 如果有外部 beautify 事件，触发它
         closeCustomizationModal();
     };
 
@@ -92,27 +92,27 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             {/* QR Code Display */}
             <div
                 style={{
-                    padding: customOptions.margin,
+                    padding: options.margin,
                     borderRadius: isCircle ? '50%' : '0%',
-                    backgroundColor: customOptions.bgColor,
+                    backgroundColor: options.bgColor,
                 }}
                 ref={qrCodeRef}
             >
                 <QRCode
                     value={generatedValue}
-                    fgColor={customOptions.fgColor}
-                    bgColor={customOptions.bgColor}
-                    size={customOptions.size}
+                    fgColor={options.fgColor}
+                    bgColor={options.bgColor}
+                    size={options.size}
                     style={{ borderRadius: isCircle ? '50%' : '0%' }}
                     logoImage={logoSrc}
-                    logoWidth={customOptions.size * 0.25}
+                    logoWidth={options.size * 0.25}
                     removeQrCodeBehindLogo
-                    quietZone={customOptions.margin}
+                    quietZone={options.margin}
                 />
             </div>
 
             <p className="text-gray-500 text-xs mt-6">
-                QR Code, {customOptions.size}×{customOptions.size}px, Error correction level:
+                QR Code, {options.size}×{options.size}px, Error correction level:
             </p>
 
             {/* Action Buttons */}
@@ -156,10 +156,10 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
 
             {/* Customization Modal */}
             <CustomizationModal
-                isOpen={isModalOpen}
+                customOptions={options} // 将当前的 options 传递给 CustomizationModal
+                isOpen={isModalOpen}  // 控制是否显示的逻辑
                 onClose={closeCustomizationModal}
-                onConfirm={handleCustomizationConfirm}
-                customOptions={customOptions}
+                onConfirm={handleCustomizationConfirm} // 传递更新选项的回调函数
             />
         </div>
     );
