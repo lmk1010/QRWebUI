@@ -24,7 +24,9 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     const handleDownloadImage = async () => {
         if (!qrCodeRef.current) return;
         try {
-            const dataUrl = await toPng(qrCodeRef.current);
+            const dataUrl = await toPng(qrCodeRef.current, {
+                backgroundColor: '#ffffff' // 强制设置白色背景
+            });
             const link = document.createElement('a');
             link.download = 'qrcode.png';
             link.href = dataUrl;
@@ -33,6 +35,7 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             console.error('Download failed:', error);
         }
     };
+
 
     const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -144,15 +147,6 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                 </button>
             </div>
 
-            {/* Additional Features Example */}
-            <div className="mt-4 text-sm flex flex-wrap gap-2 justify-center">
-                <button className="text-blue-600 underline">
-                    Layout on A4 paper
-                </button>
-                <button className="text-blue-600 underline">
-                    Download other formats
-                </button>
-            </div>
 
             {/* Customization Modal */}
             <CustomizationModal
