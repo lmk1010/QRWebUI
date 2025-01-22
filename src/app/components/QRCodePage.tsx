@@ -10,8 +10,8 @@ interface QRCodePageProps {
 }
 
 export default function QRCodePage({ onClose }: QRCodePageProps) {
-    // 保存二维码内容
-    const [qrValue, setQrValue] = useState('');
+    // 保存二维码内容，设置默认值
+    const [qrValue, setQrValue] = useState('Welcome to QR Code Generator');
     // 保存定制化配置
     const [customOptions] = useState<CustomOptions>({
         content: "",

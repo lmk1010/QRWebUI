@@ -74,7 +74,7 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     if (!generatedValue) {
         return (
             <div className="text-gray-500 text-sm">
-                QR code not generated yet, please choose the main category, subcategory, and enter content on the left.
+                QR code not generated yet
             </div>
         );
     }

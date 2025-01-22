@@ -109,8 +109,8 @@ const Navbar: React.FC<NavbarProps> = ({ onAboutClick, onContactClick }) => {
 
             {/* 新功能提示（居中）并有一定距离顶部 */}
             {showFeatureAlert && (
-                <div className="absolute left-0 right-0 top-4 flex items-center justify-center z-50">
-                    <div className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg text-lg font-semibold">
+                <div className="fixed left-0 right-0 top-4 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out">
+                    <div className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg text-lg font-semibold transform transition-transform duration-300 ease-in-out hover:scale-105">
                         New feature coming soon. Stay tuned!
                     </div>
                 </div>

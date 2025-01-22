@@ -2,14 +2,12 @@ import React from 'react';
 
 interface FeatureCardProps {
     title: string;
-    description: string;
     onClick: () => void;
     isActive: boolean;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({
                                                      title,
-                                                     description,
                                                      onClick,
                                                      isActive,
                                                  }) => {
@@ -26,9 +24,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             onClick={onClick}
         >
             <h2 className="text-base font-semibold mb-2 text-center">{title}</h2>
-            <p className="text-sm text-gray-600 text-center">
-                {description}
-            </p>
         </div>
     );
 };
