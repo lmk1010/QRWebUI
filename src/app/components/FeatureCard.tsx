@@ -4,12 +4,14 @@ interface FeatureCardProps {
     title: string;
     onClick: () => void;
     isActive: boolean;
+    icon?: React.ReactNode;
 }
 
 const FeatureCard: React.FC<FeatureCardProps> = ({
                                                      title,
                                                      onClick,
                                                      isActive,
+                                                     icon,
                                                  }) => {
     return (
         <div
@@ -23,7 +25,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             `}
             onClick={onClick}
         >
-            <h2 className="text-base font-semibold text-center">{title}</h2>
+            <div className="flex items-center">
+                {icon && <span className="mr-2">{icon}</span>}
+                <h2 className="text-base font-semibold text-center">{title}</h2>
+            </div>
         </div>
     );
 };

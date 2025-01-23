@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from 'framer-motion';
+import { FaFileAlt, FaLink, FaAddressBook, FaPalette, FaClone, FaRulerCombined, FaFile, FaAppStore, FaLayerGroup, FaVideo } from 'react-icons/fa';
 
 import FeatureCard from './FeatureCard';
 import { mainCategories } from './Categories';
@@ -91,11 +92,20 @@ const QRCard: React.FC<QRCardProps> = ({
             <div className="w-full">
                 <div className="flex justify-between border-b border-gray-200 mb-4">
                     {mainCategories.map((cat) => (
+                        // 在FeatureCard组件的渲染部分添加图标
                         <FeatureCard
                             key={cat.type}
                             title={cat.title}
                             isActive={selectedMainType === cat.type}
                             onClick={() => handleSelectMainCategory(cat.type)}
+                            icon={cat.type === 'text' ? <FaFileAlt className="mr-2" /> 
+                                : cat.type === 'url' ? <FaLink className="mr-2" /> 
+                                : cat.type === 'contact' ? <FaAddressBook className="mr-2" />
+                                : cat.type === 'file' ? <FaFile className="mr-2" />
+                                : cat.type === 'app' ? <FaAppStore className="mr-2" />
+                                : cat.type === 'batch' ? <FaLayerGroup className="mr-2" />
+                                : cat.type === 'video' ? <FaVideo className="mr-2" />
+                                : null}
                         />
                     ))}
                 </div>
@@ -127,8 +137,11 @@ const QRCard: React.FC<QRCardProps> = ({
                                 }} 
                                 className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                             >
-                                <div className="text-sm font-medium text-gray-600">点类型</div>
-                                <div className="text-xs text-gray-400 mt-1">方形/圆形</div>
+                                <div className="flex flex-col items-center">
+                                    <FaRulerCombined className="text-gray-600 mb-1" />
+                                    <div className="text-sm font-medium text-gray-600">点类型</div>
+                                    <div className="text-xs text-gray-400 mt-1">方形/圆形</div>
+                                </div>
                             </button>
                             <button 
                                 onClick={() => {
@@ -136,8 +149,11 @@ const QRCard: React.FC<QRCardProps> = ({
                                 }}
                                 className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                             >
-                                <div className="text-sm font-medium text-gray-600">Logo</div>
-                                <div className="text-xs text-gray-400 mt-1">上传/编辑</div>
+                                <div className="flex flex-col items-center">
+                                    <FaFile className="text-gray-600 mb-1" />
+                                    <div className="text-sm font-medium text-gray-600">Logo</div>
+                                    <div className="text-xs text-gray-400 mt-1">上传/编辑</div>
+                                </div>
                             </button>
                             <button 
                                 onClick={() => {
@@ -145,8 +161,11 @@ const QRCard: React.FC<QRCardProps> = ({
                                 }}
                                 className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                             >
-                                <div className="text-sm font-medium text-gray-600">颜色</div>
-                                <div className="text-xs text-gray-400 mt-1">自定义配色</div>
+                                <div className="flex flex-col items-center">
+                                    <FaPalette className="text-gray-600 mb-1" />
+                                    <div className="text-sm font-medium text-gray-600">颜色</div>
+                                    <div className="text-xs text-gray-400 mt-1">自定义配色</div>
+                                </div>
                             </button>
                         </div>
                         {/* Row 2 */}
@@ -154,20 +173,29 @@ const QRCard: React.FC<QRCardProps> = ({
                             <button 
                                 className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                             >
-                                <div className="text-sm font-medium text-gray-600">样式</div>
-                                <div className="text-xs text-gray-400 mt-1">自定义样式</div>
+                                <div className="flex flex-col items-center">
+                                    <FaPalette className="text-gray-600 mb-1" />
+                                    <div className="text-sm font-medium text-gray-600">样式</div>
+                                    <div className="text-xs text-gray-400 mt-1">自定义样式</div>
+                                </div>
                             </button>
                             <button 
                                 className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                             >
-                                <div className="text-sm font-medium text-gray-600">模版</div>
-                                <div className="text-xs text-gray-400 mt-1">选择模版</div>
+                                <div className="flex flex-col items-center">
+                                    <FaClone className="text-gray-600 mb-1" />
+                                    <div className="text-sm font-medium text-gray-600">模版</div>
+                                    <div className="text-xs text-gray-400 mt-1">选择模版</div>
+                                </div>
                             </button>
                             <button 
                                 className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                             >
-                                <div className="text-sm font-medium text-gray-600">尺寸</div>
-                                <div className="text-xs text-gray-400 mt-1">调整大小</div>
+                                <div className="flex flex-col items-center">
+                                    <FaRulerCombined className="text-gray-600 mb-1" />
+                                    <div className="text-sm font-medium text-gray-600">尺寸</div>
+                                    <div className="text-xs text-gray-400 mt-1">调整大小</div>
+                                </div>
                             </button>
                         </div>
                     </div>
