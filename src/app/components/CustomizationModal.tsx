@@ -71,14 +71,14 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
             <div className="bg-white p-6 rounded-lg w-full max-w-5xl shadow-lg relative flex">
                 {/* 左侧配置区域 */}
                 <div className="w-2/3 pr-6 border-r">
-                    <h2 className="text-2xl font-bold mb-4">二维码定制化设置</h2>
+                    <h2 className="text-2xl font-bold mb-4">QR Code Customization</h2>
 
                     {/* 点样式选择 */}
                     <div className="mb-6">
-                        <h3 className="text-lg font-semibold mb-2">码点形状</h3>
+                        <h3 className="text-lg font-semibold mb-2">Dot Shape</h3>
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">普通点样式</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Regular Dot Style</label>
                                 <select
                                     value={options.dotStyle}
                                     onChange={(e) =>
@@ -86,13 +86,13 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                                     }
                                     className="block w-full border p-2 rounded"
                                 >
-                                    <option value="squares">方块</option>
-                                    <option value="dots">圆点</option>
-                                    <option value="fluid">流体</option>
+                                    <option value="squares">Square</option>
+                                    <option value="dots">Circle</option>
+                                    <option value="fluid">Fluid</option>
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">定位点样式</label>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Position Dot Style</label>
                                 <select
                                     value={options.eyeStyle || options.dotStyle}
                                     onChange={(e) =>
@@ -100,9 +100,9 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                                     }
                                     className="block w-full border p-2 rounded"
                                 >
-                                    <option value="squares">方块</option>
-                                    <option value="dots">圆点</option>
-                                    <option value="fluid">流体</option>
+                                    <option value="squares">Square</option>
+                                    <option value="dots">Circle</option>
+                                    <option value="fluid">Fluid</option>
                                 </select>
                             </div>
                         </div>
@@ -110,10 +110,10 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
 
                     {/* 颜色配置 */}
                     <div className="mb-6">
-                        <h3 className="text-lg font-semibold mb-2">颜色配置</h3>
+                        <h3 className="text-lg font-semibold mb-2">Color Configuration</h3>
                         <div className="flex items-center space-x-4">
                             <div className="flex-1">
-                                <label className="block mb-2">前景色：</label>
+                                <label className="block mb-2">Foreground Color:</label>
                                 <input
                                     type="color"
                                     value={options.fgColor}
@@ -124,7 +124,7 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                                 />
                             </div>
                             <div className="flex-1">
-                                <label className="block mb-2">背景色：</label>
+                                <label className="block mb-2">Background Color:</label>
                                 <input
                                     type="color"
                                     value={options.bgColor}
@@ -139,7 +139,7 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
 
                     {/* Logo 上传 */}
                     <div className="mb-6">
-                        <h3 className="text-lg font-semibold mb-2">Logo 插入</h3>
+                        <h3 className="text-lg font-semibold mb-2">Logo Insert</h3>
                         <input
                             type="file"
                             accept="image/*"
@@ -150,9 +150,9 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
 
                     {/* 尺寸与边距 */}
                     <div className="mb-6">
-                        <h3 className="text-lg font-semibold mb-2">尺寸与边距</h3>
+                        <h3 className="text-lg font-semibold mb-2">Size and Margin</h3>
                         <label className="block mb-4">
-                            大小: {options.size}px
+                            Size: {options.size}px
                             <input
                                 type="range"
                                 min={100}
@@ -165,7 +165,7 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                             />
                         </label>
                         <label className="block">
-                            边距: {options.margin}px
+                            Margin: {options.margin}px
                             <input
                                 type="range"
                                 min={0}
@@ -187,13 +187,13 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                         onChange={(e) =>
                             setOptions((prev) => ({ ...prev, content: e.target.value }))
                         }
-                        placeholder="请输入二维码内容"
+                        placeholder="Please enter QR code content"
                     />
                 </div>
 
                 {/* 右侧实时预览 */}
                 <div className="w-1/3 pl-6 flex flex-col items-center justify-center">
-                    <h3 className="text-lg font-semibold mb-4">实时预览</h3>
+                    <h3 className="text-lg font-semibold mb-4">Live Preview</h3>
                     <div ref={qrCodeContainer}>
                         <QRCode
                             value={options.content}
@@ -216,13 +216,13 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                     className="p-2 bg-gray-300 rounded-full"
                     aria-label="Close"
                 >
-                    关闭
+                    Close
                 </button>
                 <button
                     onClick={handleConfirm} // 在此触发确认操作
                     className="p-2 bg-blue-500 text-white rounded-full"
                 >
-                    确定
+                    Confirm
                 </button>
             </div>
         </div>

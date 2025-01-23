@@ -139,8 +139,8 @@ const QRCard: React.FC<QRCardProps> = ({
                             >
                                 <div className="flex flex-col items-center">
                                     <FaRulerCombined className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">点类型</div>
-                                    <div className="text-xs text-gray-400 mt-1">方形/圆形</div>
+                                    <div className="text-sm font-medium text-gray-600">Dot Style</div>
+                                    <div className="text-xs text-gray-400 mt-1">Square/Circle</div>
                                 </div>
                             </button>
                             <button 
@@ -152,7 +152,7 @@ const QRCard: React.FC<QRCardProps> = ({
                                 <div className="flex flex-col items-center">
                                     <FaFile className="text-gray-600 mb-1" />
                                     <div className="text-sm font-medium text-gray-600">Logo</div>
-                                    <div className="text-xs text-gray-400 mt-1">上传/编辑</div>
+                                    <div className="text-xs text-gray-400 mt-1">Upload/Edit</div>
                                 </div>
                             </button>
                             <button 
@@ -163,8 +163,8 @@ const QRCard: React.FC<QRCardProps> = ({
                             >
                                 <div className="flex flex-col items-center">
                                     <FaPalette className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">颜色</div>
-                                    <div className="text-xs text-gray-400 mt-1">自定义配色</div>
+                                    <div className="text-sm font-medium text-gray-600">Color</div>
+                                    <div className="text-xs text-gray-400 mt-1">Custom Colors</div>
                                 </div>
                             </button>
                         </div>
@@ -175,8 +175,8 @@ const QRCard: React.FC<QRCardProps> = ({
                             >
                                 <div className="flex flex-col items-center">
                                     <FaPalette className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">样式</div>
-                                    <div className="text-xs text-gray-400 mt-1">自定义样式</div>
+                                    <div className="text-sm font-medium text-gray-600">Style</div>
+                                    <div className="text-xs text-gray-400 mt-1">Custom Style</div>
                                 </div>
                             </button>
                             <button 
@@ -184,8 +184,8 @@ const QRCard: React.FC<QRCardProps> = ({
                             >
                                 <div className="flex flex-col items-center">
                                     <FaClone className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">模版</div>
-                                    <div className="text-xs text-gray-400 mt-1">选择模版</div>
+                                    <div className="text-sm font-medium text-gray-600">Template</div>
+                                    <div className="text-xs text-gray-400 mt-1">Select Template</div>
                                 </div>
                             </button>
                             <button 
@@ -193,8 +193,8 @@ const QRCard: React.FC<QRCardProps> = ({
                             >
                                 <div className="flex flex-col items-center">
                                     <FaRulerCombined className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">尺寸</div>
-                                    <div className="text-xs text-gray-400 mt-1">调整大小</div>
+                                    <div className="text-sm font-medium text-gray-600">Size</div>
+                                    <div className="text-xs text-gray-400 mt-1">Adjust Size</div>
                                 </div>
                             </button>
                         </div>

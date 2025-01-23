@@ -14,8 +14,10 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     const [qrValue, setQrValue] = useState('Welcome to QR Code Generator');
     const [customOptions, setCustomOptions] = useState<CustomOptions>({
         content: "",
-        dotStyle: "dots",
+        dotStyle: "squares",
         eyeStyle: "squares",
+        outerEyeStyle: "squares",
+        innerEyeStyle: "squares",
         fgColor: '#000000',
         bgColor: '#ffffff',
         logoFile: null,
@@ -40,7 +42,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-600 p-2 rounded-full shadow transition"
-                    aria-label="返回或关闭"
+                    aria-label="Back or Close"
                 >
                     <FiArrowLeft size={20} />
                 </button>
