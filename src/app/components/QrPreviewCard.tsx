@@ -9,14 +9,31 @@ interface QrPreviewCardProps {
 }
 
 const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
-                                                         generatedValue,
-                                                         customOptions,
-                                                     }) => {
-    const [options, setCustomOptions] = useState<CustomOptions>(customOptions); // 初始化 customOptions 状态
+    generatedValue,
+    customOptions,
+}) => {
+    const [options, setCustomOptions] = useState<CustomOptions>(customOptions);
 
-useEffect(() => {
-    setCustomOptions(customOptions);
-}, [customOptions]);
+    // 默认配置
+    const defaultOptions: CustomOptions = {
+        content: generatedValue,
+        dotStyle: 'squares',
+        fgColor: '#000000',
+        bgColor: '#ffffff',
+        logoFile: null,
+        size: 200,
+        margin: 4
+    };
+
+    useEffect(() => {
+        setCustomOptions(customOptions);
+    }, [customOptions]);
+
+    // 重置为默认配置
+    const handleReset = () => {
+        setCustomOptions(defaultOptions);
+    };
+
     const [isModalOpen, setIsModalOpen] = useState(false);  // 控制定制化弹框是否打开
     const cardRef = useRef<HTMLDivElement>(null);
     const qrCodeRef = useRef<HTMLDivElement>(null);
@@ -72,11 +89,21 @@ useEffect(() => {
             ref={cardRef}
         >
             {/* Title Row */}
-            <div className="mb-12 text-gray-700 text-sm self-start">
-                Style: <span className="font-bold">Basic Style</span>
-                <a href="#" className="text-blue-500 ml-2" onClick={openCustomizationModal}>
-                    Switch &gt;
-                </a>
+            <div className="mb-12 text-gray-700 text-sm self-start flex items-center justify-between w-full">
+                <div>
+                    Style: <span className="font-bold">Basic Style</span>
+                </div>
+                <div className="flex items-center gap-4">
+                    <a href="#" className="text-blue-500" onClick={openCustomizationModal}>
+                        Switch &gt;
+                    </a>
+                    <button
+                        onClick={handleReset}
+                        className="text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                        Reset
+                    </button>
+                </div>
             </div>
 
             {/* QR Code Display */}
