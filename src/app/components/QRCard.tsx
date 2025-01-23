@@ -5,10 +5,12 @@ import FeatureCard from './FeatureCard';
 import { mainCategories } from './Categories';
 import { CustomOptions } from './CustomizationModal';
 import LogoModal from './LogoModal';
+import DotStyleModal from './DotStyleModal';
 
 interface QRCardProps {
     onGenerateResult: (value: string) => void;
     onLogoChange?: (logo: string | null) => void;
+    onCustomOptionsChange?: (options: CustomOptions) => void;
 }
 
 const DEFAULT_MAIN_TYPE = 'text';
@@ -16,12 +18,14 @@ const DEFAULT_MAIN_TYPE = 'text';
 const QRCard: React.FC<QRCardProps> = ({
     onGenerateResult,
     onLogoChange,
+    onCustomOptionsChange,
 }) => {
     const [selectedMainType, setSelectedMainType] = useState<string | null>(DEFAULT_MAIN_TYPE);
     const [customText, setCustomText] = useState('');
     const [showAlert, setShowAlert] = useState(false);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDotStyleModalOpen, setIsDotStyleModalOpen] = useState(false);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [selectedConfig, setSelectedConfig] = useState<string>('');
@@ -29,7 +33,7 @@ const QRCard: React.FC<QRCardProps> = ({
     const [logoFile, setLogoFile] = useState<string | null>(null);
     const [customOptions, setCustomOptions] = useState<CustomOptions>({
         content: customText,
-        dotStyle: 'square',
+        dotStyle: 'squares',
         fgColor: '#000000',
         bgColor: '#ffffff',
         logoFile: null,
@@ -59,6 +63,15 @@ const QRCard: React.FC<QRCardProps> = ({
         // 更新customOptions中的logoFile，并触发CustomizationModal的onConfirm回调
         const updatedOptions = { ...customOptions, logoFile: newLogo };
         setCustomOptions(updatedOptions);
+    };
+
+    const handleDotStyleConfirm = (newDotStyle: 'dots' | 'squares' | 'fluid') => {
+        setIsDotStyleModalOpen(false);
+        // 更新customOptions中的dotStyle
+        const updatedOptions = { ...customOptions, dotStyle: newDotStyle };
+        setCustomOptions(updatedOptions);
+        // 通知父组件customOptions已更新
+        onCustomOptionsChange?.(updatedOptions);
     };
 
     return (
@@ -123,7 +136,7 @@ const QRCard: React.FC<QRCardProps> = ({
                         <button 
                             onClick={() => {
                                 setSelectedConfig('点类型');
-                                setIsModalOpen(true);
+                                setIsDotStyleModalOpen(true);
                             }} 
                             className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                         >
@@ -185,6 +198,13 @@ const QRCard: React.FC<QRCardProps> = ({
                 </div>
             )}
 
+            {/* DotStyle Modal */}
+            <DotStyleModal
+                isOpen={isDotStyleModalOpen}
+                onClose={() => setIsDotStyleModalOpen(false)}
+                onConfirm={handleDotStyleConfirm}
+                currentDotStyle={customOptions.dotStyle}
+            />
             {/* Logo Modal */}
             <LogoModal
                 isOpen={isLogoModalOpen}

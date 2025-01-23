@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { QRCode } from "react-qrcode-logo"; // 导入 react-qrcode-logo
 
 export interface CustomOptions {
-    dotStyle: "square" | "dots"; // 支持的点样式
+    dotStyle: 'dots' | 'squares' | 'fluid';
     fgColor: string;            // 前景色
     bgColor: string;            // 背景色
     logoFile?: string | null;   // Logo file (Base64 string or File object)
@@ -71,8 +71,9 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                             }
                             className="block w-full border p-2 rounded"
                         >
-                            <option value="square">方块</option>
+                            <option value="squares">方块</option>
                             <option value="dots">圆点</option>
+                            <option value="fluid">流体</option>
                         </select>
                     </div>
 

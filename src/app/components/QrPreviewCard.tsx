@@ -42,8 +42,6 @@ useEffect(() => {
         return undefined;
     }, [options.logoFile]);
 
-    const isCircle = options.dotStyle === 'dots';
-
     // 打开定制化设置弹框
     const openCustomizationModal = () => {
         setIsModalOpen(true);
@@ -85,7 +83,6 @@ useEffect(() => {
             <div
                 style={{
                     padding: options.margin,
-                    borderRadius: isCircle ? '50%' : '0%',
                     backgroundColor: options.bgColor,
                 }}
                 ref={qrCodeRef}
@@ -95,11 +92,11 @@ useEffect(() => {
                     fgColor={options.fgColor}
                     bgColor={options.bgColor}
                     size={options.size}
-                    style={{ borderRadius: isCircle ? '50%' : '0%' }}
                     logoImage={logoSrc}
                     logoWidth={options.size * 0.25}
                     removeQrCodeBehindLogo
                     quietZone={options.margin}
+                    qrStyle={options.dotStyle === 'squares' ? 'squares' : options.dotStyle}
                 />
             </div>
 

@@ -14,7 +14,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     const [qrValue, setQrValue] = useState('Welcome to QR Code Generator');
     const [customOptions, setCustomOptions] = useState<CustomOptions>({
         content: "",
-        dotStyle: "square",
+        dotStyle: "squares",
         fgColor: '#000000',
         bgColor: '#ffffff',
         logoFile: null,
@@ -26,6 +26,10 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     const handleGenerateResult = (value: string) => {
         setQrValue(value);
         setCustomOptions(prev => ({ ...prev, content: value }));
+    };
+
+    const handleCustomOptionsChange = (newOptions: CustomOptions) => {
+        setCustomOptions(newOptions);
     };
 
     return (
@@ -54,6 +58,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                         onLogoChange={(logo: string | null) => {
                             setCustomOptions(prev => ({ ...prev, logoFile: logo }));
                         }}
+                        onCustomOptionsChange={handleCustomOptionsChange}
                     />
                 </div>
 
