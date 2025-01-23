@@ -1,21 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { motion } from 'framer-motion';
 
 import FeatureCard from './FeatureCard';
-import { mainCategories, subCategories, SubCategory } from './Categories';
+import { mainCategories } from './Categories';
+import { CustomOptions } from './CustomizationModal';
+import LogoModal from './LogoModal';
 
 interface QRCardProps {
     onGenerateResult: (value: string) => void;
+    onLogoChange?: (logo: string | null) => void;
 }
 
 const DEFAULT_MAIN_TYPE = 'text';
 
 const QRCard: React.FC<QRCardProps> = ({
     onGenerateResult,
+    onLogoChange,
 }) => {
     const [selectedMainType, setSelectedMainType] = useState<string | null>(DEFAULT_MAIN_TYPE);
     const [customText, setCustomText] = useState('');
     const [showAlert, setShowAlert] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [selectedConfig, setSelectedConfig] = useState<string>('');
+    const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
+    const [logoFile, setLogoFile] = useState<string | null>(null);
+    const [customOptions, setCustomOptions] = useState<CustomOptions>({
+        content: customText,
+        dotStyle: 'square',
+        fgColor: '#000000',
+        bgColor: '#ffffff',
+        logoFile: null,
+        size: 200,
+        margin: 4
+    });
 
     const handleSelectMainCategory = (mainType: string) => {
         setSelectedMainType(mainType);
@@ -29,6 +47,16 @@ const QRCard: React.FC<QRCardProps> = ({
         }
         const value = `[${selectedMainType}] ${customText}`;
         onGenerateResult(value);
+    };
+
+    const handleLogoConfirm = (newLogo: string | null) => {
+        setLogoFile(newLogo);
+        setIsLogoModalOpen(false);
+        // 更新父组件的logoFile状态
+        onLogoChange?.(newLogo);
+        // 更新customOptions中的logoFile，并触发CustomizationModal的onConfirm回调
+        const updatedOptions = { ...customOptions, logoFile: newLogo };
+        setCustomOptions(updatedOptions);
     };
 
     return (
@@ -59,7 +87,7 @@ const QRCard: React.FC<QRCardProps> = ({
 
             {/* Category selection */}
             <div className="w-full">
-                <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-3">
+                <div className="flex justify-between border-b border-gray-200 mb-4">
                     {mainCategories.map((cat) => (
                         <FeatureCard
                             key={cat.type}
@@ -86,8 +114,82 @@ const QRCard: React.FC<QRCardProps> = ({
                     >
                         Generate QR Code
                     </button>
+
+                    {/* Configuration Grid */}
+                    <div className="mt-6 grid grid-cols-3 gap-4">
+                        {/* Row 1 */}
+                        <button 
+                            onClick={() => {
+                                setSelectedConfig('点类型');
+                                setIsModalOpen(true);
+                            }} 
+                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                            <div className="text-sm font-medium text-gray-600">点类型</div>
+                            <div className="text-xs text-gray-400 mt-1">方形/圆形</div>
+                        </button>
+                        <button 
+                            onClick={() => {
+                                setSelectedConfig('风格');
+                                setIsModalOpen(true);
+                            }}
+                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                            <div className="text-sm font-medium text-gray-600">风格</div>
+                            <div className="text-xs text-gray-400 mt-1">经典/现代</div>
+                        </button>
+                        <button 
+                            onClick={() => {
+                                setSelectedConfig('Logo');
+                                setIsLogoModalOpen(true);
+                            }}
+                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                            <div className="text-sm font-medium text-gray-600">Logo</div>
+                            <div className="text-xs text-gray-400 mt-1">上传/编辑</div>
+                        </button>
+                        {/* Row 2 */}
+                        <button 
+                            onClick={() => {
+                                setSelectedConfig('颜色');
+                                setIsModalOpen(true);
+                            }}
+                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                            <div className="text-sm font-medium text-gray-600">颜色</div>
+                            <div className="text-xs text-gray-400 mt-1">自定义配色</div>
+                        </button>
+                        <button 
+                            onClick={() => {
+                                setSelectedConfig('结构');
+                                setIsModalOpen(true);
+                            }}
+                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                            <div className="text-sm font-medium text-gray-600">结构</div>
+                            <div className="text-xs text-gray-400 mt-1">布局设置</div>
+                        </button>
+                        <button 
+                            onClick={() => {
+                                setSelectedConfig('样式');
+                                setIsModalOpen(true);
+                            }}
+                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        >
+                            <div className="text-sm font-medium text-gray-600">样式</div>
+                            <div className="text-xs text-gray-400 mt-1">外观定制</div>
+                        </button>
+                    </div>
                 </div>
             )}
+
+            {/* Logo Modal */}
+            <LogoModal
+                isOpen={isLogoModalOpen}
+                onClose={() => setIsLogoModalOpen(false)}
+                onConfirm={handleLogoConfirm}
+                currentLogo={logoFile}
+            />
         </motion.div>
     );
 };

@@ -10,10 +10,9 @@ interface QRCodePageProps {
 }
 
 export default function QRCodePage({ onClose }: QRCodePageProps) {
-    // 保存二维码内容，设置默认值
+    // 保存二维码内容和配置状态
     const [qrValue, setQrValue] = useState('Welcome to QR Code Generator');
-    // 保存定制化配置
-    const [customOptions] = useState<CustomOptions>({
+    const [customOptions, setCustomOptions] = useState<CustomOptions>({
         content: "",
         dotStyle: "square",
         fgColor: '#000000',
@@ -23,15 +22,10 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
         margin: 4
     });
 
-    const handleUploadLogo = () => {
-        alert('上传Logo逻辑待实现');
-    };
-
-    const handleBeautify = () => {};
-
     // 生成二维码的回调
     const handleGenerateResult = (value: string) => {
         setQrValue(value);
+        setCustomOptions(prev => ({ ...prev, content: value }));
     };
 
     return (
@@ -57,6 +51,9 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                 <div className="flex-grow w-full">
                     <QRCard
                         onGenerateResult={handleGenerateResult}
+                        onLogoChange={(logo: string | null) => {
+                            setCustomOptions(prev => ({ ...prev, logoFile: logo }));
+                        }}
                     />
                 </div>
 
@@ -66,8 +63,6 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                         <QrPreviewCard
                             generatedValue={qrValue}
                             customOptions={customOptions}
-                            onUploadLogo={handleUploadLogo}
-                            onBeautify={handleBeautify}
                         />
                     ) : (
                         <div className="text-gray-500 text-sm text-center flex flex-col items-center justify-center">

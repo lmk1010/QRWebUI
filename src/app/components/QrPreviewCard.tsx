@@ -1,23 +1,23 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { QRCode } from 'react-qrcode-logo';
 import { toPng } from 'html-to-image';
-import CustomizationModal, { CustomOptions } from './CustomizationModal';  // 引入 CustomizationModal
+import CustomizationModal, { CustomOptions } from './CustomizationModal';
 
 interface QrPreviewCardProps {
     generatedValue: string;
     customOptions: CustomOptions;
-    onUploadLogo?: () => void;
-    onBeautify?: () => void;
 }
 
 const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                                                          generatedValue,
                                                          customOptions,
-                                                         onBeautify,
                                                      }) => {
     const [options, setCustomOptions] = useState<CustomOptions>(customOptions); // 初始化 customOptions 状态
-    const [logoFile, setLogoFile] = useState<string | null>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);  // 控制弹框是否打开
+
+useEffect(() => {
+    setCustomOptions(customOptions);
+}, [customOptions]);
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 控制定制化弹框是否打开
     const cardRef = useRef<HTMLDivElement>(null);
     const qrCodeRef = useRef<HTMLDivElement>(null);
 
@@ -37,20 +37,10 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     };
 
 
-    const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setLogoFile(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
     const logoSrc = useMemo(() => {
-        return logoFile || (options.logoFile && typeof options.logoFile === 'string' ? options.logoFile : undefined);
-    }, [logoFile, options.logoFile]);
+        if (options.logoFile && typeof options.logoFile === 'string') return options.logoFile;
+        return undefined;
+    }, [options.logoFile]);
 
     const isCircle = options.dotStyle === 'dots';
 
@@ -67,7 +57,6 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     // 确认定制化选项
     const handleCustomizationConfirm = (newOptions: CustomOptions) => {
         setCustomOptions(newOptions); // 更新 customOptions 状态
-        onBeautify?.(); // 如果有外部 beautify 事件，触发它
         closeCustomizationModal();
     };
 
@@ -120,19 +109,7 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
 
             {/* Action Buttons */}
             <div className="mt-10 flex flex-col w-full space-y-2">
-                <label
-                    htmlFor="logo-upload"
-                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded cursor-pointer hover:bg-gray-200 transition-colors text-center"
-                >
-                    Upload Logo
-                </label>
-                <input
-                    type="file"
-                    id="logo-upload"
-                    accept="image/*"
-                    onChange={handleLogoUpload}
-                    className="hidden"
-                />
+
                 <button
                     onClick={openCustomizationModal}  // 点击弹出定制化设置弹框
                     className="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors"
@@ -155,6 +132,8 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                 onClose={closeCustomizationModal}
                 onConfirm={handleCustomizationConfirm} // 传递更新选项的回调函数
             />
+
+
         </div>
     );
 };

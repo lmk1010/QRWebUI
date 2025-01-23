@@ -30,6 +30,14 @@ export const mainCategories: MainCategory[] = [
     {
         type: 'app',
         title: 'App'
+    },
+    {
+        type: 'batch',
+        title: 'Batch'
+    },
+    {
+        type: 'video',
+        title: 'Video'
     }
 ];
 
