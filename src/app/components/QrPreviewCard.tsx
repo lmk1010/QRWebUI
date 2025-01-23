@@ -19,6 +19,8 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             content: generatedValue,
             dotStyle: 'squares',
             eyeStyle: 'squares',
+            outerEyeStyle: 'squares',
+            innerEyeStyle: 'squares',
             fgColor: '#000000',
             bgColor: '#ffffff',
             logoFile: null,
@@ -61,6 +63,7 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
         onCustomOptionsChange(newOptions);
         closeCustomizationModal();
     };
+    
 
     const drawQRCodeWithCustomDots = (canvas: HTMLCanvasElement): void => {
         if (!canvas) return;
@@ -102,118 +105,280 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             for (let row = 0; row < moduleCount; row++) {
                 for (let col = 0; col < moduleCount; col++) {
                     if (modules.data[row * moduleCount + col] === 1) {  // 判断是否为黑色点
-                        const isEye = (
-                            (row < 7 && col < 7) || // 左上角
-                            (row < 7 && col >= moduleCount - 7) || // 右上角
-                            (row >= moduleCount - 7 && col < 7) // 左下角
+                        const isOuterEye = (
+                            // 外部定位点边框
+                            (row < 7 && col < 7 && (row === 0 || row === 6 || col === 0 || col === 6)) || // 左上角边框
+                            (row < 7 && col >= moduleCount - 7 && (row === 0 || row === 6 || col === moduleCount - 1 || col === moduleCount - 7)) || // 右上角边框
+                            (row >= moduleCount - 7 && col < 7 && (row === moduleCount - 1 || row === moduleCount - 7 || col === 0 || col === 6)) // 左下角边框
                         );
-    
+
+                        const isInnerEye = (
+                            // 内部定位点区域
+                            (row >= 1 && row < 6 && col >= 1 && col < 6) || // 左上角内部
+                            (row >= 1 && row < 6 && col >= moduleCount - 6 && col < moduleCount - 1) || // 右上角内部
+                            (row >= moduleCount - 6 && row < moduleCount - 1 && col >= 1 && col < 6) // 左下角内部
+                        );
+
                         const x = col * moduleSize;
                         const y = row * moduleSize;
-                        const size = moduleSize * (isEye ? eyeScale : dotScale);
-                        const style = isEye ? (customOptions.eyeStyle || customOptions.dotStyle) : customOptions.dotStyle;
-    
-                        ctx.fillStyle = customOptions.fgColor;
-    
-                        switch (style) {
-                            case 'dots': // 圆形
-                                ctx.beginPath();
-                                ctx.arc(
-                                    x + moduleSize / 2,
-                                    y + moduleSize / 2,
-                                    size / 2,
-                                    0,
-                                    Math.PI * 2
-                                );
-                                ctx.fill();
-                                break;
-    
-                            case 'fluid': // 流体
-                                const radius = size / 4;
-                                ctx.beginPath();
-                                ctx.moveTo(x + radius, y);
-                                ctx.lineTo(x + size - radius, y);
-                                ctx.quadraticCurveTo(x + size, y, x + size, y + radius);
-                                ctx.lineTo(x + size, y + size - radius);
-                                ctx.quadraticCurveTo(x + size, y + size, x + size - radius, y + size);
-                                ctx.lineTo(x + radius, y + size);
-                                ctx.quadraticCurveTo(x, y + size, x, y + size - radius);
-                                ctx.lineTo(x, y + radius);
-                                ctx.quadraticCurveTo(x, y, x + radius, y);
-                                ctx.fill();
-                                break;
-    
-                            case 'hexagon': // 六边形
-                                const hexSize = size / 2;
-                                ctx.beginPath();
-                                for (let i = 0; i < 6; i++) {
-                                    const angle = Math.PI / 3 * i;
-                                    const xPos = x + moduleSize / 2 + hexSize * Math.cos(angle);
-                                    const yPos = y + moduleSize / 2 + hexSize * Math.sin(angle);
-                                    if (i === 0) {
-                                        ctx.moveTo(xPos, yPos);
-                                    } else {
-                                        ctx.lineTo(xPos, yPos);
+                        const size = moduleSize * (isOuterEye || isInnerEye ? eyeScale : dotScale);
+                        
+                        if (isOuterEye) {
+                            // 外部定位点样式处理
+                            ctx.fillStyle = customOptions.fgColor;
+                            const outerStyle = customOptions.outerEyeStyle || 'squares';  // 获取外部定位点样式，默认是方形
+                            const radius = size / 2; // 圆形半径
+                        
+                            switch (outerStyle) {
+                                case 'squares': // 方形
+                                    ctx.fillRect(x, y, size, size);
+                                    break;
+                                case 'rounded': // 圆角矩形（四个角都有圆角）
+                                    const roundedRadius = size / 4;
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + roundedRadius, y);
+                                    ctx.lineTo(x + size - roundedRadius, y);
+                                    ctx.quadraticCurveTo(x + size, y, x + size, y + roundedRadius);
+                                    ctx.lineTo(x + size, y + size - roundedRadius);
+                                    ctx.quadraticCurveTo(x + size, y + size, x + size - roundedRadius, y + size);
+                                    ctx.lineTo(x + roundedRadius, y + size);
+                                    ctx.quadraticCurveTo(x, y + size, x, y + size - roundedRadius);
+                                    ctx.lineTo(x, y + roundedRadius);
+                                    ctx.quadraticCurveTo(x, y, x + roundedRadius, y);
+                                    ctx.fill();
+                                    break;
+                                case 'circle': // 直接绘制圆形
+                                    ctx.beginPath();
+                                    ctx.arc(x + radius, y + radius, radius, 0, Math.PI * 2);  // 绘制完整的圆形
+                                    ctx.fill();
+                                    break;
+                                case 'three-rounded': // 三圆角矩形（一个角是直角，其他三个角是圆角）
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + radius, y);  // 开始点
+                                    ctx.lineTo(x + size, y);    // 上边线
+                                    ctx.lineTo(x + size, y + size - radius); // 右边线
+                                    ctx.arc(x + size - radius, y + size - radius, radius, 0, Math.PI / 2); // 右下角圆角
+                                    ctx.lineTo(x + radius, y + size);  // 底边线
+                                    ctx.arc(x + radius, y + size - radius, radius, Math.PI / 2, Math.PI); // 左下角圆角
+                                    ctx.lineTo(x, y + radius);  // 左边线
+                                    ctx.arc(x + radius, y + radius, radius, Math.PI, 1.5 * Math.PI); // 左上角圆角
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                                case 'two-rounded': // 两圆角矩形（两个角是直角，另外两个角是圆角）
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + radius, y);
+                                    ctx.lineTo(x + size - radius, y); // 上边线
+                                    ctx.arc(x + size - radius, y + radius, radius, 1.5 * Math.PI, 2 * Math.PI); // 右上角圆角
+                                    ctx.lineTo(x + size, y + size); // 右边线
+                                    ctx.arc(x + size - radius, y + size - radius, radius, 0, Math.PI / 2); // 右下角圆角
+                                    ctx.lineTo(x + radius, y + size); // 底边线
+                                    ctx.fill();
+                                    break;
+                                case 'one-rounded': // 一个圆角矩形（三个角是直角，另外一个角是圆角）
+                                    ctx.beginPath();
+                                    ctx.moveTo(x, y); // 上边线
+                                    ctx.lineTo(x + size - radius, y);
+                                    ctx.arc(x + size - radius, y + radius, radius, Math.PI * 1.5, Math.PI * 2); // 右上角圆角
+                                    ctx.lineTo(x + size, y + size);  // 右边线
+                                    ctx.lineTo(x, y + size);  // 底边线
+                                    ctx.fill();
+                                    break;
+                                default: // 默认是方形
+                                    ctx.fillRect(x, y, size, size);
+                                    break;
+                            }
+                        }
+                        
+                        
+                        
+                        else if (isInnerEye) {
+                            // 内部定位点样式处理
+                            ctx.fillStyle = customOptions.fgColor;
+                            const innerStyle = customOptions.innerEyeStyle || 'squares';
+                            switch (innerStyle) {
+                                case 'squares':
+                                    ctx.fillRect(x, y, size, size);
+                                    break;
+                                case 'dots':
+                                    ctx.beginPath();
+                                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size / 2, 0, Math.PI * 2);
+                                    ctx.fill();
+                                    break;
+                                case 'fluid':
+                                    const radius = size / 4;
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + radius, y);
+                                    ctx.lineTo(x + size - radius, y);
+                                    ctx.quadraticCurveTo(x + size, y, x + size, y + radius);
+                                    ctx.lineTo(x + size, y + size - radius);
+                                    ctx.quadraticCurveTo(x + size, y + size, x + size - radius, y + size);
+                                    ctx.lineTo(x + radius, y + size);
+                                    ctx.quadraticCurveTo(x, y + size, x, y + size - radius);
+                                    ctx.lineTo(x, y + radius);
+                                    ctx.quadraticCurveTo(x, y, x + radius, y);
+                                    ctx.fill();
+                                    break;
+                                case 'hexagon':
+                                    const hexSize = size / 2;
+                                    ctx.beginPath();
+                                    for (let i = 0; i < 6; i++) {
+                                        const angle = Math.PI / 3 * i;
+                                        const xPos = x + moduleSize / 2 + hexSize * Math.cos(angle);
+                                        const yPos = y + moduleSize / 2 + hexSize * Math.sin(angle);
+                                        if (i === 0) {
+                                            ctx.moveTo(xPos, yPos);
+                                        } else {
+                                            ctx.lineTo(xPos, yPos);
+                                        }
                                     }
-                                }
-                                ctx.closePath();
-                                ctx.fill();
-                                break;
-    
-                            case 'star': // 星形
-                                const centerX = x + moduleSize / 2;
-                                const centerY = y + moduleSize / 2;
-                                const spikes = 5;
-                                const step = Math.PI / spikes;
-                                const outerRadius = size / 2;
-                                const innerRadius = size / 4;
-                                ctx.beginPath();
-                                for (let i = 0; i < spikes * 2; i++) {
-                                    const radius = i % 2 === 0 ? outerRadius : innerRadius;
-                                    const angle = i * step;
-                                    const xPos = centerX + radius * Math.cos(angle);
-                                    const yPos = centerY + radius * Math.sin(angle);
-                                    if (i === 0) {
-                                        ctx.moveTo(xPos, yPos);
-                                    } else {
-                                        ctx.lineTo(xPos, yPos);
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                                case 'star':
+                                    const centerX = x + moduleSize / 2;
+                                    const centerY = y + moduleSize / 2;
+                                    const spikes = 5;
+                                    const step = Math.PI / spikes;
+                                    const outerRadius = size / 2;
+                                    const innerRadius = size / 4;
+                                    ctx.beginPath();
+                                    for (let i = 0; i < spikes * 2; i++) {
+                                        const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                                        const angle = i * step;
+                                        const xPos = centerX + radius * Math.cos(angle);
+                                        const yPos = centerY + radius * Math.sin(angle);
+                                        if (i === 0) {
+                                            ctx.moveTo(xPos, yPos);
+                                        } else {
+                                            ctx.lineTo(xPos, yPos);
+                                        }
                                     }
-                                }
-                                ctx.closePath();
-                                ctx.fill();
-                                break;
-    
-                            case 'diamond': // 菱形
-                                ctx.beginPath();
-                                ctx.moveTo(x + moduleSize / 2, y);
-                                ctx.lineTo(x + size, y + moduleSize / 2);
-                                ctx.lineTo(x + moduleSize / 2, y + size);
-                                ctx.lineTo(x, y + moduleSize / 2);
-                                ctx.closePath();
-                                ctx.fill();
-                                break;
-    
-                            case 'heart': // 心形
-                                const heartSize = size / 2;
-                                ctx.beginPath();
-                                ctx.moveTo(x + moduleSize / 2, y + heartSize);
-                                ctx.bezierCurveTo(
-                                    x + moduleSize / 2, y,
-                                    x + moduleSize, y,
-                                    x + moduleSize, y + heartSize
-                                );
-                                ctx.bezierCurveTo(
-                                    x + moduleSize, y + heartSize * 1.5,
-                                    x + moduleSize / 2, y + heartSize * 2,
-                                    x + moduleSize / 2, y + heartSize * 1.5
-                                );
-                                ctx.closePath();
-                                ctx.fill();
-                                break;
-    
-                            default: // 默认方块
-                                ctx.fillRect(x, y, size, size);
-                                break;
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                                case 'diamond':
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + moduleSize / 2, y);
+                                    ctx.lineTo(x + size, y + moduleSize / 2);
+                                    ctx.lineTo(x + moduleSize / 2, y + size);
+                                    ctx.lineTo(x, y + moduleSize / 2);
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                                case 'heart':
+                                    const heartSize = size / 2;
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + moduleSize / 2, y + heartSize);
+                                    ctx.bezierCurveTo(
+                                        x + moduleSize / 2, y,
+                                        x + moduleSize, y,
+                                        x + moduleSize, y + heartSize
+                                    );
+                                    ctx.bezierCurveTo(
+                                        x + moduleSize, y + heartSize * 1.5,
+                                        x + moduleSize / 2, y + heartSize * 2,
+                                        x + moduleSize / 2, y + heartSize * 1.5
+                                    );
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                                default:
+                                    ctx.fillRect(x, y, size, size);
+                                    break;
+                            }
+                        } else {
+                            // 普通点样式处理
+                            ctx.fillStyle = customOptions.fgColor;
+                            const dotStyle = customOptions.dotStyle || 'squares';
+                            switch (dotStyle) {
+                                case 'squares':
+                                    ctx.fillRect(x, y, size, size);
+                                    break;
+                                case 'dots':
+                                    ctx.beginPath();
+                                    ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size / 2, 0, Math.PI * 2);
+                                    ctx.fill();
+                                    break;
+                                case 'fluid':
+                                    const radius = size / 4;
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + radius, y);
+                                    ctx.lineTo(x + size - radius, y);
+                                    ctx.quadraticCurveTo(x + size, y, x + size, y + radius);
+                                    ctx.lineTo(x + size, y + size - radius);
+                                    ctx.quadraticCurveTo(x + size, y + size, x + size - radius, y + size);
+                                    ctx.lineTo(x + radius, y + size);
+                                    ctx.quadraticCurveTo(x, y + size, x, y + size - radius);
+                                    ctx.lineTo(x, y + radius);
+                                    ctx.quadraticCurveTo(x, y, x + radius, y);
+                                    ctx.fill();
+                                    break;
+                                case 'hexagon':
+                                    const hexSize = size / 2;
+                                    ctx.beginPath();
+                                    for (let i = 0; i < 6; i++) {
+                                        const angle = Math.PI / 3 * i;
+                                        const xPos = x + moduleSize / 2 + hexSize * Math.cos(angle);
+                                        const yPos = y + moduleSize / 2 + hexSize * Math.sin(angle);
+                                        if (i === 0) {
+                                            ctx.moveTo(xPos, yPos);
+                                        } else {
+                                            ctx.lineTo(xPos, yPos);
+                                        }
+                                    }
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                                case 'star':
+                                    const centerX = x + moduleSize / 2;
+                                    const centerY = y + moduleSize / 2;
+                                    const spikes = 5;
+                                    const step = Math.PI / spikes;
+                                    const outerRadius = size / 2;
+                                    const innerRadius = size / 4;
+                                    ctx.beginPath();
+                                    for (let i = 0; i < spikes * 2; i++) {
+                                        const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                                        const angle = i * step;
+                                        const xPos = centerX + radius * Math.cos(angle);
+                                        const yPos = centerY + radius * Math.sin(angle);
+                                        if (i === 0) {
+                                            ctx.moveTo(xPos, yPos);
+                                        } else {
+                                            ctx.lineTo(xPos, yPos);
+                                        }
+                                    }
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                                case 'diamond':
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + moduleSize / 2, y);
+                                    ctx.lineTo(x + size, y + moduleSize / 2);
+                                    ctx.lineTo(x + moduleSize / 2, y + size);
+                                    ctx.lineTo(x, y + moduleSize / 2);
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                                case 'heart':
+                                    const heartSize = size / 2;
+                                    ctx.beginPath();
+                                    ctx.moveTo(x + moduleSize / 2, y + heartSize);
+                                    ctx.bezierCurveTo(
+                                        x + moduleSize / 2, y,
+                                        x + moduleSize, y,
+                                        x + moduleSize, y + heartSize
+                                    );
+                                    ctx.bezierCurveTo(
+                                        x + moduleSize, y + heartSize * 1.5,
+                                        x + moduleSize / 2, y + heartSize * 2,
+                                        x + moduleSize / 2, y + heartSize * 1.5
+                                    );
+                                    ctx.closePath();
+                                    ctx.fill();
+                                    break;
+                            }
                         }
                     }
                 }

@@ -26,16 +26,10 @@ const QRCard: React.FC<QRCardProps> = ({
     const [selectedMainType, setSelectedMainType] = useState<string | null>(DEFAULT_MAIN_TYPE);
     const [customText, setCustomText] = useState('');
     const [showAlert, setShowAlert] = useState(false);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDotStyleModalOpen, setIsDotStyleModalOpen] = useState(false);
     const [isColorModalOpen, setIsColorModalOpen] = useState(false);
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [selectedConfig, setSelectedConfig] = useState<string>('');
     const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
     const [logoFile, setLogoFile] = useState<string | null>(null);
-    // 使用父组件传递的customOptions
 
     const handleSelectMainCategory = (mainType: string) => {
         setSelectedMainType(mainType);
@@ -54,20 +48,16 @@ const QRCard: React.FC<QRCardProps> = ({
     const handleLogoConfirm = (newLogo: string | null) => {
         setLogoFile(newLogo);
         setIsLogoModalOpen(false);
-        // 更新父组件的logoFile状态
         onLogoChange?.(newLogo);
-        // 通知父组件更新customOptions
         onCustomOptionsChange?.({ ...customOptions, logoFile: newLogo });
     };
 
-    const handleDotStyleConfirm = (newDotStyle: CustomOptions['dotStyle']) => {
+    const handleDotStyleConfirm = (dotStyle: CustomOptions['dotStyle'], outerEyeStyle: CustomOptions['outerEyeStyle'], innerEyeStyle: CustomOptions['innerEyeStyle']) => {
         setIsDotStyleModalOpen(false);
-        // 通知父组件更新customOptions
-        onCustomOptionsChange?.({ ...customOptions, dotStyle: newDotStyle });
+        onCustomOptionsChange?.({ ...customOptions, dotStyle, outerEyeStyle, innerEyeStyle });
     };
 
     const handleColorConfirm = (fgColor: string, bgColor: string) => {
-        // 通知父组件更新customOptions
         onCustomOptionsChange?.({ ...customOptions, fgColor, bgColor });
     };
 
@@ -128,69 +118,58 @@ const QRCard: React.FC<QRCardProps> = ({
                     </button>
 
                     {/* Configuration Grid */}
-                    <div className="mt-6 grid grid-cols-3 gap-4">
+                    <div className="mt-6 grid grid-rows-2 gap-4">
                         {/* Row 1 */}
-                        <button 
-                            onClick={() => {
-                                setSelectedConfig('点类型');
-                                setIsDotStyleModalOpen(true);
-                            }} 
-                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                            <div className="text-sm font-medium text-gray-600">点类型</div>
-                            <div className="text-xs text-gray-400 mt-1">方形/圆形</div>
-                        </button>
-                        <button 
-                            onClick={() => {
-                                setSelectedConfig('风格');
-                                setIsModalOpen(true);
-                            }}
-                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                            <div className="text-sm font-medium text-gray-600">风格</div>
-                            <div className="text-xs text-gray-400 mt-1">经典/现代</div>
-                        </button>
-                        <button 
-                            onClick={() => {
-                                setSelectedConfig('Logo');
-                                setIsLogoModalOpen(true);
-                            }}
-                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                            <div className="text-sm font-medium text-gray-600">Logo</div>
-                            <div className="text-xs text-gray-400 mt-1">上传/编辑</div>
-                        </button>
+                        <div className="grid grid-cols-3 gap-4">
+                            <button 
+                                onClick={() => {
+                                    setIsDotStyleModalOpen(true);
+                                }} 
+                                className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                            >
+                                <div className="text-sm font-medium text-gray-600">点类型</div>
+                                <div className="text-xs text-gray-400 mt-1">方形/圆形</div>
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    setIsLogoModalOpen(true);
+                                }}
+                                className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                            >
+                                <div className="text-sm font-medium text-gray-600">Logo</div>
+                                <div className="text-xs text-gray-400 mt-1">上传/编辑</div>
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    setIsColorModalOpen(true);
+                                }}
+                                className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                            >
+                                <div className="text-sm font-medium text-gray-600">颜色</div>
+                                <div className="text-xs text-gray-400 mt-1">自定义配色</div>
+                            </button>
+                        </div>
                         {/* Row 2 */}
-                        <button 
-                            onClick={() => {
-                                setSelectedConfig('颜色');
-                                setIsColorModalOpen(true);
-                            }}
-                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                            <div className="text-sm font-medium text-gray-600">颜色</div>
-                            <div className="text-xs text-gray-400 mt-1">自定义配色</div>
-                        </button>
-                        <button 
-                            onClick={() => {
-                                setSelectedConfig('结构');
-                                setIsModalOpen(true);
-                            }}
-                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                            <div className="text-sm font-medium text-gray-600">结构</div>
-                            <div className="text-xs text-gray-400 mt-1">布局设置</div>
-                        </button>
-                        <button 
-                            onClick={() => {
-                                setSelectedConfig('样式');
-                                setIsModalOpen(true);
-                            }}
-                            className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                        >
-                            <div className="text-sm font-medium text-gray-600">样式</div>
-                            <div className="text-xs text-gray-400 mt-1">外观定制</div>
-                        </button>
+                        <div className="grid grid-cols-3 gap-4">
+                            <button 
+                                className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                            >
+                                <div className="text-sm font-medium text-gray-600">样式</div>
+                                <div className="text-xs text-gray-400 mt-1">自定义样式</div>
+                            </button>
+                            <button 
+                                className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                            >
+                                <div className="text-sm font-medium text-gray-600">模版</div>
+                                <div className="text-xs text-gray-400 mt-1">选择模版</div>
+                            </button>
+                            <button 
+                                className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                            >
+                                <div className="text-sm font-medium text-gray-600">尺寸</div>
+                                <div className="text-xs text-gray-400 mt-1">调整大小</div>
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
@@ -209,6 +188,8 @@ const QRCard: React.FC<QRCardProps> = ({
                 onClose={() => setIsDotStyleModalOpen(false)}
                 onConfirm={handleDotStyleConfirm}
                 currentDotStyle={customOptions.dotStyle}
+                currentOuterEyeStyle={customOptions.outerEyeStyle}
+                currentInnerEyeStyle={customOptions.innerEyeStyle}
             />
             {/* Logo Modal */}
             <LogoModal

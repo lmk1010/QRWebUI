@@ -4,6 +4,8 @@ import { QRCode } from "react-qrcode-logo"; // 导入 react-qrcode-logo
 export interface CustomOptions {
     dotStyle: 'squares' | 'dots' | 'fluid' | 'hexagon' | 'star' | 'diamond' | 'heart';  // 普通点的样式
     eyeStyle: 'squares' | 'dots' | 'fluid' | 'hexagon' | 'star' | 'diamond' | 'heart';  // 定位点的样式
+    outerEyeStyle: 'squares' | 'rounded' | 'circle' | 'three-rounded' | 'two-rounded' | 'one-rounded';  // 外部定位点的样式
+    innerEyeStyle: 'squares' | 'dots' | 'fluid' | 'hexagon' | 'star' | 'diamond' | 'heart' | 'cloud' | 'tag';  // 内部定位点的样式
     fgColor: string;            // 前景色
     bgColor: string;            // 背景色
     logoFile?: string | null;   // Logo file (Base64 string or File object)
