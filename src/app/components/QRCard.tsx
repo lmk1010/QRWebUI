@@ -20,8 +20,10 @@ const QRCard: React.FC<QRCardProps> = ({
     const [selectedMainType, setSelectedMainType] = useState<string | null>(DEFAULT_MAIN_TYPE);
     const [customText, setCustomText] = useState('');
     const [showAlert, setShowAlert] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [selectedConfig, setSelectedConfig] = useState<string>('');
     const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
     const [logoFile, setLogoFile] = useState<string | null>(null);
