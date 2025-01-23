@@ -12,6 +12,7 @@ interface QRCardProps {
     onGenerateResult: (value: string) => void;
     onLogoChange?: (logo: string | null) => void;
     onCustomOptionsChange?: (options: CustomOptions) => void;
+    customOptions: CustomOptions;
 }
 
 const DEFAULT_MAIN_TYPE = 'text';
@@ -20,6 +21,7 @@ const QRCard: React.FC<QRCardProps> = ({
     onGenerateResult,
     onLogoChange,
     onCustomOptionsChange,
+    customOptions,
 }) => {
     const [selectedMainType, setSelectedMainType] = useState<string | null>(DEFAULT_MAIN_TYPE);
     const [customText, setCustomText] = useState('');
@@ -33,15 +35,7 @@ const QRCard: React.FC<QRCardProps> = ({
     const [selectedConfig, setSelectedConfig] = useState<string>('');
     const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
     const [logoFile, setLogoFile] = useState<string | null>(null);
-    const [customOptions, setCustomOptions] = useState<CustomOptions>({
-        content: customText,
-        dotStyle: 'squares',
-        fgColor: '#000000',
-        bgColor: '#ffffff',
-        logoFile: null,
-        size: 200,
-        margin: 4
-    });
+    // 使用父组件传递的customOptions
 
     const handleSelectMainCategory = (mainType: string) => {
         setSelectedMainType(mainType);
@@ -62,26 +56,19 @@ const QRCard: React.FC<QRCardProps> = ({
         setIsLogoModalOpen(false);
         // 更新父组件的logoFile状态
         onLogoChange?.(newLogo);
-        // 更新customOptions中的logoFile，并触发CustomizationModal的onConfirm回调
-        const updatedOptions = { ...customOptions, logoFile: newLogo };
-        setCustomOptions(updatedOptions);
+        // 通知父组件更新customOptions
+        onCustomOptionsChange?.({ ...customOptions, logoFile: newLogo });
     };
 
-    const handleDotStyleConfirm = (newDotStyle: 'dots' | 'squares' | 'fluid') => {
+    const handleDotStyleConfirm = (newDotStyle: CustomOptions['dotStyle']) => {
         setIsDotStyleModalOpen(false);
-        // 更新customOptions中的dotStyle
-        const updatedOptions = { ...customOptions, dotStyle: newDotStyle };
-        setCustomOptions(updatedOptions);
-        // 通知父组件customOptions已更新
-        onCustomOptionsChange?.(updatedOptions);
+        // 通知父组件更新customOptions
+        onCustomOptionsChange?.({ ...customOptions, dotStyle: newDotStyle });
     };
 
     const handleColorConfirm = (fgColor: string, bgColor: string) => {
-        // 更新customOptions中的颜色
-        const updatedOptions = { ...customOptions, fgColor, bgColor };
-        setCustomOptions(updatedOptions);
-        // 通知父组件customOptions已更新
-        onCustomOptionsChange?.(updatedOptions);
+        // 通知父组件更新customOptions
+        onCustomOptionsChange?.({ ...customOptions, fgColor, bgColor });
     };
 
     return (

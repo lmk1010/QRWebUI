@@ -4,8 +4,8 @@ import { CustomOptions } from './CustomizationModal';
 interface DotStyleModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: (dotStyle: 'squares' | 'dots' | 'fluid') => void;
-    currentDotStyle?: 'squares' | 'dots' | 'fluid';
+    onConfirm: (dotStyle: CustomOptions['dotStyle']) => void;
+    currentDotStyle?: CustomOptions['dotStyle'];
 }
 
 const DotStyleModal: React.FC<DotStyleModalProps> = ({
@@ -19,7 +19,11 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
     const dotStyles = [
         { id: 'squares', name: '方形', image: '/assets/dot_styles/square.png' },
         { id: 'dots', name: '圆形', image: '/assets/dot_styles/dots.png' },
-        { id: 'fluid', name: '流体', image: '/assets/dot_styles/fluid.png' }
+        { id: 'fluid', name: '流体', image: '/assets/dot_styles/fluid.png' },
+        { id: 'hexagon', name: '六边形', image: '/assets/dot_styles/hexagon.png' },
+        { id: 'star', name: '星形', image: '/assets/dot_styles/star.png' },
+        { id: 'diamond', name: '菱形', image: '/assets/dot_styles/diamond.png' },
+        { id: 'heart', name: '心形', image: '/assets/dot_styles/heart.png' }
     ];
 
     const handleConfirm = () => {
@@ -31,11 +35,11 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-4xl">
+            <div className="bg-white rounded-lg p-6 w-full max-w-2xl">
                 <h2 className="text-xl font-semibold mb-4">选择点类型样式</h2>
 
                 {/* 样式网格 */}
-                <div className="grid grid-cols-6 gap-4 mb-6">
+                <div className="grid grid-cols-4 gap-4 mb-6">
                     {dotStyles.map((style) => (
                         <div
                             key={style.id}

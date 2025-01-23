@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { QRCode } from "react-qrcode-logo"; // 导入 react-qrcode-logo
 
 export interface CustomOptions {
-    dotStyle: 'dots' | 'squares' | 'fluid';
+    dotStyle: 'squares' | 'dots' | 'fluid' | 'hexagon' | 'star' | 'diamond' | 'heart';  // 普通点的样式
+    eyeStyle: 'squares' | 'dots' | 'fluid' | 'hexagon' | 'star' | 'diamond' | 'heart';  // 定位点的样式
     fgColor: string;            // 前景色
     bgColor: string;            // 背景色
     logoFile?: string | null;   // Logo file (Base64 string or File object)
@@ -16,6 +17,8 @@ export interface CustomOptions {
     qrStyle?: 'dots' | 'squares';  // QR码样式
     eyeRadius?: number;         // 定位点圆角
     quietZone?: number;         // 静止区域大小
+    dotScale?: number;          // 普通点的缩放比例
+    eyeScale?: number;          // 定位点的缩放比例
 }
 
 interface CustomizationModalProps {
@@ -71,17 +74,36 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
                     {/* 点样式选择 */}
                     <div className="mb-6">
                         <h3 className="text-lg font-semibold mb-2">码点形状</h3>
-                        <select
-                            value={options.dotStyle}
-                            onChange={(e) =>
-                                setOptions((prev) => ({ ...prev, dotStyle: e.target.value as CustomOptions["dotStyle"] }))
-                            }
-                            className="block w-full border p-2 rounded"
-                        >
-                            <option value="squares">方块</option>
-                            <option value="dots">圆点</option>
-                            <option value="fluid">流体</option>
-                        </select>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">普通点样式</label>
+                                <select
+                                    value={options.dotStyle}
+                                    onChange={(e) =>
+                                        setOptions((prev) => ({ ...prev, dotStyle: e.target.value as CustomOptions["dotStyle"] }))
+                                    }
+                                    className="block w-full border p-2 rounded"
+                                >
+                                    <option value="squares">方块</option>
+                                    <option value="dots">圆点</option>
+                                    <option value="fluid">流体</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">定位点样式</label>
+                                <select
+                                    value={options.eyeStyle || options.dotStyle}
+                                    onChange={(e) =>
+                                        setOptions((prev) => ({ ...prev, eyeStyle: e.target.value as CustomOptions["eyeStyle"] }))
+                                    }
+                                    className="block w-full border p-2 rounded"
+                                >
+                                    <option value="squares">方块</option>
+                                    <option value="dots">圆点</option>
+                                    <option value="fluid">流体</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     {/* 颜色配置 */}

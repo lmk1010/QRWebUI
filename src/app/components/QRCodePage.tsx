@@ -14,12 +14,14 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     const [qrValue, setQrValue] = useState('Welcome to QR Code Generator');
     const [customOptions, setCustomOptions] = useState<CustomOptions>({
         content: "",
-        dotStyle: "squares",
+        dotStyle: "dots",
+        eyeStyle: "squares",
         fgColor: '#000000',
         bgColor: '#ffffff',
         logoFile: null,
         size: 200,
-        margin: 4
+        margin: 4,
+        errorCorrectionLevel: 'H'
     });
 
     // 生成二维码的回调
@@ -59,6 +61,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                             setCustomOptions(prev => ({ ...prev, logoFile: logo }));
                         }}
                         onCustomOptionsChange={handleCustomOptionsChange}
+                        customOptions={customOptions}
                     />
                 </div>
 
@@ -68,6 +71,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                         <QrPreviewCard
                             generatedValue={qrValue}
                             customOptions={customOptions}
+                            onCustomOptionsChange={handleCustomOptionsChange}
                         />
                     ) : (
                         <div className="text-gray-500 text-sm text-center flex flex-col items-center justify-center">
