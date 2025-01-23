@@ -113,7 +113,7 @@ const LogoModal: React.FC<LogoModalProps> = ({
                 <div className="mt-6">
                     <h3 className="text-sm font-medium text-gray-700 mb-3">预设图标</h3>
                     <div className="grid grid-cols-4 gap-4">
-                        {["/assets/logo.png", "/assets/pexels-A.png", "/assets/pexels-B.png", "/assets/pexels-C.png"].map((icon, index) => (
+                        {["/assets/logo_default/icons8-discord-480.png", "/assets/logo_default/icons8-facebook-480 copy.png", "/assets/logo_default/icons8-facebook-480.png", "/assets/logo_default/icons8-github-480.png", "/assets/logo_default/icons8-instagram-480.png", "/assets/logo_default/icons8-telegram-app-480.png", "/assets/logo_default/icons8-tiktok-144.png", "/assets/logo_default/icons8-whatsapp-144.png", "/assets/logo_default/icons8-youtube-480.png"].map((icon, index) => (
                             <div
                                 key={index}
                                 className="aspect-square border rounded-lg p-2 cursor-pointer hover:border-blue-500 transition-colors"
