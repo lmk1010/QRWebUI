@@ -6,6 +6,7 @@ import { mainCategories } from './Categories';
 import { CustomOptions } from './CustomizationModal';
 import LogoModal from './LogoModal';
 import DotStyleModal from './DotStyleModal';
+import ColorModal from './ColorModal';
 
 interface QRCardProps {
     onGenerateResult: (value: string) => void;
@@ -26,6 +27,7 @@ const QRCard: React.FC<QRCardProps> = ({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDotStyleModalOpen, setIsDotStyleModalOpen] = useState(false);
+    const [isColorModalOpen, setIsColorModalOpen] = useState(false);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [selectedConfig, setSelectedConfig] = useState<string>('');
@@ -69,6 +71,14 @@ const QRCard: React.FC<QRCardProps> = ({
         setIsDotStyleModalOpen(false);
         // 更新customOptions中的dotStyle
         const updatedOptions = { ...customOptions, dotStyle: newDotStyle };
+        setCustomOptions(updatedOptions);
+        // 通知父组件customOptions已更新
+        onCustomOptionsChange?.(updatedOptions);
+    };
+
+    const handleColorConfirm = (fgColor: string, bgColor: string) => {
+        // 更新customOptions中的颜色
+        const updatedOptions = { ...customOptions, fgColor, bgColor };
         setCustomOptions(updatedOptions);
         // 通知父组件customOptions已更新
         onCustomOptionsChange?.(updatedOptions);
@@ -167,7 +177,7 @@ const QRCard: React.FC<QRCardProps> = ({
                         <button 
                             onClick={() => {
                                 setSelectedConfig('颜色');
-                                setIsModalOpen(true);
+                                setIsColorModalOpen(true);
                             }}
                             className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                         >
@@ -198,6 +208,14 @@ const QRCard: React.FC<QRCardProps> = ({
                 </div>
             )}
 
+            {/* Color Modal */}
+            <ColorModal
+                isOpen={isColorModalOpen}
+                onClose={() => setIsColorModalOpen(false)}
+                onConfirm={handleColorConfirm}
+                currentFgColor={customOptions.fgColor}
+                currentBgColor={customOptions.bgColor}
+            />
             {/* DotStyle Modal */}
             <DotStyleModal
                 isOpen={isDotStyleModalOpen}
