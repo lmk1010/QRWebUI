@@ -1,7 +1,7 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
-import { QRCode } from 'react-qrcode-logo';
+import React, { useState, useRef, useEffect } from 'react';
 import { toPng } from 'html-to-image';
 import CustomizationModal, { CustomOptions } from './CustomizationModal';
+import QRCodeJS from 'qrcode';
 
 interface QrPreviewCardProps {
     generatedValue: string;
@@ -14,35 +14,34 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
 }) => {
     const [options, setCustomOptions] = useState<CustomOptions>(customOptions);
 
-    // 默认配置
     const defaultOptions: CustomOptions = {
         content: generatedValue,
-        dotStyle: 'squares',
-        fgColor: '#000000',
-        bgColor: '#ffffff',
-        logoFile: null,
-        size: 200,
-        margin: 4
+        dotStyle: 'squares',  // 选择默认点样式
+        fgColor: '#000000',   // 前景色
+        bgColor: '#ffffff',   // 背景色
+        logoFile: null,       // logo 文件
+        size: 200,            // 二维码大小
+        margin: 4             // 边距
     };
 
     useEffect(() => {
         setCustomOptions(customOptions);
     }, [customOptions]);
 
-    // 重置为默认配置
     const handleReset = () => {
         setCustomOptions(defaultOptions);
     };
 
-    const [isModalOpen, setIsModalOpen] = useState(false);  // 控制定制化弹框是否打开
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
     const qrCodeRef = useRef<HTMLDivElement>(null);
+    const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const handleDownloadImage = async () => {
-        if (!qrCodeRef.current) return;
+        if (!canvasRef.current) return;
         try {
-            const dataUrl = await toPng(qrCodeRef.current, {
-                backgroundColor: '#ffffff' // 强制设置白色背景
+            const dataUrl = await toPng(canvasRef.current, {
+                backgroundColor: '#ffffff',
             });
             const link = document.createElement('a');
             link.download = 'qrcode.png';
@@ -53,27 +52,71 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
         }
     };
 
-
-    const logoSrc = useMemo(() => {
-        if (options.logoFile && typeof options.logoFile === 'string') return options.logoFile;
-        return undefined;
-    }, [options.logoFile]);
-
-    // 打开定制化设置弹框
     const openCustomizationModal = () => {
         setIsModalOpen(true);
     };
 
-    // 关闭定制化设置弹框
     const closeCustomizationModal = () => {
         setIsModalOpen(false);
     };
 
-    // 确认定制化选项
     const handleCustomizationConfirm = (newOptions: CustomOptions) => {
-        setCustomOptions(newOptions); // 更新 customOptions 状态
+        setCustomOptions(newOptions);
         closeCustomizationModal();
     };
+
+    const drawQRCodeWithCustomDots = (canvas: HTMLCanvasElement) => {
+        if (!canvas) return;
+
+        // 配置二维码生成选项
+        const qrOptions = {
+            width: options.size,
+            margin: options.margin,
+            color: {
+                dark: options.fgColor,
+                light: options.bgColor,
+            },
+            errorCorrectionLevel: options.errorCorrectionLevel || 'H',
+            type: 'canvas',
+        };
+
+        // 生成二维码
+        QRCodeJS.toCanvas(canvas, generatedValue, qrOptions, (error) => {
+            if (error) {
+                console.error('QR Code generation failed:', error);
+                return;
+            }
+
+            // 如果有Logo，绘制Logo
+            if (options.logoFile) {
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+
+                const img = new Image();
+                img.onload = () => {
+                    const logoSize = options.logoWidth || options.size * 0.2; // Logo默认大小为二维码的20%
+                    const logoX = (options.size - logoSize) / 2;
+                    const logoY = (options.size - logoSize) / 2;
+
+                    // 清除Logo区域的二维码
+                    ctx.fillStyle = options.bgColor;
+                    ctx.fillRect(logoX, logoY, logoSize, logoSize);
+
+                    // 绘制Logo
+                    ctx.globalAlpha = options.logoOpacity || 1;
+                    ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
+                    ctx.globalAlpha = 1;
+                };
+                img.src = options.logoFile;
+            }
+        });
+    };
+
+    useEffect(() => {
+        if (canvasRef.current) {
+            drawQRCodeWithCustomDots(canvasRef.current);
+        }
+    }, [options, generatedValue]);
 
     if (!generatedValue) {
         return (
@@ -88,7 +131,6 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             className="bg-white shadow-md rounded-md p-4 w-full max-w-sm flex flex-col items-center"
             ref={cardRef}
         >
-            {/* Title Row */}
             <div className="mb-12 text-gray-700 text-sm self-start flex items-center justify-between w-full">
                 <div>
                     Style: <span className="font-bold">Basic Style</span>
@@ -106,7 +148,6 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                 </div>
             </div>
 
-            {/* QR Code Display */}
             <div
                 style={{
                     padding: options.margin,
@@ -114,28 +155,16 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                 }}
                 ref={qrCodeRef}
             >
-                <QRCode
-                    value={generatedValue}
-                    fgColor={options.fgColor}
-                    bgColor={options.bgColor}
-                    size={options.size}
-                    logoImage={logoSrc}
-                    logoWidth={options.size * 0.25}
-                    removeQrCodeBehindLogo
-                    quietZone={options.margin}
-                    qrStyle={options.dotStyle === 'squares' ? 'squares' : options.dotStyle}
-                />
+                <canvas ref={canvasRef} />
             </div>
 
             <p className="text-gray-500 text-xs mt-6">
                 QR Code, {options.size}×{options.size}px, Error correction level:
             </p>
 
-            {/* Action Buttons */}
             <div className="mt-10 flex flex-col w-full space-y-2">
-
                 <button
-                    onClick={openCustomizationModal}  // 点击弹出定制化设置弹框
+                    onClick={openCustomizationModal}
                     className="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors"
                 >
                     Beautify QR Code
@@ -148,16 +177,12 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                 </button>
             </div>
 
-
-            {/* Customization Modal */}
             <CustomizationModal
-                customOptions={options} // 将当前的 options 传递给 CustomizationModal
-                isOpen={isModalOpen}  // 控制是否显示的逻辑
+                customOptions={options}
+                isOpen={isModalOpen}
                 onClose={closeCustomizationModal}
-                onConfirm={handleCustomizationConfirm} // 传递更新选项的回调函数
+                onConfirm={handleCustomizationConfirm}
             />
-
-
         </div>
     );
 };

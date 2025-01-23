@@ -9,6 +9,13 @@ export interface CustomOptions {
     size: number;               // 二维码大小
     margin: number;             // 二维码边距
     content: string;            // 二维码内容
+    errorCorrectionLevel?: 'L' | 'M' | 'Q' | 'H';  // 纠错级别
+    logoWidth?: number;         // Logo宽度
+    logoHeight?: number;        // Logo高度
+    logoOpacity?: number;       // Logo透明度
+    qrStyle?: 'dots' | 'squares';  // QR码样式
+    eyeRadius?: number;         // 定位点圆角
+    quietZone?: number;         // 静止区域大小
 }
 
 interface CustomizationModalProps {
