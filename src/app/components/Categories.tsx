@@ -23,10 +23,10 @@ export const mainCategories: MainCategory[] = [
         type: 'contact',
         title: 'Contact'
     },
-    {
-        type: 'file',
-        title: 'File'
-    },
+    // {
+    //     type: 'file',
+    //     title: 'File'
+    // },
     {
         type: 'app',
         title: 'App'

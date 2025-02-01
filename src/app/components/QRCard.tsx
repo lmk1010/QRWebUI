@@ -32,8 +32,6 @@ const QRCard: React.FC<QRCardProps> = ({
     const [isColorModalOpen, setIsColorModalOpen] = useState(false);
     const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
     const [logoFile, setLogoFile] = useState<string | null>(null);
-    const [isDragging, setIsDragging] = useState(false);
-
 
     // 定义联系人信息状态
     const [contactInfo, setContactInfo] = useState({
@@ -91,6 +89,15 @@ const QRCard: React.FC<QRCardProps> = ({
             }
         
             value = url;  // 只传递纯 URL，避免带有标签
+        } else if (selectedMainType === 'file') {
+            // 处理PDF文件内容
+            if (customText && customText.startsWith('data:application/pdf')) {
+                value = customText; // 直接使用Base64编码的PDF内容
+            } else {
+                setShowAlert(true);
+                setTimeout(() => setShowAlert(false), 3000);
+                return;
+            }
         } else if (selectedMainType === 'contact') {
             // 获取联系人的字段值
     
@@ -211,48 +218,7 @@ const QRCard: React.FC<QRCardProps> = ({
               {/* Input form */}
               {selectedMainType && (
                 <div className="w-full mt-4">
-                    {selectedMainType === 'file' ? (
-                        <div
-                            className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`}
-                            onDragOver={(e) => {
-                                e.preventDefault();
-                                setIsDragging(true);
-                            }}
-                            onDragLeave={(e) => {
-                                e.preventDefault();
-                                setIsDragging(false);
-                            }}
-                            onDrop={(e) => {
-                                e.preventDefault();
-                                setIsDragging(false);
-                                const file = e.dataTransfer.files[0];
-                                if (file) {
-                                    setCustomText(file.name);
-                                }
-                            }}
-                            onClick={() => document.getElementById('fileInput')?.click()}
-                        >
-                            <div className="flex flex-col items-center">
-                                <FaFile className="w-12 h-12 text-gray-400 mb-2" />
-                                <p className="text-gray-600">Click or drag to upload file</p>
-                                <p className="text-sm text-gray-500 mt-1">Supports all file formats</p>
-                                {customText && (
-                                    <p className="mt-4 text-blue-500">{customText}</p>
-                                )}
-                            </div>
-                            <input
-                                id="fileInput"
-                                type="file"
-                                className="hidden"
-                                onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) {
-                                        setCustomText(file.name);
-                                    }
-                                }}
-                            />
-                        </div>
-                    ) : selectedMainType === 'contact' ? (
+                    {selectedMainType === 'contact' ? (
                         // Contact input form
                         <div className="space-y-4">
                             {/* Name Fields - Side by side */}
