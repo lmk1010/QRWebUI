@@ -45,16 +45,7 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
         { id: 'hexagon', name: 'Hexagon', image: '/assets/dot_styles/hexagon.png' },
         { id: 'star', name: 'Star', image: '/assets/dot_styles/star.png' },
         { id: 'diamond', name: 'Diamond', image: '/assets/dot_styles/diamond.png' },
-        { id: 'heart', name: 'Heart', image: '/assets/dot_styles/heart.png' },
-        { id: 'cloud', name: 'Cloud', image: '/assets/dot_styles/cloud.png' },
-        { id: 'tag', name: 'Tag', image: '/assets/dot_styles/tag.png' },
-        { id: 'crown', name: 'Crown', image: '/assets/dot_styles/crown.png' },
-        { id: 'pentagon', name: 'Pentagon', image: '/assets/dot_styles/pentagon.png' },
-        { id: 'triangle', name: 'Triangle', image: '/assets/dot_styles/triangle.png' },
-        { id: 'leaf', name: 'Leaf', image: '/assets/dot_styles/leaf.png' },
-        { id: 'circle', name: 'Ring', image: '/assets/dot_styles/circle.png' },
-        { id: 'cross', name: 'Cross', image: '/assets/dot_styles/cross.png' },
-        { id: 'shield', name: 'Shield', image: '/assets/dot_styles/shield.png' }
+        { id: 'heart', name: 'Heart', image: '/assets/dot_styles/heart.png' }
     ];
 
     const handleConfirm = () => {
@@ -118,7 +109,7 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
                 {/* Inner positioning point style */}
                 <div className="mb-6">
                     <h3 className="text-lg font-medium mb-3">Inner Position Marker Style</h3>
-                    <div className="grid grid-cols-8 gap-2">
+                    <div className="grid grid-cols-7 gap-2">
                         {innerEyeStyles.map((style) => (
                             <div
                                 key={style.id}
