@@ -62,7 +62,7 @@ const LogoModal: React.FC<LogoModalProps> = ({
     return (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                <h2 className="text-xl font-semibold mb-4">Logo 设置</h2>
+                <h2 className="text-xl font-semibold mb-4">Logo Settings</h2>
 
                 {/* 上传区域 */}
                 <div
@@ -79,7 +79,7 @@ const LogoModal: React.FC<LogoModalProps> = ({
                                 alt="Logo preview"
                                 className="w-24 h-24 object-contain mb-2"
                             />
-                            <p className="text-sm text-gray-500">点击或拖拽更换Logo</p>
+                            <p className="text-sm text-gray-500">Click or drag to change logo</p>
                         </div>
                     ) : (
                         <div className="flex flex-col items-center">
@@ -96,8 +96,8 @@ const LogoModal: React.FC<LogoModalProps> = ({
                                     d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                                 />
                             </svg>
-                            <p className="text-gray-600">点击或拖拽上传Logo</p>
-                            <p className="text-sm text-gray-500 mt-1">支持 PNG, JPG, SVG 格式</p>
+                            <p className="text-gray-600">Click or drag to upload logo</p>
+                            <p className="text-sm text-gray-500 mt-1">Support PNG, JPG, SVG format</p>
                         </div>
                     )}
                     <input
@@ -111,7 +111,7 @@ const LogoModal: React.FC<LogoModalProps> = ({
 
                 {/* 预设图标区域 */}
                 <div className="mt-6">
-                    <h3 className="text-sm font-medium text-gray-700 mb-3">预设图标</h3>
+                    <h3 className="text-sm font-medium text-gray-700 mb-3">Preset Icons</h3>
                     <div className="grid grid-cols-4 gap-4">
                         {["/assets/logo_default/icons8-discord-480.png", "/assets/logo_default/icons8-facebook-480 copy.png", "/assets/logo_default/icons8-facebook-480.png", "/assets/logo_default/icons8-github-480.png", "/assets/logo_default/icons8-instagram-480.png", "/assets/logo_default/icons8-telegram-app-480.png", "/assets/logo_default/icons8-tiktok-144.png", "/assets/logo_default/icons8-whatsapp-144.png", "/assets/logo_default/icons8-youtube-480.png"].map((icon, index) => (
                             <div
@@ -135,13 +135,13 @@ const LogoModal: React.FC<LogoModalProps> = ({
                         onClick={onClose}
                         className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                     >
-                        取消
+                        Cancel
                     </button>
                     <button
                         onClick={handleConfirm}
                         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
                     >
-                        确认
+                        Confirm
                     </button>
                 </div>
             </div>

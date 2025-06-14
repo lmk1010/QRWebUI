@@ -17,8 +17,8 @@ const colors = [
 ];
 
 const colorGroups = [
-    { title: '灰度', colors: colors.slice(0, 11) },
-    { title: '彩色', colors: colors.slice(11) }
+    { title: 'Gray', colors: colors.slice(0, 11) },
+    { title: 'Color', colors: colors.slice(11) }
 ];
 
 const ColorModal: React.FC<ColorModalProps> = ({
@@ -57,11 +57,11 @@ const ColorModal: React.FC<ColorModalProps> = ({
                     </svg>
                 </button>
 
-                <h2 className="text-xl font-semibold mb-4">选择颜色</h2>
+                <h2 className="text-xl font-semibold mb-4">Choose Colors</h2>
 
                 {/* 前景色选择 */}
                 <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">二维码颜色</h3>
+                    <h3 className="text-lg font-medium mb-3">QR Code Color</h3>
                     {colorGroups.map((group) => (
                         <div key={group.title} className="mb-4">
                             <h4 className="text-sm font-medium text-gray-600 mb-2 pb-2 border-b border-gray-200">{group.title}</h4>
@@ -81,7 +81,7 @@ const ColorModal: React.FC<ColorModalProps> = ({
 
                 {/* 背景色选择 */}
                 <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">背景颜色</h3>
+                    <h3 className="text-lg font-medium mb-3">Background Color</h3>
                     {colorGroups.map((group) => (
                         <div key={group.title} className="mb-4">
                             <h4 className="text-sm font-medium text-gray-600 mb-2 pb-2 border-b border-gray-200">{group.title}</h4>

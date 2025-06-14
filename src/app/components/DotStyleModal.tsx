@@ -23,41 +23,38 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
     const [selectedInnerStyle, setSelectedInnerStyle] = useState<CustomOptions['innerEyeStyle']>(currentInnerEyeStyle);
 
     const dotStyles = [
-        { id: 'squares', name: '方形', image: '/assets/dot_styles/square.png' },
-        { id: 'dots', name: '圆形', image: '/assets/dot_styles/dots.png' },
-        { id: 'fluid', name: '流体', image: '/assets/dot_styles/fluid.png' },
-        { id: 'hexagon', name: '六边形', image: '/assets/dot_styles/hexagon.png' },
-        { id: 'star', name: '星形', image: '/assets/dot_styles/star.png' },
-        { id: 'diamond', name: '菱形', image: '/assets/dot_styles/diamond.png' },
-        { id: 'heart', name: '心形', image: '/assets/dot_styles/heart.png' }
+        { id: 'squares', name: 'Square', image: '/assets/dot_styles/square.png' },
+        { id: 'dots', name: 'Circle', image: '/assets/dot_styles/dots.png' },
+        { id: 'fluid', name: 'Fluid', image: '/assets/dot_styles/fluid.png' },
+        { id: 'hexagon', name: 'Hexagon', image: '/assets/dot_styles/hexagon.png' },
+        { id: 'star', name: 'Star', image: '/assets/dot_styles/star.png' },
+        { id: 'diamond', name: 'Diamond', image: '/assets/dot_styles/diamond.png' },
+        { id: 'heart', name: 'Heart', image: '/assets/dot_styles/heart.png' }
     ];
 
     const outerEyeStyles = [
-        { id: 'squares', name: '方形', image: '/assets/dot_styles/square.png' },
-        { id: 'rounded', name: '圆角方形', image: '/assets/dot_styles/rounded.png' },
-        { id: 'circle', name: '圆形', image: '/assets/dot_styles/circle.png' },
-        { id: 'three-rounded', name: '三角圆形', image: '/assets/dot_styles/three-rounded.png' },
-        { id: 'two-rounded', name: '双角圆形', image: '/assets/dot_styles/two-rounded.png' },
-        { id: 'one-rounded', name: '单角圆形', image: '/assets/dot_styles/one-rounded.png' }
+        { id: 'squares', name: 'Square', image: '/assets/dot_styles/square.png' },
+        { id: 'rounded', name: 'Rounded Square', image: '/assets/out_style/roundom.png' },
+        { id: 'circle', name: 'Circle', image: '/assets/out_style/circle.png' }
     ];
 
     const innerEyeStyles = [
-        { id: 'squares', name: '方形', image: '/assets/dot_styles/square.png' },
-        { id: 'dots', name: '圆形', image: '/assets/dot_styles/dots.png' },
-        { id: 'fluid', name: '流体', image: '/assets/dot_styles/fluid.png' },
-        { id: 'hexagon', name: '六边形', image: '/assets/dot_styles/hexagon.png' },
-        { id: 'star', name: '星形', image: '/assets/dot_styles/star.png' },
-        { id: 'diamond', name: '菱形', image: '/assets/dot_styles/diamond.png' },
-        { id: 'heart', name: '心形', image: '/assets/dot_styles/heart.png' },
-        { id: 'cloud', name: '云形', image: '/assets/dot_styles/cloud.png' },
-        { id: 'tag', name: '标签', image: '/assets/dot_styles/tag.png' },
-        { id: 'crown', name: '皇冠', image: '/assets/dot_styles/crown.png' },
-        { id: 'pentagon', name: '五边形', image: '/assets/dot_styles/pentagon.png' },
-        { id: 'triangle', name: '三角形', image: '/assets/dot_styles/triangle.png' },
-        { id: 'leaf', name: '叶形', image: '/assets/dot_styles/leaf.png' },
-        { id: 'circle', name: '圆环', image: '/assets/dot_styles/circle.png' },
-        { id: 'cross', name: '十字', image: '/assets/dot_styles/cross.png' },
-        { id: 'shield', name: '盾牌', image: '/assets/dot_styles/shield.png' }
+        { id: 'squares', name: 'Square', image: '/assets/dot_styles/square.png' },
+        { id: 'dots', name: 'Circle', image: '/assets/dot_styles/dots.png' },
+        { id: 'fluid', name: 'Fluid', image: '/assets/dot_styles/fluid.png' },
+        { id: 'hexagon', name: 'Hexagon', image: '/assets/dot_styles/hexagon.png' },
+        { id: 'star', name: 'Star', image: '/assets/dot_styles/star.png' },
+        { id: 'diamond', name: 'Diamond', image: '/assets/dot_styles/diamond.png' },
+        { id: 'heart', name: 'Heart', image: '/assets/dot_styles/heart.png' },
+        { id: 'cloud', name: 'Cloud', image: '/assets/dot_styles/cloud.png' },
+        { id: 'tag', name: 'Tag', image: '/assets/dot_styles/tag.png' },
+        { id: 'crown', name: 'Crown', image: '/assets/dot_styles/crown.png' },
+        { id: 'pentagon', name: 'Pentagon', image: '/assets/dot_styles/pentagon.png' },
+        { id: 'triangle', name: 'Triangle', image: '/assets/dot_styles/triangle.png' },
+        { id: 'leaf', name: 'Leaf', image: '/assets/dot_styles/leaf.png' },
+        { id: 'circle', name: 'Ring', image: '/assets/dot_styles/circle.png' },
+        { id: 'cross', name: 'Cross', image: '/assets/dot_styles/cross.png' },
+        { id: 'shield', name: 'Shield', image: '/assets/dot_styles/shield.png' }
     ];
 
     const handleConfirm = () => {
@@ -70,11 +67,11 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
     return (
         <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 w-full max-w-4xl">
-                <h2 className="text-xl font-semibold mb-4">二维码样式设置</h2>
+                <h2 className="text-xl font-semibold mb-4">QR Code Style Settings</h2>
 
-                {/* 普通点样式 */}
+                {/* Regular dots style */}
                 <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">普通点样式</h3>
+                    <h3 className="text-lg font-medium mb-3">Regular Dots Style</h3>
                     <div className="grid grid-cols-7 gap-2">
                         {dotStyles.map((style) => (
                             <div
@@ -95,10 +92,10 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
                     </div>
                 </div>
 
-                {/* 外部定位点样式 */}
+                {/* Outer positioning point style */}
                 <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">外部定位点样式</h3>
-                    <div className="grid grid-cols-6 gap-2">
+                    <h3 className="text-lg font-medium mb-3">Outer Position Marker Style</h3>
+                    <div className="grid grid-cols-7 gap-2">
                         {outerEyeStyles.map((style) => (
                             <div
                                 key={style.id}
@@ -118,9 +115,9 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
                     </div>
                 </div>
 
-                {/* 内部定位点样式 */}
+                {/* Inner positioning point style */}
                 <div className="mb-6">
-                    <h3 className="text-lg font-medium mb-3">内部定位点样式</h3>
+                    <h3 className="text-lg font-medium mb-3">Inner Position Marker Style</h3>
                     <div className="grid grid-cols-8 gap-2">
                         {innerEyeStyles.map((style) => (
                             <div
@@ -147,13 +144,13 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
                         onClick={onClose}
                         className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                     >
-                        取消
+                        Cancel
                     </button>
                     <button
                         onClick={handleConfirm}
                         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
                     >
-                        确认
+                        Confirm
                     </button>
                 </div>
             </div>

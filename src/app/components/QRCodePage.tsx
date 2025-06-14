@@ -1,5 +1,5 @@
 // src/app/QRCodePage.tsx
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import QrPreviewCard from '../components/QrPreviewCard';
 import QRCard from '../components/QRCard';
@@ -26,10 +26,23 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
         errorCorrectionLevel: 'H'
     });
 
+    // 添加ref用于滚动到预览区域
+    const previewRef = useRef<HTMLDivElement>(null);
+
     // 生成二维码的回调
     const handleGenerateResult = (value: string) => {
         setQrValue(value);
         setCustomOptions(prev => ({ ...prev, content: value }));
+        
+        // 延迟一小段时间后滚动到预览区域，确保DOM更新完成
+        setTimeout(() => {
+            if (previewRef.current) {
+                previewRef.current.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }
+        }, 100);
     };
 
     const handleCustomOptionsChange = (newOptions: CustomOptions) => {
@@ -49,7 +62,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
             )}
 
             <div className="text-center mt-8 mb-12">
-                <h1 className="text-2xl font-bold">QR Code Generation</h1>
+                <h1 className="text-2xl font-bold">QR Code Generator</h1>
                 <hr className="mt-4 w-200 mx-auto border-b-2 border-blue-500" />
             </div>
 
@@ -68,7 +81,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                 </div>
 
                 {/* 右侧：二维码预览卡片或提示信息 */}
-                <div className="w-full max-w-sm flex">
+                <div ref={previewRef} className="w-full max-w-sm flex">
                     {qrValue ? (
                         <QrPreviewCard
                             generatedValue={qrValue}
@@ -77,8 +90,8 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                         />
                     ) : (
                         <div className="text-gray-500 text-sm text-center flex flex-col items-center justify-center">
-                            <p>QR code not generated yet</p>
-                            <p>Please select a category and subfunction on the left and enter the content.</p>
+                            <p>QR code not yet generated</p>
+                            <p>Please select category and function on the left and input content.</p>
                         </div>
                     )}
                 </div>

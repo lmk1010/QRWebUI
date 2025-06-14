@@ -4,10 +4,21 @@ import InteractiveContent, { InteractiveContentRef } from './InteractiveContent'
 
 const ClientHomePage: React.FC = () => {
     const interactiveRef = useRef<InteractiveContentRef>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     const handleStartQRCode = () => {
         if (interactiveRef.current) {
             interactiveRef.current.showQRPage();
+            
+            // 延迟一小段时间后滚动到二维码生成器组件，确保组件已经显示
+            setTimeout(() => {
+                if (contentRef.current) {
+                    contentRef.current.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            }, 200);
         }
     };
 
@@ -24,7 +35,9 @@ const ClientHomePage: React.FC = () => {
             </div>
 
             {/* 交互式内容 - 紧跟在CTA按钮后面 */}
-            <InteractiveContent ref={interactiveRef} />
+            <div ref={contentRef}>
+                <InteractiveContent ref={interactiveRef} />
+            </div>
         </>
     );
 };
