@@ -1,30 +1,21 @@
 "use client";
 import React, { useRef } from 'react';
+import { useRouter } from 'next/navigation';
 import InteractiveContent, { InteractiveContentRef } from './InteractiveContent';
 
 const ClientHomePage: React.FC = () => {
+    const router = useRouter();
     const interactiveRef = useRef<InteractiveContentRef>(null);
     const contentRef = useRef<HTMLDivElement>(null);
 
     const handleStartQRCode = () => {
-        if (interactiveRef.current) {
-            interactiveRef.current.showQRPage();
-            
-            // 延迟一小段时间后滚动到二维码生成器组件，确保组件已经显示
-            setTimeout(() => {
-                if (contentRef.current) {
-                    contentRef.current.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
-                }
-            }, 200);
-        }
+        // Navigate to dedicated QR code generator page
+        router.push('/qr-generator');
     };
 
     return (
         <>
-            {/* CTA按钮 - 放在标题下方 */}
+            {/* CTA button - placed below the title */}
             <div className="max-w-4xl mx-auto p-6 bg-white text-center mb-8">
                 <button 
                     onClick={handleStartQRCode}
@@ -34,7 +25,7 @@ const ClientHomePage: React.FC = () => {
                 </button>
             </div>
 
-            {/* 交互式内容 - 紧跟在CTA按钮后面 */}
+            {/* Interactive content - kept for other features */}
             <div ref={contentRef}>
                 <InteractiveContent ref={interactiveRef} />
             </div>

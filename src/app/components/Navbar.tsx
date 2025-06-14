@@ -21,6 +21,9 @@ const Navbar: React.FC = () => {
                         <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors">
                             Home
                         </Link>
+                        <Link href="/qr-generator" className="text-gray-600 hover:text-blue-600 transition-colors font-semibold">
+                            QR Generator
+                        </Link>
                         <Link href="/features" className="text-gray-600 hover:text-blue-600 transition-colors">
                             Features
                         </Link>
