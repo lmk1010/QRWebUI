@@ -3,14 +3,120 @@ import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 
 export const metadata: Metadata = {
-    title: 'QR Code Generator FAQ - Frequently Asked Questions',
-    description: 'Find answers to common questions about our free QR code generator. Learn about QR code creation, customization, formats, and best practices.',
-    keywords: 'QR code FAQ, QR code questions, QR code help, QR code generator support, QR code troubleshooting',
+    title: 'QR Code Generator FAQ - Frequently Asked Questions | QRCodeHub',
+    description: 'Find answers to common questions about our free QR code generator. Learn about QR code creation, customization, formats, troubleshooting, and best practices. Get help with QR code scanning and usage.',
+    keywords: 'QR code FAQ, QR code questions, QR code help, QR code generator support, QR code troubleshooting, QR code problems, QR code answers, QR code assistance',
+    authors: [{ name: "QRCodeHub" }],
+    robots: "index, follow",
+    openGraph: {
+        title: "QR Code Generator FAQ - Frequently Asked Questions",
+        description: "Find answers to common questions about our free QR code generator. Learn about QR code creation, customization, formats, and best practices.",
+        url: "https://qrcodehub.net/faq",
+        siteName: "QRCodeHub - Free QR Code Generator",
+        type: "website",
+        locale: "en_US",
+        images: [
+            {
+                url: "https://qrcodehub.net/og-image-faq.png",
+                width: 1200,
+                height: 630,
+                alt: "QR Code Generator FAQ - Get Answers to Your Questions"
+            }
+        ]
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "QR Code Generator FAQ - Frequently Asked Questions",
+        description: "Find answers to common questions about our free QR code generator. Learn about QR code creation, customization, and best practices.",
+        site: "@qrcodehub",
+        images: ["https://qrcodehub.net/twitter-image-faq.png"]
+    },
+    alternates: {
+        canonical: "https://qrcodehub.net/faq",
+    },
 };
 
 export default function FAQPage() {
+    // FAQ结构化数据
+    const faqStructuredData = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is this QR code generator really free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! Our QR code generator is completely free to use. You can create unlimited QR codes without any registration, hidden costs, or subscription fees. We believe in providing free access to essential digital tools for everyone."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do I need to register or create an account?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No registration required! You can start creating QR codes immediately without providing any personal information. Simply visit our homepage and begin generating QR codes right away."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What types of QR codes can I create?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You can create QR codes for various purposes: Website URLs and links, Plain text messages, Email addresses with pre-filled content, Phone numbers for direct calling, SMS messages, WiFi network credentials, and Social media profiles."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I customize my QR code design?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely! You can customize colors, add logos, change patterns, and adjust the design to match your brand or preferences. Our customization options include foreground and background colors, logo integration, and various style patterns."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What file formats can I download?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You can download your QR codes in multiple formats: PNG (best for web use and digital applications), JPG (smaller file size, good for general use), SVG (vector format, perfect for scalable graphics), and PDF (ideal for professional printing and documents)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why won't my QR code scan?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Common reasons include: Poor contrast between foreground and background colors, QR code too small or too large for scanning distance, Damaged or distorted QR code, Logo blocking too much of the code, Poor lighting conditions, or Camera focus issues."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my data stored on your servers?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No! We prioritize your privacy. All QR code generation happens in your browser, and we don't store your QR code content on our servers. Your data remains completely private and secure throughout the entire process."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do QR codes expire?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "QR codes themselves don't expire - they're just encoded data. However, if your QR code links to a website or online content, that content might become unavailable over time. Static QR codes (like text or contact info) will work indefinitely as long as the physical code remains readable."
+                }
+            }
+        ]
+    };
+
     return (
         <div className="flex flex-col min-h-screen bg-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(faqStructuredData)
+                }}
+            />
             <Navbar />
             
             <main className="flex-grow container mx-auto px-4 py-8">

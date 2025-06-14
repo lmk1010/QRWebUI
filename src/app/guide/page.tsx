@@ -3,14 +3,117 @@ import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 
 export const metadata: Metadata = {
-    title: 'How to Create QR Code - Complete Step-by-Step Guide',
-    description: 'Learn how to create QR codes with our comprehensive guide. Step-by-step instructions for generating custom QR codes for websites, text, WiFi, and more.',
-    keywords: 'how to create QR code, QR code tutorial, QR code guide, make QR code, generate QR code step by step',
+    title: 'How to Create QR Code - Complete Step-by-Step Guide | QRCodeHub',
+    description: 'Learn how to create QR codes with our comprehensive guide. Step-by-step instructions for generating custom QR codes for websites, text, WiFi, email, phone, SMS and more. Perfect for beginners and professionals.',
+    keywords: 'how to create QR code, QR code tutorial, QR code guide, make QR code, generate QR code step by step, QR code instructions, QR code help, learn QR codes',
+    authors: [{ name: "QRCodeHub" }],
+    robots: "index, follow",
+    openGraph: {
+        title: "How to Create QR Code - Complete Step-by-Step Guide",
+        description: "Learn how to create QR codes with our comprehensive guide. Step-by-step instructions for generating custom QR codes for websites, text, WiFi, and more.",
+        url: "https://qrcodehub.net/guide",
+        siteName: "QRCodeHub - Free QR Code Generator",
+        type: "article",
+        locale: "en_US",
+        images: [
+            {
+                url: "https://qrcodehub.net/og-image-guide.png",
+                width: 1200,
+                height: 630,
+                alt: "QR Code Creation Guide - Step by Step Tutorial"
+            }
+        ]
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "How to Create QR Code - Complete Step-by-Step Guide",
+        description: "Learn how to create QR codes with our comprehensive guide. Step-by-step instructions for generating custom QR codes.",
+        site: "@qrcodehub",
+        images: ["https://qrcodehub.net/twitter-image-guide.png"]
+    },
+    alternates: {
+        canonical: "https://qrcodehub.net/guide",
+    },
 };
 
 export default function GuidePage() {
+    // 结构化数据 - HowTo Schema
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Create QR Code - Complete Guide",
+        "description": "Learn how to create QR codes with our comprehensive step-by-step guide",
+        "image": "https://qrcodehub.net/guide-hero-image.png",
+        "totalTime": "PT5M",
+        "estimatedCost": {
+            "@type": "MonetaryAmount",
+            "currency": "USD",
+            "value": "0"
+        },
+        "supply": [
+            {
+                "@type": "HowToSupply",
+                "name": "Computer or Mobile Device"
+            },
+            {
+                "@type": "HowToSupply", 
+                "name": "Internet Connection"
+            }
+        ],
+        "tool": [
+            {
+                "@type": "HowToTool",
+                "name": "QRCodeHub Free QR Code Generator"
+            }
+        ],
+        "step": [
+            {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Enter Your Content",
+                "text": "Type or paste the text, URL, or information you want to encode in the QR code generator.",
+                "image": "https://qrcodehub.net/step1-image.png"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Customize (Optional)",
+                "text": "Choose colors, add your logo, or modify the design to create a custom QR code.",
+                "image": "https://qrcodehub.net/step2-image.png"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Generate QR Code",
+                "text": "Click the generate button to create your QR code instantly.",
+                "image": "https://qrcodehub.net/step3-image.png"
+            },
+            {
+                "@type": "HowToStep",
+                "position": 4,
+                "name": "Download & Use",
+                "text": "Download your QR code in your preferred format and start using it.",
+                "image": "https://qrcodehub.net/step4-image.png"
+            }
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "QRCodeHub"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "QRCodeHub"
+        }
+    };
+
     return (
         <div className="flex flex-col min-h-screen bg-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(structuredData)
+                }}
+            />
             <Navbar />
             
             <main className="flex-grow container mx-auto px-4 py-8">

@@ -3,14 +3,95 @@ import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 
 export const metadata: Metadata = {
-    title: 'QR Code Generator Features - Free Online QR Code Creator',
-    description: 'Discover all the powerful features of our free QR code generator. Create custom QR codes with colors, logos, and various formats. Fast, secure, and completely free.',
-    keywords: 'QR code features, custom QR codes, QR code generator features, free QR code maker, QR code customization',
+    title: 'QR Code Generator Features - Free Online QR Code Creator | QRCodeHub',
+    description: 'Discover all the powerful features of our free QR code generator. Create custom QR codes with colors, logos, and various formats. Fast, secure, and completely free with unlimited QR code generation.',
+    keywords: 'QR code features, custom QR codes, QR code generator features, free QR code maker, QR code customization, branded QR codes, QR code design, QR code formats',
+    authors: [{ name: "QRCodeHub" }],
+    robots: "index, follow",
+    openGraph: {
+        title: "QR Code Generator Features - Free Online QR Code Creator",
+        description: "Discover all the powerful features of our free QR code generator. Create custom QR codes with colors, logos, and various formats.",
+        url: "https://qrcodehub.net/features",
+        siteName: "QRCodeHub - Free QR Code Generator",
+        type: "website",
+        locale: "en_US",
+        images: [
+            {
+                url: "https://qrcodehub.net/og-image-features.png",
+                width: 1200,
+                height: 630,
+                alt: "QR Code Generator Features - Custom QR Codes"
+            }
+        ]
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "QR Code Generator Features - Free Online QR Code Creator",
+        description: "Discover all the powerful features of our free QR code generator. Create custom QR codes with colors, logos, and various formats.",
+        site: "@qrcodehub",
+        images: ["https://qrcodehub.net/twitter-image-features.png"]
+    },
+    alternates: {
+        canonical: "https://qrcodehub.net/features",
+    },
 };
 
 export default function FeaturesPage() {
+    // 结构化数据
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "QR Code Generator Features",
+        "description": "Discover all the powerful features of our free QR code generator. Create custom QR codes with colors, logos, and various formats.",
+        "url": "https://qrcodehub.net/features",
+        "mainEntity": {
+            "@type": "SoftwareApplication",
+            "name": "QRCodeHub QR Code Generator",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Web Browser",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "featureList": [
+                "Free QR Code Generation",
+                "Custom Colors and Design",
+                "Logo Integration",
+                "Multiple File Formats",
+                "High Resolution Output",
+                "Built-in QR Scanner",
+                "Privacy Protection",
+                "Instant Generation"
+            ]
+        },
+        "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home",
+                    "item": "https://qrcodehub.net"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Features",
+                    "item": "https://qrcodehub.net/features"
+                }
+            ]
+        }
+    };
+
     return (
         <div className="flex flex-col min-h-screen bg-white">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(structuredData)
+                }}
+            />
             <Navbar />
             
             <main className="flex-grow container mx-auto px-4 py-8">

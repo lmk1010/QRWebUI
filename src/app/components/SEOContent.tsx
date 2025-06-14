@@ -1,21 +1,12 @@
-"use client";
 import React from 'react';
 import Link from 'next/link';
 
 interface SEOContentProps {
-    onStartQRCode?: () => void;
     showOnlyHeader?: boolean;
     showOnlyContent?: boolean;
 }
 
-const SEOContent: React.FC<SEOContentProps> = ({ onStartQRCode, showOnlyHeader, showOnlyContent }) => {
-    const handleStartQRCode = () => {
-        // 直接调用传入的回调函数来切换到QR页面，不需要滚动
-        if (onStartQRCode) {
-            onStartQRCode();
-        }
-    };
-
+const SEOContent: React.FC<SEOContentProps> = ({ showOnlyHeader, showOnlyContent }) => {
     // 如果只显示内容部分，不显示标题
     if (showOnlyContent) {
         return (
@@ -198,12 +189,6 @@ const SEOContent: React.FC<SEOContentProps> = ({ onStartQRCode, showOnlyHeader, 
                     Create custom QR codes for websites, text, WiFi, social media, and more. 
                     No registration required - start creating QR codes now!
                 </p>
-                <button 
-                    onClick={handleStartQRCode}
-                    className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg shadow-lg hover:shadow-xl"
-                >
-                    Create QR Code Now - Free!
-                </button>
             </header>
         </div>
     );
