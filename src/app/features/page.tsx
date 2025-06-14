@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'QR Code Generator Features - Free Online QR Code Creator | QRCodeHub',
@@ -149,7 +150,7 @@ export default function FeaturesPage() {
                                 <div className="text-4xl mb-4">🔒</div>
                                 <h3 className="font-semibold text-red-800 mb-3 text-lg">Secure & Private</h3>
                                 <p className="text-gray-700">
-                                    Your data stays completely private. We don't store your QR code content 
+                                    Your data stays completely private. We don&apos;t store your QR code content 
                                     on our servers. Generate QR codes with complete privacy and security.
                                 </p>
                             </div>
@@ -274,12 +275,12 @@ export default function FeaturesPage() {
                         <p className="text-xl text-gray-600 mb-8">
                             Start generating professional QR codes with all these amazing features - completely free!
                         </p>
-                        <a 
+                        <Link
                             href="/" 
                             className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg"
                         >
                             Create QR Code Now
-                        </a>
+                        </Link>
                     </section>
                 </div>
             </main>

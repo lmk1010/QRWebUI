@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'QR Code Generator FAQ - Frequently Asked Questions | QRCodeHub',
@@ -128,7 +129,7 @@ export default function FAQPage() {
                         </h1>
                         <p className="text-xl text-gray-600 leading-relaxed">
                             Find answers to common questions about our free QR code generator. 
-                            Can't find what you're looking for? Contact us for more help.
+                            Can&apos;t find what you&apos;re looking for? Contact us for more help.
                         </p>
                     </header>
 
@@ -256,7 +257,7 @@ export default function FAQPage() {
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed">
                                     Yes, when done correctly! QR codes have built-in error correction that allows for some 
-                                    customization without affecting functionality. However, it's important to test your 
+                                    customization without affecting functionality. However, it&apos;s important to test your 
                                     customized QR codes before using them to ensure they scan properly across different devices.
                                 </p>
                             </div>
@@ -286,7 +287,7 @@ export default function FAQPage() {
 
                             <div className="p-6 bg-gray-50 rounded-lg border-l-4 border-green-500">
                                 <h3 className="font-semibold text-gray-800 mb-3 text-lg">
-                                    What's the minimum size for a QR code to work?
+                                    What&apos;s the minimum size for a QR code to work?
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed">
                                     The minimum recommended size is 2cm x 2cm (about 0.8 x 0.8 inches) for reliable scanning. 
@@ -297,10 +298,10 @@ export default function FAQPage() {
 
                             <div className="p-6 bg-gray-50 rounded-lg border-l-4 border-purple-500">
                                 <h3 className="font-semibold text-gray-800 mb-3 text-lg">
-                                    Why won't my QR code scan?
+                                    Why won&apos;t my QR code scan?
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed mb-3">
-                                    Common reasons why QR codes don't scan:
+                                    Common reasons why QR codes don&apos;t scan:
                                 </p>
                                 <ul className="list-disc list-inside text-gray-700 space-y-1">
                                     <li>Poor contrast between foreground and background colors</li>
@@ -317,7 +318,7 @@ export default function FAQPage() {
                                     Do QR codes expire?
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed">
-                                    QR codes themselves don't expire - they're just encoded data. However, if your QR code 
+                                    QR codes themselves don&apos;t expire - they&apos;re just encoded data. However, if your QR code 
                                     links to a website or online content, that content might become unavailable over time. 
                                     Static QR codes (like text or contact info) will work indefinitely as long as the 
                                     physical code remains readable.
@@ -330,7 +331,7 @@ export default function FAQPage() {
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed">
                                     No! We prioritize your privacy. All QR code generation happens in your browser, and we 
-                                    don't store your QR code content on our servers. Your data remains completely private 
+                                    don&apos;t store your QR code content on our servers. Your data remains completely private 
                                     and secure throughout the entire process.
                                 </p>
                             </div>
@@ -349,8 +350,8 @@ export default function FAQPage() {
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed">
                                     Place QR codes on flat, smooth surfaces at eye level when possible. Ensure good lighting 
-                                    and avoid reflective surfaces. Include a clear call-to-action like "Scan for menu" or 
-                                    "Scan to visit website" to encourage scanning. Consider the scanning distance when 
+                                    and avoid reflective surfaces. Include a clear call-to-action like &quot;Scan for menu&quot; or 
+                                    &quot;Scan to visit website&quot; to encourage scanning. Consider the scanning distance when 
                                     determining size.
                                 </p>
                             </div>
@@ -373,13 +374,13 @@ export default function FAQPage() {
                                 <p className="text-gray-700 leading-relaxed">
                                     Always test your QR codes before using them! Use multiple devices and QR scanner apps 
                                     to ensure compatibility. Test in different lighting conditions and from various distances. 
-                                    You can use our built-in QR scanner or your smartphone's camera to verify functionality.
+                                    You can use our built-in QR scanner or your smartphone&apos;s camera to verify functionality.
                                 </p>
                             </div>
 
                             <div className="p-6 bg-gray-50 rounded-lg border-l-4 border-red-500">
                                 <h3 className="font-semibold text-gray-800 mb-3 text-lg">
-                                    What's the maximum amount of data I can encode?
+                                    What&apos;s the maximum amount of data I can encode?
                                 </h3>
                                 <p className="text-gray-700 leading-relaxed">
                                     QR codes can store different amounts of data depending on the type: up to 4,296 alphanumeric 
@@ -396,21 +397,21 @@ export default function FAQPage() {
                             Still Have Questions?
                         </h2>
                         <p className="text-xl text-gray-600 mb-8">
-                            Can't find the answer you're looking for? We're here to help!
+                            Can&apos;t find the answer you&apos;re looking for? We&apos;re here to help!
                         </p>
                         <div className="space-x-4">
-                            <a 
+                            <Link
                                 href="/" 
                                 className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg"
                             >
                                 Try QR Generator
-                            </a>
-                            <a 
+                            </Link>
+                            <Link
                                 href="/guide" 
                                 className="inline-block bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-lg"
                             >
                                 View Guide
-                            </a>
+                            </Link>
                         </div>
                     </section>
                 </div>

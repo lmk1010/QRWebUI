@@ -1,6 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
     title: 'How to Create QR Code - Complete Step-by-Step Guide | QRCodeHub',
@@ -179,12 +180,12 @@ export default function GuidePage() {
                             </div>
                         </div>
                         <div className="text-center">
-                            <a 
+                            <Link
                                 href="/" 
                                 className="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg"
                             >
                                 Start Creating QR Code Now
-                            </a>
+                            </Link>
                         </div>
                     </section>
 
@@ -276,7 +277,7 @@ export default function GuidePage() {
                             <h3 className="text-2xl font-semibold text-gray-800 mb-6">Step 3: Best Practices for QR Codes</h3>
                             <div className="grid md:grid-cols-2 gap-6">
                                 <div className="space-y-4">
-                                    <h4 className="font-semibold text-green-800 text-lg">✅ Do's</h4>
+                                    <h4 className="font-semibold text-green-800 text-lg">✅ Do&apos;s</h4>
                                     <ul className="space-y-3 text-gray-700">
                                         <li className="flex items-start space-x-2">
                                             <span className="text-green-500 mt-1">•</span>
@@ -301,27 +302,27 @@ export default function GuidePage() {
                                     </ul>
                                 </div>
                                 <div className="space-y-4">
-                                    <h4 className="font-semibold text-red-800 text-lg">❌ Don'ts</h4>
+                                    <h4 className="font-semibold text-red-800 text-lg">❌ Don&apos;ts</h4>
                                     <ul className="space-y-3 text-gray-700">
                                         <li className="flex items-start space-x-2">
                                             <span className="text-red-500 mt-1">•</span>
-                                            <span>Don't use low contrast color combinations</span>
+                                            <span>Don&apos;t use low contrast color combinations</span>
                                         </li>
                                         <li className="flex items-start space-x-2">
                                             <span className="text-red-500 mt-1">•</span>
-                                            <span>Don't make QR codes too small to scan</span>
+                                            <span>Don&apos;t make QR codes too small to scan</span>
                                         </li>
                                         <li className="flex items-start space-x-2">
                                             <span className="text-red-500 mt-1">•</span>
-                                            <span>Don't add too large logos that block data</span>
+                                            <span>Don&apos;t add too large logos that block data</span>
                                         </li>
                                         <li className="flex items-start space-x-2">
                                             <span className="text-red-500 mt-1">•</span>
-                                            <span>Don't place QR codes on curved or wrinkled surfaces</span>
+                                            <span>Don&apos;t place QR codes on curved or wrinkled surfaces</span>
                                         </li>
                                         <li className="flex items-start space-x-2">
                                             <span className="text-red-500 mt-1">•</span>
-                                            <span>Don't forget to test before printing/publishing</span>
+                                            <span>Don&apos;t forget to test before printing/publishing</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -365,18 +366,18 @@ export default function GuidePage() {
                         <p className="text-xl text-gray-600 mb-8">
                             Follow our guide and create professional QR codes in minutes!
                         </p>
-                        <a 
+                        <Link
                             href="/" 
                             className="inline-block bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors text-lg mr-4"
                         >
                             Create QR Code Now
-                        </a>
-                        <a 
-                            href="/features" 
+                        </Link>
+                        <Link
+                            href="/faq" 
                             className="inline-block bg-white text-green-600 border-2 border-green-600 px-8 py-4 rounded-lg font-semibold hover:bg-green-50 transition-colors text-lg"
                         >
-                            View Features
-                        </a>
+                            View FAQ
+                        </Link>
                     </section>
                 </div>
             </main>

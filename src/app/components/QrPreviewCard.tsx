@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { toPng } from 'html-to-image';
 import CustomizationModal, { CustomOptions } from './CustomizationModal';
 import QRCodeJS from 'qrcode';
@@ -65,7 +65,7 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     };
     
 
-    const drawQRCodeWithCustomDots = (canvas: HTMLCanvasElement): void => {
+    const drawQRCodeWithCustomDots = useCallback((canvas: HTMLCanvasElement): void => {
         if (!canvas) return;
     
         const ctx = canvas.getContext('2d');
@@ -304,10 +304,6 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                                     const hasBottom = getNeighborExists(1, 0);
                                     const hasLeft = getNeighborExists(0, -1);
                                     const hasRight = getNeighborExists(0, 1);
-                                    const hasTopLeft = getNeighborExists(-1, -1);
-                                    const hasTopRight = getNeighborExists(-1, 1);
-                                    const hasBottomLeft = getNeighborExists(1, -1);
-                                    const hasBottomRight = getNeighborExists(1, 1);
                                     
                                     const radius = size * 0.3; // 圆角半径
                                     const centerX = x + moduleSize / 2;
@@ -468,13 +464,13 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                 }
             };
         });
-    };
+    }, [customOptions, generatedValue]);
 
     useEffect(() => {
         if (canvasRef.current) {
             drawQRCodeWithCustomDots(canvasRef.current);
         }
-    }, [customOptions, generatedValue]);
+    }, [drawQRCodeWithCustomDots]);
 
     if (!generatedValue) {
         return (

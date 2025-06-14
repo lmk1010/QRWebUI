@@ -6,7 +6,7 @@ interface SEOContentProps {
     showOnlyContent?: boolean;
 }
 
-const SEOContent: React.FC<SEOContentProps> = ({ showOnlyHeader, showOnlyContent }) => {
+const SEOContent: React.FC<SEOContentProps> = ({ showOnlyContent }) => {
     // 如果只显示内容部分，不显示标题
     if (showOnlyContent) {
         return (
@@ -44,7 +44,7 @@ const SEOContent: React.FC<SEOContentProps> = ({ showOnlyHeader, showOnlyContent
                         <div className="p-6 bg-red-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
                             <h3 className="font-semibold text-red-800 mb-2 text-lg">🔒 Secure & Private</h3>
                             <p className="text-gray-700">
-                                Your data stays private. We don't store your QR code content on our servers.
+                                Your data stays private. We don&apos;t store your QR code content on our servers.
                             </p>
                         </div>
                         <div className="p-6 bg-teal-50 rounded-lg shadow-sm hover:shadow-md transition-shadow">
