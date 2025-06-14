@@ -6,6 +6,7 @@ import QRCodePage from '../../src/app/components/QRCodePage'; // 导入二维码
 import Navbar from './components/Navbar';
 import About from './components/About'; // 导入 About 组件
 import Contact from './components/Contact'; // 导入 Contact 组件
+import SEOContent from './components/SEOContent'; // 导入 SEO 内容组件
 
 export default function Page() {
     useEffect(() => {
@@ -73,7 +74,7 @@ export default function Page() {
                             <Contact />
                         </motion.div>
                     ) : showQRCard ? (
-                        // 显示二维码页面
+                        // 显示二维码页面和SEO内容
                         <motion.div
                             key="qrPage"
                             initial={{ opacity: 0, scale: 0.8 }}
@@ -83,12 +84,27 @@ export default function Page() {
                         >
                             <QRCodePage
                                 onClose={() => {
-                                    // 点击“返回”按钮时，回到首页
+                                    // 点击"返回"按钮时，回到首页
                                     setShowQRCard(false);
                                 }}
                             />
+                            {/* 在QR码工具下方添加SEO内容 */}
+                            <div className="mt-16">
+                                <SEOContent />
+                            </div>
                         </motion.div>
-                    ) : null}
+                    ) : (
+                        // 显示SEO内容作为默认首页
+                        <motion.div
+                            key="seoContent"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ duration: 0.5 }}
+                        >
+                            <SEOContent />
+                        </motion.div>
+                    )}
                 </AnimatePresence>
             </main>
         </div>

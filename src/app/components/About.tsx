@@ -22,21 +22,21 @@ const About = () => {
                 <div className="flex justify-center items-center">
                     <img
                         src="/assets/pexels-A.png"
-                        alt="Image 1"
+                        alt="QR code generator for business applications and marketing campaigns"
                         className="w-full h-64 object-cover rounded-lg shadow-lg"
                     />
                 </div>
                 <div className="flex justify-center items-center">
                     <img
                         src="/assets/pexels-B.png"
-                        alt="Image 2"
+                        alt="Free QR code scanner and mobile technology solutions"
                         className="w-full h-64 object-cover rounded-lg shadow-lg"
                     />
                 </div>
                 <div className="flex justify-center items-center">
                     <img
                         src="/assets/pexels-C.png"
-                        alt="Image 3"
+                        alt="Custom QR code creation tools and digital innovation"
                         className="w-full h-64 object-cover rounded-lg shadow-lg"
                     />
                 </div>

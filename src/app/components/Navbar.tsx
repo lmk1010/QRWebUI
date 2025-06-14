@@ -82,15 +82,6 @@ const Navbar: React.FC<NavbarProps> = ({ onAboutClick, onContactClick }) => {
                     </ul>
                 </div>
 
-                <div className="hidden md:block">
-                    <a
-                        href="#cta"
-                        className="inline-block px-6 py-2 bg-gradient-to-r from-gray-400 to-gray-600 text-white font-semibold rounded-full hover:from-gray-500 hover:to-gray-700 transition-colors duration-300"
-                    >
-                        Register Now
-                    </a>
-                </div>
-
                 <div className="md:hidden">
                     <button
                         onClick={() => setIsOpen(!isOpen)}
@@ -171,14 +162,6 @@ const Navbar: React.FC<NavbarProps> = ({ onAboutClick, onContactClick }) => {
                                     }}
                                 >
                                     Contact Us
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="#cta"
-                                    className="block text-center w-full px-3 py-2 rounded-lg text-base font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
-                                >
-                                    Register Now
                                 </a>
                             </li>
                         </ul>
