@@ -17,18 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: "Free QR Code Generator - Create QR Codes Online | QRCodeHub.net",
     description: "Free online QR code generator and scanner. Create custom QR codes instantly for websites, text, WiFi, social media and more. Fast, secure and completely free QR code maker tool.",
-    keywords: [
-        "qr code generator",
-        "free qr code generator", 
-        "qr code scanner",
-        "create qr code",
-        "qr code maker",
-        "online qr generator",
-        "custom qr code",
-        "qr code creator",
-        "generate qr code",
-        "qr code tool"
-    ],
+    keywords: "qr code generator, free qr code generator, qr code scanner, create qr code, qr code maker, online qr generator, custom qr code, qr code creator, generate qr code, qr code tool",
     authors: [{ name: "QRCodeHub" }],
     robots: "index, follow",
     viewport: "width=device-width, initial-scale=1",
@@ -39,19 +28,32 @@ export const metadata: Metadata = {
         siteName: "QRCodeHub - Free QR Code Generator",
         type: "website",
         locale: "en_US",
+        images: [
+            {
+                url: "https://qrcodehub.net/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "QRCodeHub - Free QR Code Generator"
+            }
+        ]
     },
     twitter: {
         card: "summary_large_image",
         title: "Free QR Code Generator - Create QR Codes Online",
         description: "Generate free QR codes instantly! Create custom QR codes for websites, text, WiFi, and more.",
         site: "@qrcodehub",
+        images: ["https://qrcodehub.net/twitter-image.png"]
     },
     alternates: {
         canonical: "https://qrcodehub.net",
     },
     other: {
         "google-site-verification": "your-google-verification-code-here",
+        "msapplication-TileColor": "#2563eb",
+        "theme-color": "#2563eb",
     },
+    metadataBase: new URL('https://qrcodehub.net'),
+    category: 'technology',
 };
 
 interface RootLayoutProps {
@@ -63,30 +65,100 @@ export default function RootLayout({ children }: RootLayoutProps) {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "QRCodeHub - Free QR Code Generator",
-        "description": "Free online QR code generator and scanner. Create custom QR codes instantly.",
+        "description": "Free online QR code generator and scanner. Create custom QR codes instantly for websites, text, WiFi, social media and more. Fast, secure and completely free QR code maker tool.",
         "url": "https://qrcodehub.net",
         "applicationCategory": "UtilityApplication",
         "operatingSystem": "Web Browser",
+        "browserRequirements": "HTML5, JavaScript",
         "offers": {
             "@type": "Offer",
             "price": "0",
-            "priceCurrency": "USD"
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
         },
         "featureList": [
-            "QR Code Generator",
-            "QR Code Scanner", 
-            "Custom QR Codes",
-            "Free Online Tool"
+            "qr code generator",
+            "free qr code generator", 
+            "qr code scanner",
+            "create qr code",
+            "qr code maker",
+            "online qr generator",
+            "custom qr code",
+            "qr code creator",
+            "generate qr code",
+            "qr code tool"
+        ],
+        "author": {
+            "@type": "Organization",
+            "name": "QRCodeHub"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "QRCodeHub"
+        },
+        "inLanguage": ["en-US"],
+        "potentialAction": {
+            "@type": "CreateAction",
+            "target": "https://qrcodehub.net",
+            "object": {
+                "@type": "DigitalDocument",
+                "name": "QR Code"
+            }
+        }
+    };
+
+    // 添加FAQ结构化数据
+    const faqStructuredData = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is this QR code generator really free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! Our QR code generator is completely free to use. You can create unlimited QR codes without any registration or hidden fees."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I scan a QR code?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "You can use our built-in QR code scanner or any smartphone camera app. Most modern phones can automatically detect and scan QR codes through the camera."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I customize the QR code design?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! You can customize the color, add a logo, change the pattern, and adjust the design to match your brand or preference."
+                }
+            }
         ]
     };
 
     return (
-        <html lang="en">
+        <html lang="en-US">
             <head>
+                <meta name="format-detection" content="telephone=no" />
+                <meta name="mobile-web-app-capable" content="yes" />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+                <meta name="apple-mobile-web-app-title" content="QRCodeHub" />
+                <link rel="icon" href="/favicon.ico" />
+                <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(structuredData)
+                    }}
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(faqStructuredData)
                     }}
                 />
             </head>
