@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Navbar: React.FC = () => {
     return (
@@ -10,23 +11,25 @@ const Navbar: React.FC = () => {
                         <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                             <span className="text-white font-bold text-lg">Q</span>
                         </div>
-                        <h1 className="text-xl font-bold text-gray-800">QRCodeHub</h1>
+                        <Link href="/" className="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
+                            QRCodeHub
+                        </Link>
                     </div>
 
                     {/* Navigation Links */}
                     <div className="hidden md:flex space-x-6">
-                        <a href="#home" className="text-gray-600 hover:text-blue-600 transition-colors">
+                        <Link href="/" className="text-gray-600 hover:text-blue-600 transition-colors">
                             Home
-                        </a>
-                        <a href="#features" className="text-gray-600 hover:text-blue-600 transition-colors">
+                        </Link>
+                        <Link href="/features" className="text-gray-600 hover:text-blue-600 transition-colors">
                             Features
-                        </a>
-                        <a href="#guide" className="text-gray-600 hover:text-blue-600 transition-colors">
+                        </Link>
+                        <Link href="/guide" className="text-gray-600 hover:text-blue-600 transition-colors">
                             Guide
-                        </a>
-                        <a href="#faq" className="text-gray-600 hover:text-blue-600 transition-colors">
+                        </Link>
+                        <Link href="/faq" className="text-gray-600 hover:text-blue-600 transition-colors">
                             FAQ
-                        </a>
+                        </Link>
                     </div>
 
                     {/* Mobile menu button */}
