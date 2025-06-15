@@ -520,16 +520,6 @@ showpage
                             ctx.fillStyle = customOptions.fgColor;
                             const dotStyle = customOptions.dotStyle || 'squares';
                             
-                            // 获取相邻点的信息，用于流体样式的连接
-                            const getNeighborExists = (deltaRow: number, deltaCol: number): boolean => {
-                                const newRow = row + deltaRow;
-                                const newCol = col + deltaCol;
-                                if (newRow < 0 || newRow >= moduleCount || newCol < 0 || newCol >= moduleCount) {
-                                    return false;
-                                }
-                                return modules.data[newRow * moduleCount + newCol] === 1;
-                            };
-
                             switch (dotStyle) {
                                 case 'squares':
                                     ctx.fillRect(x, y, size, size);
