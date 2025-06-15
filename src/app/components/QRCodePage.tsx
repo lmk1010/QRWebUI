@@ -62,13 +62,13 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
+        <div className="min-h-screen bg-gray-50 py-4">
             <div className="container mx-auto px-4">
                 {/* Top navigation area */}
-                <div className="flex justify-between items-center mb-8">
+                <div className="flex justify-between items-center mb-4">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-800">QR Code Generator</h1>
-                        <p className="text-gray-600 mt-2">Create professional custom QR codes</p>
+                        <h1 className="text-2xl font-bold text-gray-800">QR Code Generator</h1>
+                        <p className="text-gray-600 mt-1">Create professional custom QR codes</p>
                     </div>
                     <button
                         onClick={handleBackToHome}
@@ -81,9 +81,9 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                 </div>
 
                 {/* Main content area */}
-                <div className="flex flex-col lg:flex-row gap-8">
+                <div className="flex flex-col lg:flex-row gap-4 items-stretch">
                     {/* Left side: Configure and generate QR code */}
-                    <div className="flex-1">
+                    <div className="flex-1 flex">
                         <QRCard
                             onGenerateResult={handleGenerateResult}
                             onLogoChange={(logo: string | null) => {
@@ -95,7 +95,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                     </div>
 
                     {/* Right side: QR code preview card */}
-                    <div ref={previewRef} className="w-full lg:w-96">
+                    <div ref={previewRef} className="w-full lg:w-96 flex">
                         {qrValue ? (
                             <QrPreviewCard
                                 generatedValue={qrValue}
@@ -103,16 +103,31 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                                 onCustomOptionsChange={handleCustomOptionsChange}
                             />
                         ) : (
-                            <div className="bg-white rounded-lg p-8 shadow text-center text-gray-500">
+                            <div className="bg-white rounded-lg p-6 shadow text-center text-gray-500 w-full flex flex-col justify-center">
                                 <div className="mb-4">
                                     <div className="w-16 h-16 bg-gray-100 rounded-lg mx-auto flex items-center justify-center mb-4">
                                         <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v6h6V4H4zM4 14v6h6v-6H4zM14 4v6h6V4h-6zM17 17h3v3h-3v-3z" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v6h6V4H4zM4 14v6h6v-6H4zM17 17h3v3h-3v-3z" />
                                         </svg>
                                     </div>
                                 </div>
                                 <h3 className="font-semibold text-gray-700 mb-2">QR Code Preview</h3>
-                                <p className="text-sm">Please select category and function on the left and input content to generate QR code</p>
+                                <p className="text-sm">Please select a category and function on the left and enter content to generate a QR code</p>
+                                
+                                {/* 占位内容，确保高度一致 */}
+                                <div className="mt-6 space-y-3 opacity-30 flex-1 flex flex-col justify-center">
+                                    <div className="bg-gray-100 h-3 rounded"></div>
+                                    <div className="bg-gray-100 h-3 rounded w-3/4 mx-auto"></div>
+                                    <div className="bg-gray-100 h-16 rounded"></div>
+                                    <div className="bg-gray-100 h-3 rounded w-1/2 mx-auto"></div>
+                                    <div className="grid grid-cols-2 gap-2 mt-3">
+                                        <div className="bg-gray-100 h-6 rounded"></div>
+                                        <div className="bg-gray-100 h-6 rounded"></div>
+                                        <div className="bg-gray-100 h-6 rounded"></div>
+                                        <div className="bg-gray-100 h-6 rounded"></div>
+                                    </div>
+                                    <div className="bg-gray-100 h-8 rounded mt-3"></div>
+                                </div>
                             </div>
                         )}
                     </div>

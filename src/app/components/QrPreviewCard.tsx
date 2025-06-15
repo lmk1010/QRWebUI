@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { toPng } from 'html-to-image';
-import CustomizationModal, { CustomOptions } from './CustomizationModal';
+import { CustomOptions } from './CustomizationModal';
 import QRCodeJS from 'qrcode';
+import jsPDF from 'jspdf';
+import { FaDownload, FaFileImage, FaFilePdf, FaVectorSquare, FaFileCode } from 'react-icons/fa';
 
 interface QrPreviewCardProps {
     generatedValue: string;
@@ -32,12 +34,12 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
         onCustomOptionsChange(defaultOptions);
     };
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
     const qrCodeRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const handleDownloadImage = async () => {
+    // PNG下载功能
+    const handleDownloadPNG = async () => {
         try {
             // 创建临时Canvas用于下载，使用downloadSize
             const tempCanvas = document.createElement('canvas');
@@ -57,11 +59,166 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             link.href = dataUrl;
             link.click();
         } catch (error) {
-            console.error('Download failed:', error);
+            console.error('PNG download failed:', error);
         }
     };
 
-    // 专门用于下载的绘图函数
+    // SVG下载功能
+    const handleDownloadSVG = async () => {
+        try {
+            const downloadSize = customOptions.downloadSize || customOptions.size;
+            const svg = generateSVGQRCode(downloadSize);
+            
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'qrcode.svg';
+            link.href = url;
+            link.click();
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('SVG download failed:', error);
+        }
+    };
+
+    // PDF下载功能
+    const handleDownloadPDF = async () => {
+        try {
+            const downloadSize = customOptions.downloadSize || customOptions.size;
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = downloadSize;
+            tempCanvas.height = downloadSize;
+            
+            drawQRCodeForDownload(tempCanvas, downloadSize);
+            
+            // 等待绘制完成
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            const dataUrl = tempCanvas.toDataURL('image/png');
+            
+            // 创建PDF，尺寸按照二维码实际大小
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'px',
+                format: [downloadSize, downloadSize]
+            });
+            
+            pdf.addImage(dataUrl, 'PNG', 0, 0, downloadSize, downloadSize);
+            pdf.save('qrcode.pdf');
+        } catch (error) {
+            console.error('PDF download failed:', error);
+        }
+    };
+
+    // EPS下载功能（转换SVG为EPS）
+    const handleDownloadEPS = async () => {
+        try {
+            const downloadSize = customOptions.downloadSize || customOptions.size;
+            const svg = generateSVGQRCode(downloadSize);
+            
+            // 将SVG转换为EPS格式
+            const eps = convertSVGToEPS(svg, downloadSize);
+            
+            const blob = new Blob([eps], { type: 'application/postscript' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'qrcode.eps';
+            link.href = url;
+            link.click();
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('EPS download failed:', error);
+        }
+    };
+
+    // 生成SVG格式的二维码
+    const generateSVGQRCode = (size: number): string => {
+        const qrData = QRCodeJS.create(generatedValue, {
+            errorCorrectionLevel: customOptions.errorCorrectionLevel || 'H',
+        });
+        const modules = qrData.modules;
+        const moduleCount = modules.size;
+        const moduleSize = size / moduleCount;
+
+        let svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
+        svg += `<rect width="${size}" height="${size}" fill="${customOptions.bgColor}"/>`;
+
+        // 绘制二维码模块
+        for (let row = 0; row < moduleCount; row++) {
+            for (let col = 0; col < moduleCount; col++) {
+                if (modules.data[row * moduleCount + col] === 1) {
+                    const x = col * moduleSize;
+                    const y = row * moduleSize;
+                    
+                    if (customOptions.dotStyle === 'dots') {
+                        const cx = x + moduleSize / 2;
+                        const cy = y + moduleSize / 2;
+                        const r = moduleSize / 2;
+                        svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${customOptions.fgColor}"/>`;
+                    } else {
+                        svg += `<rect x="${x}" y="${y}" width="${moduleSize}" height="${moduleSize}" fill="${customOptions.fgColor}"/>`;
+                    }
+                }
+            }
+        }
+
+        svg += '</svg>';
+        return svg;
+    };
+
+    // 将SVG转换为EPS格式
+    const convertSVGToEPS = (svg: string, size: number): string => {
+        const eps = `%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 ${size} ${size}
+%%Creator: QRCodeHub
+%%Title: QR Code
+%%CreationDate: ${new Date().toISOString()}
+%%EndComments
+
+% 设置坐标系
+0 ${size} translate
+1 -1 scale
+
+% 绘制背景
+newpath
+0 0 moveto
+${size} 0 lineto
+${size} ${size} lineto
+0 ${size} lineto
+closepath
+${hexToRGB(customOptions.bgColor)} setrgbcolor
+fill
+
+% 绘制二维码
+${hexToRGB(customOptions.fgColor)} setrgbcolor
+${svg.match(/<rect[^>]*>/g)?.map(rect => {
+    const x = rect.match(/x="([^"]*)"/) ? parseFloat(rect.match(/x="([^"]*)"/)![1]) : 0;
+    const y = rect.match(/y="([^"]*)"/) ? parseFloat(rect.match(/y="([^"]*)"/)![1]) : 0;
+    const width = rect.match(/width="([^"]*)"/) ? parseFloat(rect.match(/width="([^"]*)"/)![1]) : 0;
+    const height = rect.match(/height="([^"]*)"/) ? parseFloat(rect.match(/height="([^"]*)"/)![1]) : 0;
+    
+    return `newpath
+${x} ${y} moveto
+${x + width} ${y} lineto
+${x + width} ${y + height} lineto
+${x} ${y + height} lineto
+closepath
+fill`;
+}).join('\n') || ''}
+
+showpage
+%%EOF`;
+        return eps;
+    };
+
+    // 将十六进制颜色转换为RGB
+    const hexToRGB = (hex: string): string => {
+        const r = parseInt(hex.slice(1, 3), 16) / 255;
+        const g = parseInt(hex.slice(3, 5), 16) / 255;
+        const b = parseInt(hex.slice(5, 7), 16) / 255;
+        return `${r.toFixed(3)} ${g.toFixed(3)} ${b.toFixed(3)}`;
+    };
+
     const drawQRCodeForDownload = (canvas: HTMLCanvasElement, downloadSize: number): void => {
         if (!canvas) return;
     
@@ -150,20 +307,6 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             }
         });
     };
-
-    const openCustomizationModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const closeCustomizationModal = () => {
-        setIsModalOpen(false);
-    };
-
-    const handleCustomizationConfirm = (newOptions: CustomOptions) => {
-        onCustomOptionsChange(newOptions);
-        closeCustomizationModal();
-    };
-    
 
     const drawQRCodeWithCustomDots = useCallback((canvas: HTMLCanvasElement): void => {
         if (!canvas) return;
@@ -542,29 +685,51 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
 
     return (
         <div
-            className="bg-white shadow-md rounded-md p-4 w-full max-w-sm flex flex-col items-center"
+            className="bg-white shadow-md rounded-md p-4 w-full max-w-sm flex flex-col items-center h-full"
             ref={cardRef}
         >
-            <div className="mb-12 text-gray-700 text-sm self-start flex items-center justify-between w-full">
+            {/* 顶部标题和重置区域 */}
+            <div className="mb-4 text-gray-700 text-sm self-start flex items-center justify-between w-full">
                 <div>
-                    Style: <span className="font-bold">Basic Style</span>
+                    <div className="text-base font-semibold text-gray-800 mb-1">QR Code Preview</div>
+                    <div className="text-xs text-gray-500">Real-time preview of your QR code</div>
                 </div>
                 <div className="flex items-center gap-4">
-                    <a href="#" className="text-blue-500" onClick={openCustomizationModal}>
-                        Switch Style &gt;
-                    </a>
                     <button
                         onClick={handleReset}
-                        className="text-gray-500 hover:text-gray-700 transition-colors"
+                        className="text-gray-500 hover:text-gray-700 transition-colors text-sm px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50"
                     >
                         Reset
                     </button>
                 </div>
             </div>
 
+            {/* 二维码信息卡片 */}
+            <div className="w-full bg-gray-50 rounded-lg p-3 mb-4">
+                <div className="grid grid-cols-4 gap-2 text-xs">
+                    <div className="text-center">
+                        <div className="text-gray-500 mb-1">Size</div>
+                        <div className="font-semibold text-gray-800">{customOptions.size}×{customOptions.size}</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-gray-500 mb-1">Style</div>
+                        <div className="font-semibold text-gray-800 capitalize">{customOptions.dotStyle}</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-gray-500 mb-1">Error Correction</div>
+                        <div className="font-semibold text-gray-800">{customOptions.errorCorrectionLevel}</div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-gray-500 mb-1">Margin</div>
+                        <div className="font-semibold text-gray-800">{customOptions.margin}px</div>
+                    </div>
+                </div>
+            </div>
+
+            {/* 二维码显示区域 */}
             <div
+                className="bg-white border-2 border-gray-200 rounded-lg p-3 mb-4 shadow-inner"
                 style={{
-                    padding: customOptions.margin,
                     backgroundColor: customOptions.bgColor,
                 }}
                 ref={qrCodeRef}
@@ -572,31 +737,78 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                 <canvas ref={canvasRef} />
             </div>
 
-            <p className="text-gray-500 text-xs mt-6">
-                QR Code Size: {customOptions.size}×{customOptions.size}px, Error Correction Level: {customOptions.errorCorrectionLevel}
-            </p>
-
-            <div className="mt-10 flex flex-col w-full space-y-2">
-                <button
-                    onClick={openCustomizationModal}
-                    className="bg-gray-100 text-gray-700 px-4 py-2 rounded hover:bg-gray-200 transition-colors"
-                >
-                    Customize QR Code
-                </button>
-                <button
-                    onClick={handleDownloadImage}
-                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
-                >
-                    Download Image
-                </button>
+            {/* 下载区域 */}
+            <div className="w-full flex-1 flex flex-col justify-end">
+                {/* 功能提示区域 - 确保与左侧配置网格对齐 */}
+                <div className="mb-4 bg-blue-50 rounded-lg p-3 border border-blue-100">
+                    <div className="text-sm font-medium text-blue-800 mb-2">💡 Download Tips</div>
+                    <div className="text-xs text-blue-600 space-y-0.5">
+                        <div>• PNG: Suitable for web and social media use</div>
+                        <div>• SVG: Vector format, infinitely scalable</div>
+                        <div>• PDF: Suitable for printing and document embedding</div>
+                        <div>• EPS: Professional printing and design software</div>
+                    </div>
+                </div>
+                
+                <div className="flex flex-col w-full space-y-2">
+                    <div className="text-center mb-3">
+                        <h3 className="text-gray-700 font-semibold text-sm mb-2">Download Format Selection</h3>
+                        <div className="w-full h-px bg-gray-200"></div>
+                    </div>
+                    
+                    {/* 下载按钮网格布局 */}
+                    <div className="grid grid-cols-2 gap-2">
+                        <button
+                            onClick={handleDownloadPNG}
+                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-2 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+                        >
+                            <FaFileImage className="text-sm" />
+                            <span className="text-sm font-medium">PNG</span>
+                        </button>
+                        
+                        <button
+                            onClick={handleDownloadSVG}
+                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-3 py-2 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+                        >
+                            <FaVectorSquare className="text-sm" />
+                            <span className="text-sm font-medium">SVG</span>
+                        </button>
+                        
+                        <button
+                            onClick={handleDownloadPDF}
+                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-2 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+                        >
+                            <FaFilePdf className="text-sm" />
+                            <span className="text-sm font-medium">PDF</span>
+                        </button>
+                        
+                        <button
+                            onClick={handleDownloadEPS}
+                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-2 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+                        >
+                            <FaFileCode className="text-sm" />
+                            <span className="text-sm font-medium">EPS</span>
+                        </button>
+                    </div>
+                    
+                    {/* 一键下载所有格式 */}
+                    <button
+                        onClick={async () => {
+                            await handleDownloadPNG();
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                            await handleDownloadSVG();
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                            await handleDownloadPDF();
+                            await new Promise(resolve => setTimeout(resolve, 500));
+                            await handleDownloadEPS();
+                        }}
+                        className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 shadow-md mt-3"
+                    >
+                        <FaDownload className="text-sm" />
+                        <span className="text-sm font-medium">Download All Formats</span>
+                    </button>
+                </div>
             </div>
-
-            <CustomizationModal
-                customOptions={customOptions}
-                isOpen={isModalOpen}
-                onClose={closeCustomizationModal}
-                onConfirm={handleCustomizationConfirm}
-            />
         </div>
     );
 };

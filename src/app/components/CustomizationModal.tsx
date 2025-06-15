@@ -63,11 +63,19 @@ const CustomizationModal: React.FC<CustomizationModalProps> = ({
         onClose();           // 关闭模态框
     };
 
+    // 点击外部关闭弹窗
+    const handleBackdropClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
     return (
         <div
             className={`fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-6 overflow-auto transition-opacity duration-300 ${
                 isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
+            onClick={handleBackdropClick}
         >
             <div className="bg-white p-6 rounded-lg w-full max-w-5xl shadow-lg relative flex">
                 {/* 左侧配置区域 */}

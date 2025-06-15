@@ -57,16 +57,37 @@ const LogoModal: React.FC<LogoModalProps> = ({
         onClose();
     };
 
+    // 点击外部关闭弹窗
+    const handleBackdropClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
+
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                <h2 className="text-xl font-semibold mb-4">Logo Settings</h2>
+        <div 
+            className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-4"
+            onClick={handleBackdropClick}
+        >
+            <div className="bg-white rounded-lg p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
+                {/* 关闭按钮 */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                    aria-label="Close"
+                >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <h2 className="text-xl font-semibold mb-4 pr-8">Logo Settings</h2>
 
                 {/* 上传区域 */}
                 <div
-                    className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`}
+                    className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'}`}
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
@@ -77,14 +98,14 @@ const LogoModal: React.FC<LogoModalProps> = ({
                             <img
                                 src={previewLogo}
                                 alt="Logo preview"
-                                className="w-24 h-24 object-contain mb-2"
+                                className="w-20 h-20 object-contain mb-2"
                             />
                             <p className="text-sm text-gray-500">Click or drag to change logo</p>
                         </div>
                     ) : (
                         <div className="flex flex-col items-center">
                             <svg
-                                className="w-12 h-12 text-gray-400 mb-2"
+                                className="w-10 h-10 text-gray-400 mb-2"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -112,17 +133,17 @@ const LogoModal: React.FC<LogoModalProps> = ({
                 {/* 预设图标区域 */}
                 <div className="mt-6">
                     <h3 className="text-sm font-medium text-gray-700 mb-3">Preset Icons</h3>
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid grid-cols-5 gap-1">
                         {["/assets/logo_default/icons8-discord-480.png", "/assets/logo_default/icons8-facebook-480 copy.png", "/assets/logo_default/icons8-facebook-480.png", "/assets/logo_default/icons8-github-480.png", "/assets/logo_default/icons8-instagram-480.png", "/assets/logo_default/icons8-telegram-app-480.png", "/assets/logo_default/icons8-tiktok-144.png", "/assets/logo_default/icons8-whatsapp-144.png", "/assets/logo_default/icons8-youtube-480.png"].map((icon, index) => (
                             <div
                                 key={index}
-                                className="aspect-square border rounded-lg p-2 cursor-pointer hover:border-blue-500 transition-colors"
+                                className="aspect-square border rounded-lg p-1 cursor-pointer hover:border-blue-500 transition-colors flex items-center justify-center"
                                 onClick={() => setPreviewLogo(icon)}
                             >
                                 <img
                                     src={icon}
                                     alt={`Preset logo ${index + 1}`}
-                                    className="w-full h-full object-contain"
+                                    className="w-10 h-10 object-contain"
                                 />
                             </div>
                         ))}
@@ -130,7 +151,7 @@ const LogoModal: React.FC<LogoModalProps> = ({
                 </div>
 
                 {/* 操作按钮 */}
-                <div className="flex justify-end space-x-3 mt-6">
+                <div className="flex justify-end space-x-3 mt-6 pt-4 border-t">
                     <button
                         onClick={onClose}
                         className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"

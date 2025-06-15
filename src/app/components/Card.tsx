@@ -108,7 +108,7 @@ const Card: React.FC<CardProps> = ({
                         {/* 顶部区域：左侧小文字，右侧图标 */}
                         <div className="flex justify-between items-center w-full mt-3">
                             <p className="text-lg font-semibold ">{title}</p>
-                            <button aria-label="更多信息">
+                            <button aria-label="More information">
                                 <FaArrowRight className="text-black text-2xl cursor-pointer hover:text-gray-500" />
                             </button>
                         </div>

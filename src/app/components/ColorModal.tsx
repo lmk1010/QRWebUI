@@ -41,23 +41,32 @@ const ColorModal: React.FC<ColorModalProps> = ({
         onConfirm(selectedFgColor, color);
     };
 
+    // 点击外部关闭弹窗
+    const handleBackdropClick = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget) {
+            onClose();
+        }
+    };
 
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-2xl relative">
+        <div 
+            className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50 p-4"
+            onClick={handleBackdropClick}
+        >
+            <div className="bg-white rounded-lg p-6 w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
                 <button
                     onClick={onClose}
-                    className="absolute top-6 right-6 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
-                    aria-label="关闭"
+                    className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                    aria-label="Close"
                 >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
 
-                <h2 className="text-xl font-semibold mb-4">Choose Colors</h2>
+                <h2 className="text-xl font-semibold mb-4 pr-8">Choose Colors</h2>
 
                 {/* 前景色选择 */}
                 <div className="mb-6">
@@ -65,11 +74,11 @@ const ColorModal: React.FC<ColorModalProps> = ({
                     {colorGroups.map((group) => (
                         <div key={group.title} className="mb-4">
                             <h4 className="text-sm font-medium text-gray-600 mb-2 pb-2 border-b border-gray-200">{group.title}</h4>
-                            <div className="grid grid-cols-11 gap-3 p-2">
+                            <div className="grid grid-cols-8 gap-2 p-2">
                                 {group.colors.map((color) => (
                                     <button
                                         key={`fg-${color}`}
-                                        className={`w-10 h-10 rounded-md border-2 transition-all ${selectedFgColor === color ? 'ring-2 ring-blue-500 ring-offset-2' : 'hover:ring-1 hover:ring-blue-300 hover:scale-110'}`}
+                                        className={`w-8 h-8 rounded-md border-2 transition-all ${selectedFgColor === color ? 'ring-2 ring-blue-500 ring-offset-2' : 'hover:ring-1 hover:ring-blue-300 hover:scale-110'}`}
                                         style={{ backgroundColor: color }}
                                         onClick={() => handleFgColorSelect(color)}
                                     />
@@ -85,11 +94,11 @@ const ColorModal: React.FC<ColorModalProps> = ({
                     {colorGroups.map((group) => (
                         <div key={group.title} className="mb-4">
                             <h4 className="text-sm font-medium text-gray-600 mb-2 pb-2 border-b border-gray-200">{group.title}</h4>
-                            <div className="grid grid-cols-9 gap-3 p-2">
+                            <div className="grid grid-cols-8 gap-2 p-2">
                                 {group.colors.map((color) => (
                                     <button
                                         key={`bg-${color}`}
-                                        className={`w-10 h-10 rounded-md border-2 transition-all ${selectedBgColor === color ? 'ring-2 ring-blue-500 ring-offset-2' : 'hover:ring-1 hover:ring-blue-300 hover:scale-110'}`}
+                                        className={`w-8 h-8 rounded-md border-2 transition-all ${selectedBgColor === color ? 'ring-2 ring-blue-500 ring-offset-2' : 'hover:ring-1 hover:ring-blue-300 hover:scale-110'}`}
                                         style={{ backgroundColor: color }}
                                         onClick={() => handleBgColorSelect(color)}
                                     />
