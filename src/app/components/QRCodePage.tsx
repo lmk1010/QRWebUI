@@ -25,6 +25,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
         bgColor: '#ffffff',
         logoFile: null,
         size: 200,
+        downloadSize: 200,
         margin: 4,
         errorCorrectionLevel: 'H'
     });

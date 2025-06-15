@@ -8,6 +8,7 @@ import { CustomOptions } from './CustomizationModal';
 import LogoModal from './LogoModal';
 import DotStyleModal from './DotStyleModal';
 import ColorModal from './ColorModal';
+import SizeModal from './SizeModal';
 
 interface QRCardProps {
     onGenerateResult: (value: string) => void;
@@ -31,6 +32,7 @@ const QRCard: React.FC<QRCardProps> = ({
     const [isDotStyleModalOpen, setIsDotStyleModalOpen] = useState(false);
     const [isColorModalOpen, setIsColorModalOpen] = useState(false);
     const [isLogoModalOpen, setIsLogoModalOpen] = useState(false);
+    const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
     const [logoFile, setLogoFile] = useState<string | null>(null);
 
     // 定义联系人信息状态
@@ -150,6 +152,11 @@ const QRCard: React.FC<QRCardProps> = ({
 
     const handleColorConfirm = (fgColor: string, bgColor: string) => {
         onCustomOptionsChange?.({ ...customOptions, fgColor, bgColor });
+    };
+
+    const handleSizeConfirm = (downloadSize: number) => {
+        setIsSizeModalOpen(false);
+        onCustomOptionsChange?.({ ...customOptions, downloadSize });
     };
 
     return (
@@ -465,6 +472,9 @@ const QRCard: React.FC<QRCardProps> = ({
                                 </div>
                             </button>
                             <button
+                                onClick={() => {
+                                    setIsSizeModalOpen(true);
+                                }}
                                 className="p-3 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
                             >
                                 <div className="flex flex-col items-center">
@@ -500,6 +510,13 @@ const QRCard: React.FC<QRCardProps> = ({
                 onClose={() => setIsLogoModalOpen(false)}
                 onConfirm={handleLogoConfirm}
                 currentLogo={logoFile}
+            />
+            {/* Size Modal */}
+            <SizeModal
+                isOpen={isSizeModalOpen}
+                onClose={() => setIsSizeModalOpen(false)}
+                onConfirm={handleSizeConfirm}
+                currentSize={customOptions.downloadSize || customOptions.size}
             />
         </motion.div>
     );

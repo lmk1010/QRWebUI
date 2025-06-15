@@ -25,6 +25,7 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             bgColor: '#ffffff',
             logoFile: null,
             size: 200,
+            downloadSize: 200,
             margin: 4,
             errorCorrectionLevel: 'H',
         };
@@ -37,11 +38,20 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     const handleDownloadImage = async () => {
-        if (!canvasRef.current) return;
         try {
-            const dataUrl = await toPng(canvasRef.current, {
-                backgroundColor: '#ffffff',
-            });
+            // 创建临时Canvas用于下载，使用downloadSize
+            const tempCanvas = document.createElement('canvas');
+            const downloadSize = customOptions.downloadSize || customOptions.size;
+            tempCanvas.width = downloadSize;
+            tempCanvas.height = downloadSize;
+            
+            // 使用专门的下载函数绘制二维码
+            drawQRCodeForDownload(tempCanvas, downloadSize);
+            
+            // 等待绘制完成
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            const dataUrl = tempCanvas.toDataURL('image/png');
             const link = document.createElement('a');
             link.download = 'qrcode.png';
             link.href = dataUrl;
@@ -49,6 +59,96 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
         } catch (error) {
             console.error('Download failed:', error);
         }
+    };
+
+    // 专门用于下载的绘图函数
+    const drawQRCodeForDownload = (canvas: HTMLCanvasElement, downloadSize: number): void => {
+        if (!canvas) return;
+    
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // 添加 roundRect polyfill 以确保兼容性
+        if (!ctx.roundRect) {
+            ctx.roundRect = function(x: number, y: number, width: number, height: number, radius: number) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + width - radius, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                this.lineTo(x + width, y + height - radius);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                this.lineTo(x + radius, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+    
+        // 配置二维码生成选项 - 使用下载尺寸
+        const qrOptions = {
+            width: downloadSize,
+            margin: customOptions.margin,
+            color: {
+                dark: customOptions.fgColor,
+                light: customOptions.bgColor,
+            },
+            errorCorrectionLevel: customOptions.errorCorrectionLevel || 'H',
+        };
+    
+        // 生成二维码数据矩阵
+        QRCodeJS.toCanvas(canvas, generatedValue, qrOptions, (error) => {
+            if (error) {
+                console.error('Error generating QR code:', error);
+                return;
+            }
+    
+            // 获取生成的二维码数据
+            const qrData = QRCodeJS.create(generatedValue, qrOptions);
+            const modules = qrData.modules;
+            const moduleCount = modules.size;
+            const moduleSize = downloadSize / moduleCount;
+            const dotScale = customOptions.dotScale || 1;
+            const eyeScale = customOptions.eyeScale || 1;
+    
+            // 清空画布
+            ctx.fillStyle = customOptions.bgColor;
+            ctx.fillRect(0, 0, downloadSize, downloadSize);
+    
+            // 绘制数据点 - 使用与预览相同的逻辑，但使用下载尺寸
+            for (let row = 0; row < moduleCount; row++) {
+                for (let col = 0; col < moduleCount; col++) {
+                    if (modules.data[row * moduleCount + col] === 1) {
+                        const isOuterEye = (
+                            (row < 7 && col < 7 && (row === 0 || row === 6 || col === 0 || col === 6)) ||
+                            (row < 7 && col >= moduleCount - 7 && (row === 0 || row === 6 || col === moduleCount - 1 || col === moduleCount - 7)) ||
+                            (row >= moduleCount - 7 && col < 7 && (row === moduleCount - 1 || row === moduleCount - 7 || col === 0 || col === 6))
+                        );
+
+                        const isInnerEye = (
+                            (row >= 1 && row < 6 && col >= 1 && col < 6) ||
+                            (row >= 1 && row < 6 && col >= moduleCount - 6 && col < moduleCount - 1) ||
+                            (row >= moduleCount - 6 && row < moduleCount - 1 && col >= 1 && col < 6)
+                        );
+
+                        const x = col * moduleSize;
+                        const y = row * moduleSize;
+                        const size = moduleSize * (isOuterEye || isInnerEye ? eyeScale : dotScale);
+                        
+                        ctx.fillStyle = customOptions.fgColor;
+                        
+                        // 应用样式逻辑（简化版，重点是下载功能）
+                        if (customOptions.dotStyle === 'dots' && !isOuterEye && !isInnerEye) {
+                            ctx.beginPath();
+                            ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size / 2, 0, Math.PI * 2);
+                            ctx.fill();
+                        } else {
+                            ctx.fillRect(x, y, size, size);
+                        }
+                    }
+                }
+            }
+        });
     };
 
     const openCustomizationModal = () => {
@@ -299,50 +399,10 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                                     break;
                                     
                                 case 'fluid': {
-                                    // 改进的流体样式 - 根据相邻点动态调整形状
-                                    const hasTop = getNeighborExists(-1, 0);
-                                    const hasBottom = getNeighborExists(1, 0);
-                                    const hasLeft = getNeighborExists(0, -1);
-                                    const hasRight = getNeighborExists(0, 1);
+                                    // 流体样式 - 使用完整模块大小，完全消除间隙
+                                    // 对于fluid样式，忽略dotScale，使用完整的moduleSize
+                                    ctx.fillRect(x, y, moduleSize, moduleSize);
                                     
-                                    const radius = size * 0.3; // 圆角半径
-                                    const centerX = x + moduleSize / 2;
-                                    const centerY = y + moduleSize / 2;
-                                    const halfSize = size / 2;
-                                    
-                                    ctx.beginPath();
-                                    
-                                    // 根据相邻点的情况绘制流体形状
-                                    if (hasTop && hasBottom && hasLeft && hasRight) {
-                                        // 四周都有点，绘制带小圆角的方形
-                                        const smallRadius = size * 0.1;
-                                        ctx.roundRect(x, y, size, size, smallRadius);
-                                    } else if ((hasTop || hasBottom) && (hasLeft || hasRight)) {
-                                        // 十字形连接，绘制更流畅的形状
-                                        ctx.roundRect(x, y, size, size, radius * 0.5);
-                                    } else if (hasTop && hasBottom) {
-                                        // 垂直连接
-                                        ctx.roundRect(x + size * 0.1, y, size * 0.8, size, radius);
-                                    } else if (hasLeft && hasRight) {
-                                        // 水平连接
-                                        ctx.roundRect(x, y + size * 0.1, size, size * 0.8, radius);
-                                    } else if (hasTop || hasBottom || hasLeft || hasRight) {
-                                        // 单边连接，绘制水滴形状
-                                        if (hasTop) {
-                                            ctx.ellipse(centerX, centerY + halfSize * 0.3, halfSize * 0.7, halfSize, 0, 0, Math.PI * 2);
-                                        } else if (hasBottom) {
-                                            ctx.ellipse(centerX, centerY - halfSize * 0.3, halfSize * 0.7, halfSize, 0, 0, Math.PI * 2);
-                                        } else if (hasLeft) {
-                                            ctx.ellipse(centerX + halfSize * 0.3, centerY, halfSize, halfSize * 0.7, 0, 0, Math.PI * 2);
-                                        } else if (hasRight) {
-                                            ctx.ellipse(centerX - halfSize * 0.3, centerY, halfSize, halfSize * 0.7, 0, 0, Math.PI * 2);
-                                        }
-                                    } else {
-                                        // 独立点，绘制圆形
-                                        ctx.arc(centerX, centerY, halfSize * 0.8, 0, Math.PI * 2);
-                                    }
-                                    
-                                    ctx.fill();
                                     break;
                                 }
                                     

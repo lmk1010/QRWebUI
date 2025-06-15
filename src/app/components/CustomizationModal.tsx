@@ -9,7 +9,8 @@ export interface CustomOptions {
     fgColor: string;            // 前景色
     bgColor: string;            // 背景色
     logoFile?: string | null;   // Logo file (Base64 string or File object)
-    size: number;               // 二维码大小
+    size: number;               // 二维码预览大小
+    downloadSize: number;       // 二维码下载大小
     margin: number;             // 二维码边距
     content: string;            // 二维码内容
     errorCorrectionLevel?: 'L' | 'M' | 'Q' | 'H';  // 纠错级别
