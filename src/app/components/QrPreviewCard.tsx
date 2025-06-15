@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { toPng } from 'html-to-image';
+import React, { useRef, useEffect, useCallback } from 'react';
 import { CustomOptions } from './CustomizationModal';
 import QRCodeJS from 'qrcode';
 import jsPDF from 'jspdf';
