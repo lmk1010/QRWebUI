@@ -12,6 +12,14 @@
         <priority>1.0</priority>
     </url>
     
+    <!-- QR生成器页面 - 重要页面！ -->
+    <url>
+        <loc>https://qrcodehub.net/qr-generator</loc>
+        <lastmod>2024-12-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.95</priority>
+    </url>
+    
     <!-- Features页面 -->
     <url>
         <loc>https://qrcodehub.net/features</loc>
