@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../../components/Navbar';
 import Link from 'next/link';
-import { FaEnvelope, FaArrowLeft, FaPlay, FaCheck, FaExclamationTriangle, FaLightbulb, FaDownload, FaMailBulk } from 'react-icons/fa';
+import { FaEnvelope, FaArrowLeft, FaPlay, FaCheck, FaLightbulb } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'Email QR Code Creation Tutorial - Detailed Step-by-Step Guide | QRCodeHub',
@@ -198,7 +198,7 @@ export default function EmailQRGuidePage() {
     const tips = [
         "邮箱QR码使用mailto协议，兼容所有主流邮件客户端",
         "可以在邮件内容中使用占位符，如{用户姓名}，让用户个性化填写",
-        "建议在QR码附近添加"扫描发送邮件"的说明文字",
+        "建议在QR码附近添加\"扫描发送邮件\"的说明文字",
         "可以创建多个不同用途的邮箱QR码，如客服、商务、反馈等"
     ];
 
@@ -326,7 +326,7 @@ export default function EmailQRGuidePage() {
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">选择邮箱类型</h3>
                                         <p className="text-gray-700 mb-3">
-                                            打开QR码生成器，在左侧功能选择区域点击"Email"选项，进入邮箱QR码制作模式。
+                                            打开QR码生成器，在左侧功能选择区域点击&quot;Email&quot;选项，进入邮箱QR码制作模式。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
@@ -356,7 +356,7 @@ export default function EmailQRGuidePage() {
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">自定义样式（可选）</h3>
                                         <p className="text-gray-700 mb-3">
-                                            点击"自定义"按钮，可以调整颜色、添加Logo、修改样式等，让您的QR码更加个性化。
+                                            点击&quot;自定义&quot;按钮，可以调整颜色、添加Logo、修改样式等，让您的QR码更加个性化。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
@@ -371,7 +371,7 @@ export default function EmailQRGuidePage() {
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">生成和下载</h3>
                                         <p className="text-gray-700 mb-3">
-                                            点击"生成QR码"按钮，系统会立即创建您的邮箱QR码。然后选择下载格式（PNG、JPG、SVG、PDF）。
+                                            点击&quot;生成QR码&quot;按钮，系统会立即创建您的邮箱QR码。然后选择下载格式（PNG、JPG、SVG、PDF）。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">

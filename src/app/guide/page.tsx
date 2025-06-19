@@ -463,7 +463,7 @@ export default function GuidePage() {
                                             <span className="text-red-500 mt-1">•</span>
                                             <div>
                                                 <span className="font-semibold text-gray-800">Too Small Size</span>
-                                                <p className="text-gray-600 text-sm mt-1">Don't make QR codes too small, affecting scanning effects</p>
+                                                <p className="text-gray-600 text-sm mt-1">Don&apos;t make QR codes too small, affecting scanning effects</p>
                                             </div>
                                         </li>
                                         <li className="flex items-start space-x-3">

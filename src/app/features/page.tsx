@@ -247,7 +247,7 @@ export default function FeaturesPage() {
                                 </div>
                                 <div className="text-center">
                                     <h3 className="font-bold text-yellow-800 text-xl mb-3">SCAN Frame</h3>
-                                    <p className="text-yellow-700 mb-4">Perfect for scanning scenarios with clear "Scan Me" prompts. Ideal for WeChat, Alipay, and general scanning applications.</p>
+                                    <p className="text-yellow-700 mb-4">Perfect for scanning scenarios with clear &quot;Scan Me&quot; prompts. Ideal for WeChat, Alipay, and general scanning applications.</p>
                                     <div className="text-sm text-yellow-600">
                                         <strong>Best for:</strong> Mobile payments, social media, contact sharing
                                     </div>

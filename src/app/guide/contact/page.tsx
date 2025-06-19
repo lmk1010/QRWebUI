@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../../components/Navbar';
 import Link from 'next/link';
-import { FaAddressBook, FaArrowLeft, FaPlay, FaCheck, FaExclamationTriangle, FaLightbulb, FaDownload, FaUser } from 'react-icons/fa';
+import { FaAddressBook, FaArrowLeft, FaPlay, FaCheck, FaLightbulb } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'Contact QR Code Creation Tutorial - Detailed Step-by-Step Guide | QRCodeHub',
@@ -213,7 +213,7 @@ export default function ContactQRGuidePage() {
         "联系人QR码使用vCard格式，兼容所有主流手机通讯录应用",
         "可以包含多个电话号码和邮箱地址，用分号分隔",
         "地址信息会自动格式化，支持多行地址",
-        "建议在QR码附近添加"扫描保存联系人"的说明文字"
+        "建议在QR码附近添加\"扫描保存联系人\"的说明文字"
     ];
 
     return (
@@ -314,7 +314,7 @@ export default function ContactQRGuidePage() {
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">选择联系人类型</h3>
                                         <p className="text-gray-700 mb-3">
-                                            打开QR码生成器，在左侧功能选择区域点击"Contact"选项，进入联系人QR码制作模式。
+                                            打开QR码生成器，在左侧功能选择区域点击&quot;Contact&quot;选项，进入联系人QR码制作模式。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
@@ -344,7 +344,7 @@ export default function ContactQRGuidePage() {
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">自定义样式（可选）</h3>
                                         <p className="text-gray-700 mb-3">
-                                            点击"自定义"按钮，可以调整颜色、添加Logo、修改样式等，让您的QR码更加个性化。
+                                            点击&quot;自定义&quot;按钮，可以调整颜色、添加Logo、修改样式等，让您的QR码更加个性化。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
@@ -359,7 +359,7 @@ export default function ContactQRGuidePage() {
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">生成和下载</h3>
                                         <p className="text-gray-700 mb-3">
-                                            点击"生成QR码"按钮，系统会立即创建您的联系人QR码。然后选择下载格式（PNG、JPG、SVG、PDF）。
+                                            点击&quot;生成QR码&quot;按钮，系统会立即创建您的联系人QR码。然后选择下载格式（PNG、JPG、SVG、PDF）。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">

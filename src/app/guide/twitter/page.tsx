@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../../components/Navbar';
 import Link from 'next/link';
-import { FaTwitter, FaArrowLeft, FaPlay, FaCheck, FaExclamationTriangle, FaLightbulb, FaDownload, FaHashtag } from 'react-icons/fa';
+import { FaTwitter, FaArrowLeft, FaPlay, FaCheck, FaLightbulb } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'Twitter QR Code Creation Tutorial - Detailed Step-by-Step Guide | QRCodeHub',
@@ -43,8 +43,8 @@ export default function TwitterQRGuidePage() {
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": "如何制作Twitter QR码",
-        "description": "详细的Twitter QR码制作教程，包含步骤说明和使用案例",
+        "name": "How to Create a Twitter QR Code",
+        "description": "Detailed Twitter QR code creation tutorial, including step-by-step instructions and use cases",
         "image": "https://qrcodehub.net/twitter-qr-guide-image.png",
         "totalTime": "PT6M",
         "estimatedCost": {
@@ -55,46 +55,46 @@ export default function TwitterQRGuidePage() {
         "supply": [
             {
                 "@type": "HowToSupply",
-                "name": "电脑或移动设备"
+                "name": "Computer or Mobile Device"
             },
             {
                 "@type": "HowToSupply", 
-                "name": "网络连接"
+                "name": "Network Connection"
             }
         ],
         "tool": [
             {
                 "@type": "HowToTool",
-                "name": "QRCodeHub Twitter QR码生成器"
+                "name": "QRCodeHub Twitter QR Code Generator"
             }
         ],
         "step": [
             {
                 "@type": "HowToStep",
                 "position": 1,
-                "name": "选择Twitter类型",
-                "text": "在QR码生成器中选择'Twitter'类型",
+                "name": "Select Twitter Type",
+                "text": "Open the QR code generator and click the &quot;Twitter&quot; option in the left function area to enter Twitter QR code mode.",
                 "image": "https://qrcodehub.net/step1-twitter.png"
             },
             {
                 "@type": "HowToStep",
                 "position": 2,
-                "name": "选择功能类型",
-                "text": "选择链接到个人资料或发布推文",
+                "name": "Select Function Type",
+                "text": "Choose &quot;Profile Link&quot; or &quot;Tweet&quot; function. Profile link will redirect to your Twitter homepage, tweet will preset tweet content.",
                 "image": "https://qrcodehub.net/step2-twitter.png"
             },
             {
                 "@type": "HowToStep",
                 "position": 3,
-                "name": "填写Twitter信息",
-                "text": "输入用户名或推文内容",
+                "name": "Enter Twitter Information",
+                "text": "If you select profile link, enter your Twitter username (no @ needed). If you select tweet, enter the tweet content you want to preset.",
                 "image": "https://qrcodehub.net/step3-twitter.png"
             },
             {
                 "@type": "HowToStep",
                 "position": 4,
-                "name": "生成和下载",
-                "text": "点击生成按钮创建QR码并下载",
+                "name": "Generate and Download",
+                "text": "Click the &quot;Generate QR Code&quot; button to instantly create your Twitter QR code. Then select the download format (PNG, JPG, SVG, PDF).",
                 "image": "https://qrcodehub.net/step4-twitter.png"
             }
         ],
@@ -110,74 +110,67 @@ export default function TwitterQRGuidePage() {
 
     const twitterFeatures = [
         {
-            title: "个人资料链接",
-            description: "扫描后直接跳转到您的Twitter个人资料页面",
+            title: "Profile Link",
+            description: "Scan to directly jump to your Twitter profile page",
             icon: "👤",
-            benefits: ["快速关注", "个人品牌", "粉丝增长"]
+            benefits: ["Quick Follow", "Personal Branding", "Fan Growth"]
         },
         {
-            title: "推文发布",
-            description: "扫描后自动打开Twitter并预设推文内容",
+            title: "Tweet",
+            description: "Scan to automatically open Twitter and preset tweet content",
             icon: "📝",
-            benefits: ["内容分享", "话题推广", "互动引导"]
+            benefits: ["Content Sharing", "Topic Promotion", "Interactive Guidance"]
         }
     ];
 
     const useCases = [
         {
-            title: "个人资料推广",
-            description: "在名片、简历或宣传材料上添加Twitter个人资料QR码",
-            example: "用户名：@yourusername",
+            title: "Personal Branding",
+            description: "Add Twitter profile QR code to business cards, resumes, or promotional materials",
+            example: "Username: @yourusername",
             icon: "📄"
         },
         {
-            title: "活动推广",
-            description: "创建包含活动相关推文的QR码，引导用户分享",
-            example: "推文：参加2024春季摄影大赛！分享你的作品 #摄影大赛 #春天",
+            title: "Event Promotion",
+            description: "Create QR code with event-related tweets to guide users to share",
+            example: "Tweet: Join our event! #event #share",
             icon: "📸"
         },
         {
-            title: "产品宣传",
-            description: "创建产品推广推文的QR码，增加产品曝光",
-            example: "推文：新品上市！限时优惠，快来抢购 #新品 #优惠",
+            title: "Product Promotion",
+            description: "Create QR code with product promotion tweets to increase product exposure",
+            example: "Tweet: New product! Limited time offer, hurry up and grab it #new #discount",
             icon: "🛍️"
         },
         {
-            title: "话题标签推广",
-            description: "创建包含特定话题标签的推文QR码",
-            example: "推文：分享你的想法 #创新 #科技 #未来",
+            title: "Topic Tag Promotion",
+            description: "Create QR code with tweets containing specific topic tags",
+            example: "Tweet: Share your thoughts #innovation #technology #future",
             icon: "🏷️"
         }
     ];
 
     const bestPractices = [
         {
-            title: "使用简洁用户名",
-            description: "选择简短易记的Twitter用户名，便于用户输入和记忆",
+            title: "Use Short and Memorable Usernames",
+            description: "Choose short and easy-to-remember Twitter usernames for users to input",
             icon: <FaCheck className="w-5 h-5 text-green-500" />
         },
         {
-            title: "推文内容吸引人",
-            description: "创建有趣、有价值的推文内容，提高用户分享意愿",
+            title: "Test the QR Code",
+            description: "Test the QR code with different devices and Twitter apps before publishing",
             icon: <FaCheck className="w-5 h-5 text-green-500" />
         },
         {
-            title: "合理使用话题标签",
-            description: "在推文中添加相关的话题标签，增加曝光机会",
-            icon: <FaCheck className="w-5 h-5 text-green-500" />
-        },
-        {
-            title: "测试链接有效性",
-            description: "生成后测试QR码，确保能正确跳转到Twitter",
+            title: "Keep tweets within 280 characters for best compatibility",
+            description: "Keep your tweet content within 280 characters for best results",
             icon: <FaCheck className="w-5 h-5 text-green-500" />
         }
     ];
 
     const tips = [
-        "Twitter用户名不区分大小写，但建议使用小写字母",
-        "推文内容建议控制在280字符以内，符合Twitter限制",
-        "可以在推文中添加@用户名来提及其他用户",
-        "使用相关的话题标签可以增加推文的曝光度"
+        "Keep tweets within 280 characters for best compatibility",
+        "Use relevant and trending hashtags to increase exposure"
     ];
 
     return (
@@ -211,10 +204,10 @@ export default function TwitterQRGuidePage() {
                                 </div>
                                 <div>
                                     <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                                        Twitter QR码制作教程
+                                        Twitter QR Code Creation Tutorial
                                     </h1>
                                     <p className="text-sky-100 text-lg">
-                                        学习如何创建Twitter QR码，链接到个人资料或发布预设推文
+                                        Learn how to create Twitter QR codes, linking to personal profiles or posting preset tweets
                                     </p>
                                 </div>
                             </div>
@@ -243,27 +236,27 @@ export default function TwitterQRGuidePage() {
                     <div className="max-w-4xl mx-auto">
                         {/* 什么是Twitter QR码 */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">什么是Twitter QR码？</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">What is a Twitter QR Code?</h2>
                             <div className="bg-sky-50 rounded-lg p-6 mb-8">
                                 <p className="text-gray-700 leading-relaxed mb-4">
-                                    Twitter QR码是一种专门用于Twitter平台的二维码。它可以帮助用户快速访问您的Twitter个人资料，
-                                    或者自动打开Twitter应用并预设推文内容。这使得Twitter QR码非常适合社交媒体营销和个人品牌推广。
+                                    Twitter QR codes are specifically designed for the Twitter platform. They help users quickly access your Twitter profile page,
+                                    or automatically open the Twitter app and preset tweet content. This makes Twitter QR codes perfect for social media marketing and personal branding.
                                 </p>
                                 <div className="grid md:grid-cols-3 gap-4">
                                     <div className="text-center">
                                         <div className="text-2xl mb-2">👤</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">个人资料链接</h4>
-                                        <p className="text-sm text-gray-600">快速跳转到个人主页</p>
+                                        <h4 className="font-semibold text-gray-800 mb-1">Profile Link</h4>
+                                        <p className="text-sm text-gray-600">Jump to profile page</p>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-2xl mb-2">📝</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">推文发布</h4>
-                                        <p className="text-sm text-gray-600">预设推文内容</p>
+                                        <h4 className="font-semibold text-gray-800 mb-1">Tweet</h4>
+                                        <p className="text-sm text-gray-600">Preset tweet content</p>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-2xl mb-2">📈</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">粉丝增长</h4>
-                                        <p className="text-sm text-gray-600">增加关注者数量</p>
+                                        <h4 className="font-semibold text-gray-800 mb-1">Fan Growth</h4>
+                                        <p className="text-sm text-gray-600">Increase follower count</p>
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +264,7 @@ export default function TwitterQRGuidePage() {
 
                         {/* Twitter功能类型 */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Twitter功能类型</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Twitter Function Types</h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 {twitterFeatures.map((feature, index) => (
                                     <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
@@ -295,14 +288,14 @@ export default function TwitterQRGuidePage() {
 
                         {/* 制作步骤 */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">制作步骤</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">How to Create a Twitter QR Code</h2>
                             <div className="space-y-6">
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">选择Twitter类型</h3>
                                         <p className="text-gray-700 mb-3">
-                                            打开QR码生成器，在左侧功能选择区域点击"Twitter"选项，进入Twitter QR码制作模式。
+                                            打开QR码生成器，在左侧功能选择区域点击&quot;Twitter&quot;选项，进入Twitter QR码制作模式。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
@@ -317,7 +310,7 @@ export default function TwitterQRGuidePage() {
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">选择功能类型</h3>
                                         <p className="text-gray-700 mb-3">
-                                            选择"链接到个人资料"或"发布推文"功能。个人资料链接会跳转到您的Twitter主页，
+                                            选择&quot;链接到个人资料&quot;或&quot;发布推文&quot;功能。个人资料链接会跳转到您的Twitter主页，
                                             推文发布会预设推文内容。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
@@ -349,7 +342,7 @@ export default function TwitterQRGuidePage() {
                                     <div className="flex-1">
                                         <h3 className="font-semibold text-gray-800 mb-2 text-lg">生成和下载</h3>
                                         <p className="text-gray-700 mb-3">
-                                            点击"生成QR码"按钮，系统会立即创建您的Twitter QR码。然后选择下载格式（PNG、JPG、SVG、PDF）。
+                                            点击&quot;生成QR码&quot;按钮，系统会立即创建您的Twitter QR码。然后选择下载格式（PNG、JPG、SVG、PDF）。
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
