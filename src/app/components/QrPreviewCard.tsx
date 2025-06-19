@@ -205,6 +205,63 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
                         const cy = y + moduleSize / 2;
                         const r = moduleSize / 2;
                         svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${customOptions.fgColor}"/>`;
+                    } else if (customOptions.dotStyle === 'fluid') {
+                        // 流体样式 - 检测相邻点并创建流畅连接
+                        const centerX = x + moduleSize / 2;
+                        const centerY = y + moduleSize / 2;
+                        const fluidRadius = moduleSize * 0.6; // 流体半径
+                        
+                        // 检测相邻的点
+                        const hasLeft = col > 0 && modules.data[row * moduleCount + (col - 1)] === 1;
+                        const hasRight = col < moduleCount - 1 && modules.data[row * moduleCount + (col + 1)] === 1;
+                        const hasTop = row > 0 && modules.data[(row - 1) * moduleCount + col] === 1;
+                        const hasBottom = row < moduleCount - 1 && modules.data[(row + 1) * moduleCount + col] === 1;
+                        
+                        // 检测对角点
+                        const hasTopLeft = row > 0 && col > 0 && modules.data[(row - 1) * moduleCount + (col - 1)] === 1;
+                        const hasTopRight = row > 0 && col < moduleCount - 1 && modules.data[(row - 1) * moduleCount + (col + 1)] === 1;
+                        const hasBottomLeft = row < moduleCount - 1 && col > 0 && modules.data[(row + 1) * moduleCount + (col - 1)] === 1;
+                        const hasBottomRight = row < moduleCount - 1 && col < moduleCount - 1 && modules.data[(row + 1) * moduleCount + (col + 1)] === 1;
+                        
+                        // 如果有相邻点，创建连接效果
+                        if (hasLeft || hasRight || hasTop || hasBottom || hasTopLeft || hasTopRight || hasBottomLeft || hasBottomRight) {
+                            // 创建流体连接形状
+                            const connectionRadius = moduleSize * 0.8;
+                            
+                            // 基础圆形
+                            svg += `<circle cx="${centerX}" cy="${centerY}" r="${fluidRadius}" fill="${customOptions.fgColor}"/>`;
+                            
+                            // 添加连接扩展
+                            if (hasLeft) {
+                                svg += `<circle cx="${centerX - moduleSize}" cy="${centerY}" r="${connectionRadius}" fill="${customOptions.fgColor}"/>`;
+                            }
+                            if (hasRight) {
+                                svg += `<circle cx="${centerX + moduleSize}" cy="${centerY}" r="${connectionRadius}" fill="${customOptions.fgColor}"/>`;
+                            }
+                            if (hasTop) {
+                                svg += `<circle cx="${centerX}" cy="${centerY - moduleSize}" r="${connectionRadius}" fill="${customOptions.fgColor}"/>`;
+                            }
+                            if (hasBottom) {
+                                svg += `<circle cx="${centerX}" cy="${centerY + moduleSize}" r="${connectionRadius}" fill="${customOptions.fgColor}"/>`;
+                            }
+                            
+                            // 对角连接
+                            if (hasTopLeft) {
+                                svg += `<circle cx="${centerX - moduleSize}" cy="${centerY - moduleSize}" r="${connectionRadius * 0.7}" fill="${customOptions.fgColor}"/>`;
+                            }
+                            if (hasTopRight) {
+                                svg += `<circle cx="${centerX + moduleSize}" cy="${centerY - moduleSize}" r="${connectionRadius * 0.7}" fill="${customOptions.fgColor}"/>`;
+                            }
+                            if (hasBottomLeft) {
+                                svg += `<circle cx="${centerX - moduleSize}" cy="${centerY + moduleSize}" r="${connectionRadius * 0.7}" fill="${customOptions.fgColor}"/>`;
+                            }
+                            if (hasBottomRight) {
+                                svg += `<circle cx="${centerX + moduleSize}" cy="${centerY + moduleSize}" r="${connectionRadius * 0.7}" fill="${customOptions.fgColor}"/>`;
+                            }
+                        } else {
+                            // 没有相邻点时，绘制独立的流体形状
+                            svg += `<circle cx="${centerX}" cy="${centerY}" r="${fluidRadius}" fill="${customOptions.fgColor}"/>`;
+                        }
                     } else {
                         svg += `<rect x="${x}" y="${y}" width="${moduleSize}" height="${moduleSize}" fill="${customOptions.fgColor}"/>`;
                     }
@@ -349,6 +406,67 @@ showpage
                             ctx.beginPath();
                             ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size / 2, 0, Math.PI * 2);
                             ctx.fill();
+                        } else if (customOptions.dotStyle === 'fluid' && !isOuterEye && !isInnerEye) {
+                            // 流体样式 - 检测相邻点并创建流畅连接
+                            const centerX = x + moduleSize / 2;
+                            const centerY = y + moduleSize / 2;
+                            const fluidRadius = size * 0.6; // 流体半径
+                            
+                            // 检测相邻的点
+                            const hasLeft = col > 0 && modules.data[row * moduleCount + (col - 1)] === 1;
+                            const hasRight = col < moduleCount - 1 && modules.data[row * moduleCount + (col + 1)] === 1;
+                            const hasTop = row > 0 && modules.data[(row - 1) * moduleCount + col] === 1;
+                            const hasBottom = row < moduleCount - 1 && modules.data[(row + 1) * moduleCount + col] === 1;
+                            
+                            // 检测对角点
+                            const hasTopLeft = row > 0 && col > 0 && modules.data[(row - 1) * moduleCount + (col - 1)] === 1;
+                            const hasTopRight = row > 0 && col < moduleCount - 1 && modules.data[(row - 1) * moduleCount + (col + 1)] === 1;
+                            const hasBottomLeft = row < moduleCount - 1 && col > 0 && modules.data[(row + 1) * moduleCount + (col - 1)] === 1;
+                            const hasBottomRight = row < moduleCount - 1 && col < moduleCount - 1 && modules.data[(row + 1) * moduleCount + (col + 1)] === 1;
+                            
+                            ctx.beginPath();
+                            
+                            // 如果有相邻点，创建连接效果
+                            if (hasLeft || hasRight || hasTop || hasBottom || hasTopLeft || hasTopRight || hasBottomLeft || hasBottomRight) {
+                                // 创建流体连接形状
+                                const connectionRadius = moduleSize * 0.8;
+                                
+                                // 基础圆形
+                                ctx.arc(centerX, centerY, fluidRadius, 0, Math.PI * 2);
+                                
+                                // 添加连接扩展
+                                if (hasLeft) {
+                                    ctx.arc(centerX - moduleSize, centerY, connectionRadius, 0, Math.PI * 2);
+                                }
+                                if (hasRight) {
+                                    ctx.arc(centerX + moduleSize, centerY, connectionRadius, 0, Math.PI * 2);
+                                }
+                                if (hasTop) {
+                                    ctx.arc(centerX, centerY - moduleSize, connectionRadius, 0, Math.PI * 2);
+                                }
+                                if (hasBottom) {
+                                    ctx.arc(centerX, centerY + moduleSize, connectionRadius, 0, Math.PI * 2);
+                                }
+                                
+                                // 对角连接
+                                if (hasTopLeft) {
+                                    ctx.arc(centerX - moduleSize, centerY - moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                }
+                                if (hasTopRight) {
+                                    ctx.arc(centerX + moduleSize, centerY - moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                }
+                                if (hasBottomLeft) {
+                                    ctx.arc(centerX - moduleSize, centerY + moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                }
+                                if (hasBottomRight) {
+                                    ctx.arc(centerX + moduleSize, centerY + moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                }
+                            } else {
+                                // 没有相邻点时，绘制独立的流体形状
+                                ctx.arc(centerX, centerY, fluidRadius, 0, Math.PI * 2);
+                            }
+                            
+                            ctx.fill();
                         } else {
                             ctx.fillRect(x, y, size, size);
                         }
@@ -483,20 +601,69 @@ showpage
                                     ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size / 2, 0, Math.PI * 2);
                                     ctx.fill();
                                     break;
-                                case 'fluid':
-                                    const radius = size / 4;
+                                case 'fluid': {
+                                    // 流体样式 - 检测相邻点并创建流畅连接
+                                    const centerX = x + moduleSize / 2;
+                                    const centerY = y + moduleSize / 2;
+                                    const fluidRadius = size * 0.6; // 流体半径
+                                    
+                                    // 检测相邻的点
+                                    const hasLeft = col > 0 && modules.data[row * moduleCount + (col - 1)] === 1;
+                                    const hasRight = col < moduleCount - 1 && modules.data[row * moduleCount + (col + 1)] === 1;
+                                    const hasTop = row > 0 && modules.data[(row - 1) * moduleCount + col] === 1;
+                                    const hasBottom = row < moduleCount - 1 && modules.data[(row + 1) * moduleCount + col] === 1;
+                                    
+                                    // 检测对角点
+                                    const hasTopLeft = row > 0 && col > 0 && modules.data[(row - 1) * moduleCount + (col - 1)] === 1;
+                                    const hasTopRight = row > 0 && col < moduleCount - 1 && modules.data[(row - 1) * moduleCount + (col + 1)] === 1;
+                                    const hasBottomLeft = row < moduleCount - 1 && col > 0 && modules.data[(row + 1) * moduleCount + (col - 1)] === 1;
+                                    const hasBottomRight = row < moduleCount - 1 && col < moduleCount - 1 && modules.data[(row + 1) * moduleCount + (col + 1)] === 1;
+                                    
                                     ctx.beginPath();
-                                    ctx.moveTo(x + radius, y);
-                                    ctx.lineTo(x + size - radius, y);
-                                    ctx.quadraticCurveTo(x + size, y, x + size, y + radius);
-                                    ctx.lineTo(x + size, y + size - radius);
-                                    ctx.quadraticCurveTo(x + size, y + size, x + size - radius, y + size);
-                                    ctx.lineTo(x + radius, y + size);
-                                    ctx.quadraticCurveTo(x, y + size, x, y + size - radius);
-                                    ctx.lineTo(x, y + radius);
-                                    ctx.quadraticCurveTo(x, y, x + radius, y);
+                                    
+                                    // 如果有相邻点，创建连接效果
+                                    if (hasLeft || hasRight || hasTop || hasBottom || hasTopLeft || hasTopRight || hasBottomLeft || hasBottomRight) {
+                                        // 创建流体连接形状
+                                        const connectionRadius = moduleSize * 0.8;
+                                        
+                                        // 基础圆形
+                                        ctx.arc(centerX, centerY, fluidRadius, 0, Math.PI * 2);
+                                        
+                                        // 添加连接扩展
+                                        if (hasLeft) {
+                                            ctx.arc(centerX - moduleSize, centerY, connectionRadius, 0, Math.PI * 2);
+                                        }
+                                        if (hasRight) {
+                                            ctx.arc(centerX + moduleSize, centerY, connectionRadius, 0, Math.PI * 2);
+                                        }
+                                        if (hasTop) {
+                                            ctx.arc(centerX, centerY - moduleSize, connectionRadius, 0, Math.PI * 2);
+                                        }
+                                        if (hasBottom) {
+                                            ctx.arc(centerX, centerY + moduleSize, connectionRadius, 0, Math.PI * 2);
+                                        }
+                                        
+                                        // 对角连接
+                                        if (hasTopLeft) {
+                                            ctx.arc(centerX - moduleSize, centerY - moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                        }
+                                        if (hasTopRight) {
+                                            ctx.arc(centerX + moduleSize, centerY - moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                        }
+                                        if (hasBottomLeft) {
+                                            ctx.arc(centerX - moduleSize, centerY + moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                        }
+                                        if (hasBottomRight) {
+                                            ctx.arc(centerX + moduleSize, centerY + moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                        }
+                                    } else {
+                                        // 没有相邻点时，绘制独立的流体形状
+                                        ctx.arc(centerX, centerY, fluidRadius, 0, Math.PI * 2);
+                                    }
+                                    
                                     ctx.fill();
                                     break;
+                                }
                                 case 'hexagon':
                                     const hexSize = size / 2;
                                     ctx.beginPath();
@@ -582,10 +749,66 @@ showpage
                                     break;
                                     
                                 case 'fluid': {
-                                    // 流体样式 - 使用完整模块大小，完全消除间隙
-                                    // 对于fluid样式，忽略dotScale，使用完整的moduleSize
-                                    ctx.fillRect(x, y, moduleSize, moduleSize);
+                                    // 流体样式 - 检测相邻点并创建流畅连接
+                                    const centerX = x + moduleSize / 2;
+                                    const centerY = y + moduleSize / 2;
+                                    const fluidRadius = size * 0.6; // 流体半径
                                     
+                                    // 检测相邻的点
+                                    const hasLeft = col > 0 && modules.data[row * moduleCount + (col - 1)] === 1;
+                                    const hasRight = col < moduleCount - 1 && modules.data[row * moduleCount + (col + 1)] === 1;
+                                    const hasTop = row > 0 && modules.data[(row - 1) * moduleCount + col] === 1;
+                                    const hasBottom = row < moduleCount - 1 && modules.data[(row + 1) * moduleCount + col] === 1;
+                                    
+                                    // 检测对角点
+                                    const hasTopLeft = row > 0 && col > 0 && modules.data[(row - 1) * moduleCount + (col - 1)] === 1;
+                                    const hasTopRight = row > 0 && col < moduleCount - 1 && modules.data[(row - 1) * moduleCount + (col + 1)] === 1;
+                                    const hasBottomLeft = row < moduleCount - 1 && col > 0 && modules.data[(row + 1) * moduleCount + (col - 1)] === 1;
+                                    const hasBottomRight = row < moduleCount - 1 && col < moduleCount - 1 && modules.data[(row + 1) * moduleCount + (col + 1)] === 1;
+                                    
+                                    ctx.beginPath();
+                                    
+                                    // 如果有相邻点，创建连接效果
+                                    if (hasLeft || hasRight || hasTop || hasBottom || hasTopLeft || hasTopRight || hasBottomLeft || hasBottomRight) {
+                                        // 创建流体连接形状
+                                        const connectionRadius = moduleSize * 0.8;
+                                        
+                                        // 基础圆形
+                                        ctx.arc(centerX, centerY, fluidRadius, 0, Math.PI * 2);
+                                        
+                                        // 添加连接扩展
+                                        if (hasLeft) {
+                                            ctx.arc(centerX - moduleSize, centerY, connectionRadius, 0, Math.PI * 2);
+                                        }
+                                        if (hasRight) {
+                                            ctx.arc(centerX + moduleSize, centerY, connectionRadius, 0, Math.PI * 2);
+                                        }
+                                        if (hasTop) {
+                                            ctx.arc(centerX, centerY - moduleSize, connectionRadius, 0, Math.PI * 2);
+                                        }
+                                        if (hasBottom) {
+                                            ctx.arc(centerX, centerY + moduleSize, connectionRadius, 0, Math.PI * 2);
+                                        }
+                                        
+                                        // 对角连接
+                                        if (hasTopLeft) {
+                                            ctx.arc(centerX - moduleSize, centerY - moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                        }
+                                        if (hasTopRight) {
+                                            ctx.arc(centerX + moduleSize, centerY - moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                        }
+                                        if (hasBottomLeft) {
+                                            ctx.arc(centerX - moduleSize, centerY + moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                        }
+                                        if (hasBottomRight) {
+                                            ctx.arc(centerX + moduleSize, centerY + moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
+                                        }
+                                    } else {
+                                        // 没有相邻点时，绘制独立的流体形状
+                                        ctx.arc(centerX, centerY, fluidRadius, 0, Math.PI * 2);
+                                    }
+                                    
+                                    ctx.fill();
                                     break;
                                 }
                                     
