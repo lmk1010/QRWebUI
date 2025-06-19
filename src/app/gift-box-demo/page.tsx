@@ -288,7 +288,7 @@ export default function GiftBoxDemo() {
                 <h3 className="font-semibold text-yellow-800">SCAN Code</h3>
               </div>
               <p className="text-sm text-yellow-700">
-                Designed specifically for scanning scenarios, includes "Scan Me" prompt, suitable for WeChat and Alipay scanning.
+                Designed specifically for scanning scenarios, includes &quot;Scan Me&quot; prompt, suitable for WeChat and Alipay scanning.
               </p>
             </div>
             

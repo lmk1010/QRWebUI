@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const About = () => {
     return (
@@ -20,23 +21,29 @@ const About = () => {
             {/* Image Section */}
             <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="flex justify-center items-center">
-                    <img
+                    <Image
                         src="/assets/pexels-A.png"
                         alt="QR code generator for business applications and marketing campaigns"
+                        width={400}
+                        height={256}
                         className="w-full h-64 object-cover rounded-lg shadow-lg"
                     />
                 </div>
                 <div className="flex justify-center items-center">
-                    <img
+                    <Image
                         src="/assets/pexels-B.png"
                         alt="Free QR code scanner and mobile technology solutions"
+                        width={400}
+                        height={256}
                         className="w-full h-64 object-cover rounded-lg shadow-lg"
                     />
                 </div>
                 <div className="flex justify-center items-center">
-                    <img
+                    <Image
                         src="/assets/pexels-C.png"
                         alt="Custom QR code creation tools and digital innovation"
+                        width={400}
+                        height={256}
                         className="w-full h-64 object-cover rounded-lg shadow-lg"
                     />
                 </div>

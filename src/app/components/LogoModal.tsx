@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 
 interface LogoModalProps {
     isOpen: boolean;
@@ -95,9 +96,11 @@ const LogoModal: React.FC<LogoModalProps> = ({
                 >
                     {previewLogo ? (
                         <div className="flex flex-col items-center">
-                            <img
+                            <Image
                                 src={previewLogo}
                                 alt="Logo preview"
+                                width={80}
+                                height={80}
                                 className="w-20 h-20 object-contain mb-2"
                             />
                             <p className="text-sm text-gray-500">Click or drag to change logo</p>
@@ -140,9 +143,11 @@ const LogoModal: React.FC<LogoModalProps> = ({
                                 className="aspect-square border rounded-lg p-1 cursor-pointer hover:border-blue-500 transition-colors flex items-center justify-center"
                                 onClick={() => setPreviewLogo(icon)}
                             >
-                                <img
+                                <Image
                                     src={icon}
                                     alt={`Preset logo ${index + 1}`}
+                                    width={40}
+                                    height={40}
                                     className="w-10 h-10 object-contain"
                                 />
                             </div>

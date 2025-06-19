@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from 'framer-motion';
-import { FaFileAlt, FaLink, FaAddressBook, FaPalette, FaClone, FaRulerCombined, FaFile, FaAppStore, FaLayerGroup, FaVideo, FaEnvelope, FaWifi, FaSquare } from 'react-icons/fa';
+import { FaFileAlt, FaLink, FaAddressBook, FaPalette, FaClone, FaRulerCombined, FaFile, FaEnvelope, FaWifi, FaSquare } from 'react-icons/fa';
 
 import FeatureCard from './FeatureCard';
 import { mainCategories } from './Categories';

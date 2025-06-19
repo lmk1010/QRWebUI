@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { CustomOptions } from './CustomizationModal';
 
 interface DotStyleModalProps {
@@ -113,9 +114,11 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
                                 onClick={() => handleDotStyleSelect(style.id as CustomOptions['dotStyle'])}
                             >
                                 <div className="w-full h-full flex flex-col items-center justify-center">
-                                    <img
+                                    <Image
                                         src={style.image}
                                         alt={style.name}
+                                        width={32}
+                                        height={32}
                                         className="w-8 h-8 object-contain mb-1"
                                     />
                                     <span className="text-xs text-gray-600 text-center">{style.name}</span>
@@ -136,9 +139,11 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
                                 onClick={() => handleOuterEyeStyleSelect(style.id as CustomOptions['outerEyeStyle'])}
                             >
                                 <div className="w-full h-full flex flex-col items-center justify-center">
-                                    <img
+                                    <Image
                                         src={style.image}
                                         alt={style.name}
+                                        width={40}
+                                        height={40}
                                         className="w-10 h-10 object-contain mb-1"
                                     />
                                     <span className="text-xs text-gray-600 text-center">{style.name}</span>
@@ -159,9 +164,11 @@ const DotStyleModal: React.FC<DotStyleModalProps> = ({
                                 onClick={() => handleInnerEyeStyleSelect(style.id as CustomOptions['innerEyeStyle'])}
                             >
                                 <div className="w-full h-full flex flex-col items-center justify-center">
-                                    <img
+                                    <Image
                                         src={style.image}
                                         alt={style.name}
+                                        width={32}
+                                        height={32}
                                         className="w-8 h-8 object-contain mb-1"
                                     />
                                     <span className="text-xs text-gray-600 text-center">{style.name}</span>

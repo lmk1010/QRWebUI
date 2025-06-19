@@ -290,7 +290,7 @@ const FrameModal: React.FC<FrameModalProps> = ({
                         <div>
                             <h4 className="text-sm font-medium text-gray-800 mb-1">Frame Feature Usage Guide</h4>
                             <ul className="text-sm text-gray-600 space-y-1">
-                                <li>• <strong>📱 SCAN Frame:</strong> Designed for scanning scenarios with "Scan Me" prompt, suitable for WeChat and Alipay scanning</li>
+                                <li>• <strong>📱 SCAN Frame:</strong> Designed for scanning scenarios with &quot;Scan Me&quot; prompt, suitable for WeChat and Alipay scanning</li>
                                 <li>• <strong>💳 PAY Frame:</strong> Business payment style with bold border to enhance trust, specifically for payment scenarios</li>
                                 <li>• <strong>👉 THIS Frame:</strong> Directional guide design for navigation and guidance, suitable for locations requiring user direction</li>
                                 <li>• <strong>✨ MODERN Frame:</strong> Simple modern style with minimal decorative elements, suitable for premium brands and modern scenarios</li>
