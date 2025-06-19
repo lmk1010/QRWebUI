@@ -22,6 +22,8 @@ export interface CustomOptions {
     quietZone?: number;         // 静止区域大小
     dotScale?: number;          // 普通点的缩放比例
     eyeScale?: number;          // 定位点的缩放比例
+    frameStyle?: 'none' | 'scan' | 'pay' | 'this' | 'modern' | 'common';  // 边框样式
+    frameColor?: string;        // 边框颜色
 }
 
 interface CustomizationModalProps {

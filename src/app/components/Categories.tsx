@@ -29,15 +29,15 @@ export const mainCategories: MainCategory[] = [
     // },
     {
         type: 'app',
-        title: 'App'
+        title: 'twitter'
     },
     {
         type: 'batch',
-        title: 'Batch'
+        title: 'Email'
     },
     {
         type: 'video',
-        title: 'Video'
+        title: 'wifi'
     }
 ];
 

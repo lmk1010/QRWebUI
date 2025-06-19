@@ -80,7 +80,7 @@ const SEOContent: React.FC<SEOContentProps> = ({ showOnlyContent }) => {
                         </div>
                         <div className="p-6 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
                             <h3 className="font-semibold text-gray-800 mb-2">📧 Email</h3>
-                            <p className="text-gray-600">Pre-compose emails with recipients and subjects.</p>
+                            <p className="text-gray-600">Pre-compose emails with recipient and subject.</p>
                         </div>
                         <div className="p-6 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
                             <h3 className="font-semibold text-gray-800 mb-2">📞 Phone Numbers</h3>
@@ -92,7 +92,7 @@ const SEOContent: React.FC<SEOContentProps> = ({ showOnlyContent }) => {
                         </div>
                         <div className="p-6 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
                             <h3 className="font-semibold text-gray-800 mb-2">🌐 WiFi</h3>
-                            <p className="text-gray-600">Share WiFi credentials for instant connection.</p>
+                            <p className="text-gray-600">分享WiFi凭据，实现即时连接。</p>
                         </div>
                     </div>
                 </section>

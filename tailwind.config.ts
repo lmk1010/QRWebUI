@@ -19,6 +19,12 @@ export default {
       fontWeight: {
         'extra-black': '950', // 自定义字体重量
       },
+      scale: {
+        '102': '1.02',
+        '103': '1.03',
+        '98': '0.98',
+        '97': '0.97',
+      },
       gridTemplateRows: {
         // 定义自定义的行高模板
         'custom-8': 'repeat(2, 320px)', // 8 行，每行 100px 高

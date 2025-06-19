@@ -198,7 +198,7 @@ export default function FeaturesPage() {
                                 </div>
                                 <p className="text-gray-600">
                                     Create QR codes that automatically compose emails with preset recipients, 
-                                    subject lines, and message content.
+                                    subject lines and message content.
                                 </p>
                             </div>
                             <div className="p-6 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
@@ -224,11 +224,11 @@ export default function FeaturesPage() {
                             <div className="p-6 border border-gray-200 rounded-lg hover:border-blue-300 transition-colors">
                                 <div className="flex items-center mb-3">
                                     <span className="text-2xl mr-3">🌐</span>
-                                    <h3 className="font-semibold text-gray-800 text-lg">WiFi QR Code</h3>
+                                    <h3 className="font-semibold text-gray-800 text-lg">WiFi二维码</h3>
                                 </div>
                                 <p className="text-gray-600">
-                                    Generate QR codes for easy WiFi network sharing and connection. 
-                                    Let guests connect to your WiFi instantly.
+                                    生成WiFi网络分享和连接的二维码。
+                                    让客人立即连接到您的WiFi。
                                 </p>
                             </div>
                         </div>

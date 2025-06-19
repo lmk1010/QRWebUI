@@ -29,6 +29,8 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
             downloadSize: 200,
             margin: 4,
             errorCorrectionLevel: 'H',
+            frameStyle: 'none',
+            frameColor: '#000000',
         };
         onCustomOptionsChange(defaultOptions);
     };
@@ -37,29 +39,78 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     const qrCodeRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    // PNG下载功能
     const handleDownloadPNG = async () => {
-        try {
-            // 创建临时Canvas用于下载，使用downloadSize
-            const tempCanvas = document.createElement('canvas');
-            const downloadSize = customOptions.downloadSize || customOptions.size;
-            tempCanvas.width = downloadSize;
-            tempCanvas.height = downloadSize;
+        if (!canvasRef.current) return;
+
+        // 创建下载用的画布
+        const downloadCanvas = document.createElement('canvas');
+        const downloadSize = customOptions.downloadSize;
+        downloadCanvas.width = downloadSize;
+        downloadCanvas.height = downloadSize;
+
+        // 根据Frame样式处理下载
+        if (customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'pay' || 
+            customOptions.frameStyle === 'this' || customOptions.frameStyle === 'common') {
+            // 使用Canvas绘制的Frame
+            await handleDownloadWithCanvasFrame(downloadSize);
+        } else {
+            // 普通样式
+            drawQRCodeForDownload(downloadCanvas, downloadSize);
             
-            // 使用专门的下载函数绘制二维码
-            drawQRCodeForDownload(tempCanvas, downloadSize);
-            
-            // 等待绘制完成
-            await new Promise(resolve => setTimeout(resolve, 100));
-            
-            const dataUrl = tempCanvas.toDataURL('image/png');
             const link = document.createElement('a');
-            link.download = 'qrcode.png';
-            link.href = dataUrl;
+            link.download = `qrcode-${Date.now()}.png`;
+            link.href = downloadCanvas.toDataURL();
             link.click();
-        } catch (error) {
-            console.error('PNG download failed:', error);
         }
+    };
+
+    // 新的Canvas Frame下载处理函数
+    const handleDownloadWithCanvasFrame = async (downloadSize: number) => {
+        // 这里可以集成GiftBoxCanvas的绘制逻辑
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        canvas.width = downloadSize + 200; // 增加空间用于Frame装饰
+        canvas.height = downloadSize + 250;
+
+        // 简化的Frame绘制逻辑（基于GiftBoxCanvas）
+        ctx.fillStyle = customOptions.bgColor;
+        ctx.fillRect(50, 50, downloadSize + 100, downloadSize + 150);
+        
+        // 绘制QR码
+        const qrCanvas = document.createElement('canvas');
+        drawQRCodeForDownload(qrCanvas, downloadSize);
+        
+        const qrX = (canvas.width - downloadSize) / 2;
+        const qrY = (canvas.height - downloadSize) / 2 + 25;
+        ctx.drawImage(qrCanvas, qrX, qrY);
+
+        // 添加文字
+        ctx.fillStyle = customOptions.fgColor;
+        ctx.font = 'bold 24px Arial';
+        ctx.textAlign = 'center';
+        const textY = qrY - 30;
+        
+        switch (customOptions.frameStyle) {
+            case 'scan':
+                ctx.fillText('SCAN ME', canvas.width / 2, textY);
+                break;
+            case 'pay':
+                ctx.fillText('PAY HERE', canvas.width / 2, textY);
+                break;
+            case 'this':
+                ctx.fillText('THIS WAY', canvas.width / 2, textY);
+                break;
+            case 'common':
+                ctx.fillText('WELCOME', canvas.width / 2, textY);
+                break;
+        }
+
+        const link = document.createElement('a');
+        link.download = `qrcode-frame-${Date.now()}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
     };
 
     // SVG下载功能
@@ -695,7 +746,7 @@ showpage
 
             {/* 二维码信息卡片 */}
             <div className="w-full bg-gray-50 rounded-lg p-3 mb-4">
-                <div className="grid grid-cols-4 gap-2 text-xs">
+                <div className="grid grid-cols-5 gap-2 text-xs">
                     <div className="text-center">
                         <div className="text-gray-500 mb-1">Size</div>
                         <div className="font-semibold text-gray-800">{customOptions.size}×{customOptions.size}</div>
@@ -705,7 +756,18 @@ showpage
                         <div className="font-semibold text-gray-800 capitalize">{customOptions.dotStyle}</div>
                     </div>
                     <div className="text-center">
-                        <div className="text-gray-500 mb-1">Error Correction</div>
+                        <div className="text-gray-500 mb-1">Frame</div>
+                        <div className="font-semibold text-gray-800 capitalize">
+                            {customOptions.frameStyle === 'none' ? 'None' :
+                             customOptions.frameStyle === 'scan' ? 'SCAN' :
+                             customOptions.frameStyle === 'pay' ? 'PAY' :
+                             customOptions.frameStyle === 'this' ? 'THIS' :
+                             customOptions.frameStyle === 'modern' ? 'MODERN' :
+                             customOptions.frameStyle === 'common' ? 'COMMON' : 'None'}
+                        </div>
+                    </div>
+                    <div className="text-center">
+                        <div className="text-gray-500 mb-1">Error Level</div>
                         <div className="font-semibold text-gray-800">{customOptions.errorCorrectionLevel}</div>
                     </div>
                     <div className="text-center">
@@ -717,13 +779,106 @@ showpage
 
             {/* 二维码显示区域 */}
             <div
-                className="bg-white border-2 border-gray-200 rounded-lg p-3 mb-4 shadow-inner"
+                className={`relative mb-4 shadow-inner ${
+                    customOptions.frameStyle === 'none' ? 'bg-white border-2 border-gray-200 rounded-lg p-3' :
+                    customOptions.frameStyle === 'scan' ? 'bg-yellow-50 rounded-xl p-6 relative' :
+                    customOptions.frameStyle === 'pay' ? 'bg-green-50 rounded-lg p-6 relative' :
+                    customOptions.frameStyle === 'this' ? 'bg-blue-50 rounded-lg p-6 relative' :
+                    customOptions.frameStyle === 'modern' ? 'bg-gray-50 rounded-lg p-6 relative' :
+                    customOptions.frameStyle === 'common' ? 'bg-red-50 rounded-xl p-6 relative' :
+                    'bg-white border-2 border-gray-200 rounded-lg p-3'
+                }`}
                 style={{
-                    backgroundColor: customOptions.bgColor,
+                    backgroundColor: customOptions.frameStyle === 'scan' ? '#fffbeb' : 
+                                   customOptions.frameStyle === 'pay' ? '#f0fdf4' :
+                                   customOptions.frameStyle === 'this' ? '#eff6ff' :
+                                   customOptions.frameStyle === 'common' ? '#fef2f2' :
+                                   customOptions.bgColor,
+                    borderColor: customOptions.frameStyle !== 'none' ? customOptions.frameColor || '#000000' : undefined,
+                    borderWidth: customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'common' ? '4px' : 
+                                customOptions.frameStyle === 'pay' ? '5px' :
+                                customOptions.frameStyle === 'this' ? '4px' :
+                                customOptions.frameStyle === 'modern' ? '2px' : undefined,
+                    borderStyle: customOptions.frameStyle !== 'none' ? 'solid' : undefined,
                 }}
                 ref={qrCodeRef}
             >
-                <canvas ref={canvasRef} />
+                {/* Frame装饰元素 */}
+                {customOptions.frameStyle === 'scan' && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                        <div 
+                            className="text-black text-xs font-bold rounded-full flex items-center justify-center px-3 py-1 border shadow-sm"
+                            style={{ 
+                                backgroundColor: customOptions.frameColor || '#F4D03F',
+                                borderColor: customOptions.frameColor || '#F4D03F',
+                                color: '#000'
+                            }}
+                        >
+                            📱 SCAN ME
+                        </div>
+                    </div>
+                )}
+                
+                {customOptions.frameStyle === 'pay' && (
+                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
+                        <div 
+                            className="text-white text-sm font-bold rounded flex items-center justify-center px-4 py-2"
+                            style={{ 
+                                backgroundColor: customOptions.frameColor || '#58D68D',
+                            }}
+                        >
+                            💳 PAY HERE
+                        </div>
+                    </div>
+                )}
+
+                {customOptions.frameStyle === 'this' && (
+                    <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
+                        <div 
+                            className="text-white text-sm font-bold rounded flex items-center justify-center px-4 py-2"
+                            style={{ 
+                                backgroundColor: customOptions.frameColor || '#5DADE2',
+                            }}
+                        >
+                            👉 THIS WAY
+                        </div>
+                    </div>
+                )}
+
+                {customOptions.frameStyle === 'modern' && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                        <div 
+                            className="text-gray-800 text-xs font-medium rounded-full flex items-center justify-center px-3 py-1 border shadow-sm"
+                            style={{ 
+                                borderColor: customOptions.frameColor || '#9E9E9E',
+                                backgroundColor: 'white',
+                                color: customOptions.frameColor || '#9E9E9E'
+                            }}
+                        >
+                            ✨ MODERN
+                        </div>
+                    </div>
+                )}
+
+                {customOptions.frameStyle === 'common' && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                        <div 
+                            className="text-white text-xs font-bold rounded-full flex items-center justify-center px-3 py-1 border shadow-sm"
+                            style={{ 
+                                backgroundColor: customOptions.frameColor || '#EC7063',
+                                borderColor: customOptions.frameColor || '#EC7063',
+                                color: 'white'
+                            }}
+                        >
+                            🎯 WELCOME
+                        </div>
+                    </div>
+                )}
+                
+                {/* 二维码canvas容器 */}
+                <div className="flex items-center justify-center">
+                    <canvas ref={canvasRef} />
+                </div>
             </div>
 
             {/* 下载区域 */}

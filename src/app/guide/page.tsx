@@ -227,12 +227,12 @@ export default function GuidePage() {
                                     </p>
                                 </div>
                                 <div className="p-6 border-l-4 border-orange-500 bg-orange-50">
-                                    <h4 className="font-semibold text-orange-800 mb-3">🌐 WiFi QR Code</h4>
+                                    <h4 className="font-semibold text-orange-800 mb-3">🌐 WiFi二维码</h4>
                                     <p className="text-gray-700 mb-3">
-                                        Allow guests to connect to your WiFi network instantly.
+                                        允许客人立即连接到您的WiFi网络。
                                     </p>
                                     <p className="text-sm text-gray-600">
-                                        <strong>Format:</strong> WIFI:T:WPA;S:NetworkName;P:Password;;
+                                        <strong>格式：</strong> WIFI:T:WPA;S:网络名称;P:密码;;
                                     </p>
                                 </div>
                             </div>
