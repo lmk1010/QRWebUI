@@ -2,10 +2,10 @@ import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://qrcodehub.net'
-  const currentDate = new Date()
+  const currentDate = new Date().toISOString()
 
   return [
-    // 主要页面
+    // 主要页面 - 只包含实际存在的页面
     {
       url: baseUrl,
       lastModified: currentDate,
