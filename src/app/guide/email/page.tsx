@@ -39,62 +39,62 @@ export const metadata: Metadata = {
 };
 
 export default function EmailQRGuidePage() {
-    // 结构化数据
+    // Structured Data
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": "如何制作邮箱QR码",
-        "description": "详细的邮箱QR码制作教程，包含步骤说明和使用案例",
+        "name": "How to Create an Email QR Code",
+        "description": "Detailed email QR code creation tutorial, including step-by-step instructions and use cases",
         "image": "https://qrcodehub.net/email-qr-guide-image.png",
         "totalTime": "PT6M",
         "estimatedCost": {
             "@type": "MonetaryAmount",
-            "currency": "CNY",
+            "currency": "USD",
             "value": "0"
         },
         "supply": [
             {
                 "@type": "HowToSupply",
-                "name": "电脑或移动设备"
+                "name": "Computer or mobile device"
             },
             {
                 "@type": "HowToSupply", 
-                "name": "网络连接"
+                "name": "Internet connection"
             }
         ],
         "tool": [
             {
                 "@type": "HowToTool",
-                "name": "QRCodeHub邮箱QR码生成器"
+                "name": "QRCodeHub Email QR Code Generator"
             }
         ],
         "step": [
             {
                 "@type": "HowToStep",
                 "position": 1,
-                "name": "选择邮箱类型",
-                "text": "在QR码生成器中选择'Email'类型",
+                "name": "Select Email Type",
+                "text": "Choose 'Email' type in the QR code generator",
                 "image": "https://qrcodehub.net/step1-email.png"
             },
             {
                 "@type": "HowToStep",
                 "position": 2,
-                "name": "填写邮箱信息",
-                "text": "输入收件人邮箱、邮件主题和内容",
+                "name": "Fill Email Information",
+                "text": "Enter recipient email, subject and content",
                 "image": "https://qrcodehub.net/step2-email.png"
             },
             {
                 "@type": "HowToStep",
                 "position": 3,
-                "name": "自定义样式",
-                "text": "选择颜色、添加Logo等个性化设置",
+                "name": "Customize Style",
+                "text": "Choose colors, add logo and other personalized settings",
                 "image": "https://qrcodehub.net/step3-email.png"
             },
             {
                 "@type": "HowToStep",
                 "position": 4,
-                "name": "生成和下载",
-                "text": "点击生成按钮创建QR码并下载",
+                "name": "Generate and Download",
+                "text": "Click generate button to create QR code and download",
                 "image": "https://qrcodehub.net/step4-email.png"
             }
         ],
@@ -110,63 +110,63 @@ export default function EmailQRGuidePage() {
 
     const emailFields = [
         {
-            field: "收件人邮箱",
+            field: "Recipient Email",
             required: true,
-            description: "邮件接收者的邮箱地址",
+            description: "Email address of the recipient",
             example: "contact@example.com"
         },
         {
-            field: "邮件主题",
+            field: "Email Subject",
             required: false,
-            description: "邮件的主题标题",
-            example: "商务合作咨询"
+            description: "Subject title of the email",
+            example: "Business Cooperation Inquiry"
         },
         {
-            field: "邮件内容",
+            field: "Email Content",
             required: false,
-            description: "邮件的正文内容",
-            example: "您好，我对您的产品很感兴趣，希望能了解更多信息。"
+            description: "Body content of the email",
+            example: "Hello, I&apos;m interested in your products and would like to learn more information."
         }
     ];
 
     const useCases = [
         {
-            title: "客服联系",
-            description: "提供客服邮箱联系方式，方便客户咨询问题",
+            title: "Customer Service",
+            description: "Provide customer service email contact for easy customer inquiries",
             example: {
                 email: "service@company.com",
-                subject: "客服咨询",
-                content: "您好，我需要帮助解决以下问题："
+                subject: "Customer Service Inquiry",
+                content: "Hello, I need help with the following issue:"
             },
             icon: "🎧"
         },
         {
-            title: "商务合作",
-            description: "分享商务合作邮箱，便于合作伙伴联系",
+            title: "Business Cooperation",
+            description: "Share business cooperation email for partner contact",
             example: {
                 email: "business@company.com",
-                subject: "商务合作提案",
-                content: "您好，我们希望能与贵公司建立合作关系。"
+                subject: "Business Cooperation Proposal",
+                content: "Hello, we hope to establish a cooperative relationship with your company."
             },
             icon: "🤝"
         },
         {
-            title: "意见反馈",
-            description: "收集用户意见和反馈，改进产品和服务",
+            title: "Feedback",
+            description: "Collect user opinions and feedback to improve products and services",
             example: {
                 email: "feedback@company.com",
-                subject: "产品反馈",
-                content: "您好，我想对产品提出以下建议："
+                subject: "Product Feedback",
+                content: "Hello, I would like to make the following suggestions for the product:"
             },
             icon: "💬"
         },
         {
-            title: "订阅服务",
-            description: "提供订阅邮箱，用户可订阅最新资讯",
+            title: "Subscription Service",
+            description: "Provide subscription email for users to subscribe to latest news",
             example: {
                 email: "subscribe@company.com",
-                subject: "订阅服务",
-                content: "您好，我想订阅贵公司的最新资讯和优惠信息。"
+                subject: "Subscription Service",
+                content: "Hello, I would like to subscribe to your company&apos;s latest news and promotional information."
             },
             icon: "📧"
         }
@@ -174,32 +174,32 @@ export default function EmailQRGuidePage() {
 
     const bestPractices = [
         {
-            title: "使用专业邮箱",
-            description: "使用公司域名邮箱，提升专业形象和可信度",
+            title: "Use Professional Email",
+            description: "Use company domain email to enhance professional image and credibility",
             icon: <FaCheck className="w-5 h-5 text-green-500" />
         },
         {
-            title: "设置明确主题",
-            description: "预设清晰的邮件主题，帮助收件人快速了解邮件内容",
+            title: "Set Clear Subject",
+            description: "Preset clear email subject to help recipients quickly understand email content",
             icon: <FaCheck className="w-5 h-5 text-green-500" />
         },
         {
-            title: "提供模板内容",
-            description: "预设邮件模板内容，减少用户输入负担",
+            title: "Provide Template Content",
+            description: "Preset email template content to reduce user input burden",
             icon: <FaCheck className="w-5 h-5 text-green-500" />
         },
         {
-            title: "定期检查邮箱",
-            description: "确保邮箱正常工作，及时回复用户邮件",
+            title: "Regular Email Check",
+            description: "Ensure email works properly and respond to user emails promptly",
             icon: <FaCheck className="w-5 h-5 text-green-500" />
         }
     ];
 
     const tips = [
-        "邮箱QR码使用mailto协议，兼容所有主流邮件客户端",
-        "可以在邮件内容中使用占位符，如{用户姓名}，让用户个性化填写",
-        "建议在QR码附近添加\"扫描发送邮件\"的说明文字",
-        "可以创建多个不同用途的邮箱QR码，如客服、商务、反馈等"
+        "Email QR codes use mailto protocol and are compatible with all mainstream email clients",
+        "You can use placeholders in email content, such as {user name}, to let users personalize the content",
+        "It&apos;s recommended to add &apos;Scan to send email&apos; instructions near the QR code",
+        "You can create multiple email QR codes for different purposes, such as customer service, business, feedback, etc."
     ];
 
     return (
@@ -213,7 +213,7 @@ export default function EmailQRGuidePage() {
             <Navbar />
             
             <main className="flex-grow">
-                {/* 页面标题 */}
+                {/* Page Title */}
                 <section className="bg-gradient-to-r from-orange-600 to-orange-700 text-white py-12">
                     <div className="container mx-auto px-4">
                         <div className="max-w-4xl mx-auto">
@@ -223,7 +223,7 @@ export default function EmailQRGuidePage() {
                                     className="flex items-center gap-2 text-orange-100 hover:text-white transition-colors"
                                 >
                                     <FaArrowLeft className="w-4 h-4" />
-                                    返回教程首页
+                                    Back to Tutorial Home
                                 </Link>
                             </div>
                             
@@ -233,10 +233,10 @@ export default function EmailQRGuidePage() {
                                 </div>
                                 <div>
                                     <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                                        邮箱QR码制作教程
+                                        Email QR Code Creation Tutorial
                                     </h1>
                                     <p className="text-orange-100 text-lg">
-                                        学习如何创建邮箱QR码，扫描后自动打开邮件客户端并预设收件人和内容
+                                        Learn how to create email QR codes that automatically open email clients and preset recipients and content when scanned
                                     </p>
                                 </div>
                             </div>
@@ -247,56 +247,55 @@ export default function EmailQRGuidePage() {
                                     className="bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2"
                                 >
                                     <FaPlay className="w-4 h-4" />
-                                    立即制作邮箱QR码
+                                    Create Email QR Code Now
                                 </Link>
                                 <Link
                                     href="/guide"
                                     className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors"
                                 >
-                                    查看其他类型教程
+                                    View Other Type Tutorials
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 主要内容 */}
+                {/* Main Content */}
                 <div className="container mx-auto px-4 py-12">
                     <div className="max-w-4xl mx-auto">
-                        {/* 什么是邮箱QR码 */}
+                        {/* What is an Email QR Code */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">什么是邮箱QR码？</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">What is an Email QR Code?</h2>
                             <div className="bg-orange-50 rounded-lg p-6 mb-8">
                                 <p className="text-gray-700 leading-relaxed mb-4">
-                                    邮箱QR码是一种包含邮件信息的二维码。当用户扫描这种QR码时，会自动打开手机或电脑的邮件客户端，
-                                    并预设收件人邮箱、邮件主题和内容。这使得邮箱QR码非常适合客服联系、商务合作、意见反馈等场景。
+                                    An email QR code is a type of QR code that contains email information. When users scan this QR code, it automatically opens the email client on their phone or computer and presets the recipient email, subject, and content. This makes email QR codes perfect for customer service contact, business cooperation, feedback, and other scenarios.
                                 </p>
                                 <div className="grid md:grid-cols-3 gap-4">
                                     <div className="text-center">
                                         <div className="text-2xl mb-2">📧</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">自动填写</h4>
-                                        <p className="text-sm text-gray-600">预设收件人和内容</p>
+                                        <h4 className="font-semibold text-gray-800 mb-1">Auto Fill</h4>
+                                        <p className="text-sm text-gray-600">Preset recipient and content</p>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-2xl mb-2">⚡</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">快速联系</h4>
-                                        <p className="text-sm text-gray-600">一键打开邮件客户端</p>
+                                        <h4 className="font-semibold text-gray-800 mb-1">Quick Contact</h4>
+                                        <p className="text-sm text-gray-600">One-click open email client</p>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-2xl mb-2">💼</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">专业沟通</h4>
-                                        <p className="text-sm text-gray-600">提升沟通效率</p>
+                                        <h4 className="font-semibold text-gray-800 mb-1">Professional Communication</h4>
+                                        <p className="text-sm text-gray-600">Improve communication efficiency</p>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
-                        {/* 邮箱字段说明 */}
+                        {/* Email Field Description */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">邮箱字段说明</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Email Field Description</h2>
                             <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                                 <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
-                                    <h3 className="font-semibold text-gray-800">可填写的邮箱信息</h3>
+                                    <h3 className="font-semibold text-gray-800">Email Information Fields</h3>
                                 </div>
                                 <div className="divide-y divide-gray-200">
                                     {emailFields.map((field, index) => (
@@ -304,12 +303,12 @@ export default function EmailQRGuidePage() {
                                             <div className="flex items-center justify-between mb-2">
                                                 <h4 className="font-semibold text-gray-800">{field.field}</h4>
                                                 {field.required && (
-                                                    <span className="text-red-500 text-sm font-medium">必填</span>
+                                                    <span className="text-red-500 text-sm font-medium">Required</span>
                                                 )}
                                             </div>
                                             <p className="text-gray-600 text-sm mb-2">{field.description}</p>
                                             <p className="text-gray-500 text-xs font-mono bg-gray-50 px-2 py-1 rounded">
-                                                示例：{field.example}
+                                                Example: {field.example}
                                             </p>
                                         </div>
                                     ))}
@@ -317,20 +316,20 @@ export default function EmailQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 制作步骤 */}
+                        {/* Creation Steps */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">制作步骤</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Creation Steps</h2>
                             <div className="space-y-6">
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
                                     <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">选择邮箱类型</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Select Email Type</h3>
                                         <p className="text-gray-700 mb-3">
-                                            打开QR码生成器，在左侧功能选择区域点击&quot;Email&quot;选项，进入邮箱QR码制作模式。
+                                            Open the QR code generator and click the &quot;Email&quot; option in the left function area to enter email QR code creation mode.
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
-                                                <strong>提示：</strong>邮箱类型会显示专门的邮箱信息填写表单。
+                                                <strong>Tip:</strong> Email type will display a specialized email information form.
                                             </p>
                                         </div>
                                     </div>
@@ -339,13 +338,13 @@ export default function EmailQRGuidePage() {
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg">2</div>
                                     <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">填写邮箱信息</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Fill Email Information</h3>
                                         <p className="text-gray-700 mb-3">
-                                            在邮箱信息表单中填写收件人邮箱、邮件主题和邮件内容。收件人邮箱是必填项。
+                                            Fill in recipient email, email subject, and email content in the email information form. Recipient email is required.
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
-                                                <strong>建议：</strong>预设邮件主题和内容可以提升用户体验，减少输入负担。
+                                                <strong>Recommendation:</strong> Presetting email subject and content can improve user experience and reduce input burden.
                                             </p>
                                         </div>
                                     </div>
@@ -354,13 +353,13 @@ export default function EmailQRGuidePage() {
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg">3</div>
                                     <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">自定义样式（可选）</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Customize Style (Optional)</h3>
                                         <p className="text-gray-700 mb-3">
-                                            点击&quot;自定义&quot;按钮，可以调整颜色、添加Logo、修改样式等，让您的QR码更加个性化。
+                                            Click the &quot;Customize&quot; button to adjust colors, add a logo, modify styles, etc., to make your QR code more personalized.
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
-                                                <strong>建议：</strong>可以添加公司Logo，提升专业形象。
+                                                <strong>Recommendation:</strong> You can add a company logo to enhance professional image.
                                             </p>
                                         </div>
                                     </div>
@@ -369,13 +368,13 @@ export default function EmailQRGuidePage() {
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-orange-500 text-white rounded-full flex items-center justify-center font-bold text-lg">4</div>
                                     <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">生成和下载</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Generate and Download</h3>
                                         <p className="text-gray-700 mb-3">
-                                            点击&quot;生成QR码&quot;按钮，系统会立即创建您的邮箱QR码。然后选择下载格式（PNG、JPG、SVG、PDF）。
+                                            Click the &quot;Generate QR Code&quot; button, and the system will immediately create your email QR code. Then select the download format (PNG, JPG, SVG, PDF).
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
-                                                <strong>格式选择：</strong>PNG适合网页使用，SVG适合矢量图形，PDF适合打印。
+                                                <strong>Format Selection:</strong> PNG for web use, SVG for vector graphics, PDF for printing.
                                             </p>
                                         </div>
                                     </div>
@@ -383,9 +382,9 @@ export default function EmailQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 使用案例 */}
+                        {/* Use Cases */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">使用案例</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Use Cases</h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 {useCases.map((useCase, index) => (
                                     <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
@@ -397,17 +396,17 @@ export default function EmailQRGuidePage() {
                                         <div className="space-y-2">
                                             <div className="bg-gray-50 rounded-lg p-3">
                                                 <p className="text-sm text-gray-700">
-                                                    <strong>收件人：</strong>{useCase.example.email}
+                                                    <strong>Recipient:</strong> {useCase.example.email}
                                                 </p>
                                             </div>
                                             <div className="bg-gray-50 rounded-lg p-3">
                                                 <p className="text-sm text-gray-700">
-                                                    <strong>主题：</strong>{useCase.example.subject}
+                                                    <strong>Subject:</strong> {useCase.example.subject}
                                                 </p>
                                             </div>
                                             <div className="bg-gray-50 rounded-lg p-3">
                                                 <p className="text-sm text-gray-700">
-                                                    <strong>内容：</strong>{useCase.example.content}
+                                                    <strong>Content:</strong> {useCase.example.content}
                                                 </p>
                                             </div>
                                         </div>
@@ -416,9 +415,9 @@ export default function EmailQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 最佳实践 */}
+                        {/* Best Practices */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">最佳实践</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Best Practices</h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 {bestPractices.map((practice, index) => (
                                     <div key={index} className="flex items-start space-x-3">
@@ -432,13 +431,13 @@ export default function EmailQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 实用技巧 */}
+                        {/* Tips */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">实用技巧</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Tips</h2>
                             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
                                 <div className="flex items-center gap-3 mb-4">
                                     <FaLightbulb className="w-6 h-6 text-yellow-600" />
-                                    <h3 className="text-lg font-semibold text-gray-800">制作技巧</h3>
+                                    <h3 className="text-lg font-semibold text-gray-800">Creation Tips</h3>
                                 </div>
                                 <ul className="space-y-3">
                                     {tips.map((tip, index) => (
@@ -451,51 +450,47 @@ export default function EmailQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 常见问题 */}
+                        {/* FAQ */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">常见问题</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">FAQ</h2>
                             <div className="space-y-6">
                                 <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: 邮箱QR码支持哪些邮件客户端？</h3>
+                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Which email clients do email QR codes support?</h3>
                                     <p className="text-gray-700">
-                                        A: 邮箱QR码使用标准的mailto协议，兼容所有主流邮件客户端，包括Gmail、Outlook、Apple Mail、
-                                        以及手机上的邮件应用等。
+                                        A: Email QR codes use standard mailto protocol and are compatible with all mainstream email clients, including Gmail, Outlook, Apple Mail, and mobile email applications.
                                     </p>
                                 </div>
                                 
                                 <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: 邮件主题和内容是必填的吗？</h3>
+                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Are email subject and content required?</h3>
                                     <p className="text-gray-700">
-                                        A: 不是必填的。只有收件人邮箱是必填项。邮件主题和内容是可选填写的，
-                                        但建议预设这些信息以提升用户体验。
+                                        A: No, they are not required. Only recipient email is required. Email subject and content are optional, but it&apos;s recommended to preset this information to improve user experience.
                                     </p>
                                 </div>
                                 
                                 <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: 可以在邮件内容中使用特殊字符吗？</h3>
+                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Can I use special characters in email content?</h3>
                                     <p className="text-gray-700">
-                                        A: 可以！支持中文字符、英文、数字、符号等。但建议避免使用过于复杂的特殊字符，
-                                        以确保在所有邮件客户端中都能正确显示。
+                                        A: Yes! Chinese characters, English, numbers, symbols, etc. are supported. However, it&apos;s recommended to avoid overly complex special characters to ensure correct display in all email clients.
                                     </p>
                                 </div>
                                 
                                 <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: 如何确保邮件能及时回复？</h3>
+                                    <h3 className="font-semibold text-gray-800 mb-3">Q: How to ensure emails are replied to promptly?</h3>
                                     <p className="text-gray-700">
-                                        A: 建议设置邮件自动回复，告知用户已收到邮件并会在指定时间内回复。
-                                        同时定期检查邮箱，确保及时处理用户邮件。
+                                        A: It&apos;s recommended to set up email auto-reply to inform users that emails have been received and will be replied to within a specified time. Also check emails regularly to ensure timely handling of user emails.
                                     </p>
                                 </div>
                             </div>
                         </section>
 
-                        {/* 行动号召 */}
+                        {/* Call to Action */}
                         <section className="text-center py-12 bg-gradient-to-r from-orange-50 to-red-50 rounded-lg">
                             <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                                准备制作您的邮箱QR码了吗？
+                                Ready to create your email QR code?
                             </h2>
                             <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-                                现在就开始创建专业的邮箱QR码，提升客户沟通效率
+                                Start creating professional email QR codes now to improve customer communication efficiency
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <Link
@@ -503,13 +498,13 @@ export default function EmailQRGuidePage() {
                                     className="bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-orange-700 transition-colors flex items-center gap-2"
                                 >
                                     <FaPlay className="w-4 h-4" />
-                                    立即开始制作
+                                    Start Creating Now
                                 </Link>
                                 <Link
                                     href="/guide"
                                     className="border-2 border-orange-600 text-orange-600 px-8 py-4 rounded-lg font-semibold hover:bg-orange-50 transition-colors"
                                 >
-                                    查看其他教程
+                                    View Other Tutorials
                                 </Link>
                             </div>
                         </section>

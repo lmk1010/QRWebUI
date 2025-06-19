@@ -44,7 +44,7 @@ interface GuideLayoutProps {
 }
 
 export default function GuideLayout({ children }: GuideLayoutProps) {
-  // 为guide页面添加结构化数据
+  // Add structured data for guide pages
   const guideStructuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",

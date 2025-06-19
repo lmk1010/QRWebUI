@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 export default function TextQRGuidePage() {
-    // 结构化数据
+    // Structured Data
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "HowTo",
@@ -49,7 +49,7 @@ export default function TextQRGuidePage() {
         "totalTime": "PT5M",
         "estimatedCost": {
             "@type": "MonetaryAmount",
-            "currency": "CNY",
+            "currency": "USD",
             "value": "0"
         },
         "supply": [
@@ -176,7 +176,7 @@ export default function TextQRGuidePage() {
             <Navbar />
             
             <main className="flex-grow">
-                {/* 页面标题 */}
+                {/* Page Title */}
                 <section className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-12">
                     <div className="container mx-auto px-4">
                         <div className="max-w-4xl mx-auto">
@@ -186,7 +186,7 @@ export default function TextQRGuidePage() {
                                     className="flex items-center gap-2 text-blue-100 hover:text-white transition-colors"
                                 >
                                     <FaArrowLeft className="w-4 h-4" />
-                                    返回教程首页
+                                    Back to Tutorial Home
                                 </Link>
                             </div>
                             
@@ -223,10 +223,10 @@ export default function TextQRGuidePage() {
                     </div>
                 </section>
 
-                {/* 主要内容 */}
+                {/* Main Content */}
                 <div className="container mx-auto px-4 py-12">
                     <div className="max-w-4xl mx-auto">
-                        {/* 什么是文本QR码 */}
+                        {/* What is a Text QR Code */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">What is a Text QR Code?</h2>
                             <div className="bg-blue-50 rounded-lg p-6 mb-8">
@@ -253,7 +253,7 @@ export default function TextQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 制作步骤 */}
+                        {/* Creation Steps */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">How to Create a Text QR Code</h2>
                             <div className="space-y-6">
@@ -319,7 +319,7 @@ export default function TextQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 使用案例 */}
+                        {/* Use Cases */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">Use Cases</h2>
                             <div className="grid md:grid-cols-2 gap-6">
@@ -338,7 +338,7 @@ export default function TextQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 最佳实践 */}
+                        {/* Best Practices */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">Best Practices</h2>
                             <div className="grid md:grid-cols-2 gap-6">
@@ -354,7 +354,7 @@ export default function TextQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 实用技巧 */}
+                        {/* Tips */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">Tips</h2>
                             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
@@ -373,7 +373,7 @@ export default function TextQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 常见问题 */}
+                        {/* FAQ */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">FAQ</h2>
                             <div className="space-y-6">
@@ -389,7 +389,7 @@ export default function TextQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 行动号召 */}
+                        {/* Call to Action */}
                         <section className="text-center py-12 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
                             <h2 className="text-2xl font-bold text-gray-800 mb-4">Ready to create your text QR code?</h2>
                             <p className="text-gray-600 mb-8 max-w-2xl mx-auto">Start now and share your information, instructions, or messages with a professional text QR code.</p>

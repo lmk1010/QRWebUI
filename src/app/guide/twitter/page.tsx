@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 };
 
 export default function TwitterQRGuidePage() {
-    // 结构化数据
+    // Structured Data
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "HowTo",
@@ -49,7 +49,7 @@ export default function TwitterQRGuidePage() {
         "totalTime": "PT6M",
         "estimatedCost": {
             "@type": "MonetaryAmount",
-            "currency": "CNY",
+            "currency": "USD",
             "value": "0"
         },
         "supply": [
@@ -184,7 +184,7 @@ export default function TwitterQRGuidePage() {
             <Navbar />
             
             <main className="flex-grow">
-                {/* 页面标题 */}
+                {/* Page Title */}
                 <section className="bg-gradient-to-r from-sky-600 to-sky-700 text-white py-12">
                     <div className="container mx-auto px-4">
                         <div className="max-w-4xl mx-auto">
@@ -194,7 +194,7 @@ export default function TwitterQRGuidePage() {
                                     className="flex items-center gap-2 text-sky-100 hover:text-white transition-colors"
                                 >
                                     <FaArrowLeft className="w-4 h-4" />
-                                    返回教程首页
+                                    Back to Tutorial Home
                                 </Link>
                             </div>
                             
@@ -218,23 +218,23 @@ export default function TwitterQRGuidePage() {
                                     className="bg-white text-sky-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2"
                                 >
                                     <FaPlay className="w-4 h-4" />
-                                    立即制作Twitter QR码
+                                    Create Twitter QR Code Now
                                 </Link>
                                 <Link
                                     href="/guide"
                                     className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-sky-600 transition-colors"
                                 >
-                                    查看其他类型教程
+                                    View Other Type Tutorials
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* 主要内容 */}
+                {/* Main Content */}
                 <div className="container mx-auto px-4 py-12">
                     <div className="max-w-4xl mx-auto">
-                        {/* 什么是Twitter QR码 */}
+                        {/* What is a Twitter QR Code */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">What is a Twitter QR Code?</h2>
                             <div className="bg-sky-50 rounded-lg p-6 mb-8">
@@ -262,7 +262,7 @@ export default function TwitterQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* Twitter功能类型 */}
+                        {/* Twitter Function Types */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">Twitter Function Types</h2>
                             <div className="grid md:grid-cols-2 gap-6">
@@ -286,20 +286,20 @@ export default function TwitterQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 制作步骤 */}
+                        {/* Creation Steps */}
                         <section className="mb-16">
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">How to Create a Twitter QR Code</h2>
                             <div className="space-y-6">
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
                                     <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">选择Twitter类型</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Select Twitter Type</h3>
                                         <p className="text-gray-700 mb-3">
-                                            打开QR码生成器，在左侧功能选择区域点击&quot;Twitter&quot;选项，进入Twitter QR码制作模式。
+                                            Open the QR code generator and click the &quot;Twitter&quot; option in the left function area to enter Twitter QR code creation mode.
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
-                                                <strong>提示：</strong>Twitter类型专门用于创建Twitter相关的QR码。
+                                                <strong>Tip:</strong> Twitter type is specifically designed for creating Twitter-related QR codes.
                                             </p>
                                         </div>
                                     </div>
@@ -308,14 +308,13 @@ export default function TwitterQRGuidePage() {
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center font-bold text-lg">2</div>
                                     <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">选择功能类型</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Select Function Type</h3>
                                         <p className="text-gray-700 mb-3">
-                                            选择&quot;链接到个人资料&quot;或&quot;发布推文&quot;功能。个人资料链接会跳转到您的Twitter主页，
-                                            推文发布会预设推文内容。
+                                            Choose &quot;Profile Link&quot; or &quot;Tweet&quot; function. Profile link will redirect to your Twitter homepage, tweet will preset tweet content.
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
-                                                <strong>建议：</strong>个人资料链接适合推广个人品牌，推文发布适合活动宣传。
+                                                <strong>Recommendation:</strong> Profile link is suitable for personal branding, tweet is suitable for event promotion.
                                             </p>
                                         </div>
                                     </div>
@@ -324,14 +323,13 @@ export default function TwitterQRGuidePage() {
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center font-bold text-lg">3</div>
                                     <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">填写Twitter信息</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Enter Twitter Information</h3>
                                         <p className="text-gray-700 mb-3">
-                                            如果选择个人资料链接，输入您的Twitter用户名（不需要@符号）。
-                                            如果选择推文发布，输入您想要预设的推文内容。
+                                            If you select profile link, enter your Twitter username (no @ needed). If you select tweet, enter the tweet content you want to preset.
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
-                                                <strong>示例：</strong>用户名：yourusername 或 推文：参加我们的活动！ #活动 #分享
+                                                <strong>Example:</strong> Username: yourusername or Tweet: Join our event! #event #share
                                             </p>
                                         </div>
                                     </div>
@@ -340,13 +338,13 @@ export default function TwitterQRGuidePage() {
                                 <div className="flex items-start space-x-4">
                                     <div className="flex-shrink-0 w-10 h-10 bg-sky-500 text-white rounded-full flex items-center justify-center font-bold text-lg">4</div>
                                     <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">生成和下载</h3>
+                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Generate and Download</h3>
                                         <p className="text-gray-700 mb-3">
-                                            点击&quot;生成QR码&quot;按钮，系统会立即创建您的Twitter QR码。然后选择下载格式（PNG、JPG、SVG、PDF）。
+                                            Click the &quot;Generate QR Code&quot; button to instantly create your Twitter QR code. Then select the download format (PNG, JPG, SVG, PDF).
                                         </p>
                                         <div className="bg-gray-50 rounded-lg p-4">
                                             <p className="text-sm text-gray-600">
-                                                <strong>格式选择：</strong>PNG适合网页使用，SVG适合矢量图形，PDF适合打印。
+                                                <strong>Format Selection:</strong> PNG for web use, SVG for vector graphics, PDF for printing.
                                             </p>
                                         </div>
                                     </div>
@@ -354,9 +352,9 @@ export default function TwitterQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 使用案例 */}
+                        {/* Use Cases */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">使用案例</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Use Cases</h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 {useCases.map((useCase, index) => (
                                     <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
@@ -373,9 +371,9 @@ export default function TwitterQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 最佳实践 */}
+                        {/* Best Practices */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">最佳实践</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Best Practices</h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 {bestPractices.map((practice, index) => (
                                     <div key={index} className="flex items-start space-x-3">
@@ -389,13 +387,13 @@ export default function TwitterQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 实用技巧 */}
+                        {/* Tips */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">实用技巧</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Tips</h2>
                             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
                                 <div className="flex items-center gap-3 mb-4">
                                     <FaLightbulb className="w-6 h-6 text-yellow-600" />
-                                    <h3 className="text-lg font-semibold text-gray-800">制作技巧</h3>
+                                    <h3 className="text-lg font-semibold text-gray-800">Creation Tips</h3>
                                 </div>
                                 <ul className="space-y-3">
                                     {tips.map((tip, index) => (
@@ -408,51 +406,51 @@ export default function TwitterQRGuidePage() {
                             </div>
                         </section>
 
-                        {/* 常见问题 */}
+                        {/* FAQ */}
                         <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">常见问题</h2>
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6">FAQ</h2>
                             <div className="space-y-6">
                                 <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Twitter用户名需要包含@符号吗？</h3>
+                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Do Twitter usernames need to include the @ symbol?</h3>
                                     <p className="text-gray-700">
-                                        A: 不需要！在输入Twitter用户名时，只需要输入用户名本身，不需要包含@符号。
-                                        例如：如果您的用户名是@yourusername，只需要输入yourusername。
+                                        A: No! When entering Twitter username, just enter the username itself, no need to include the @ symbol.
+                                        For example: If your username is @yourusername, just enter yourusername.
                                     </p>
                                 </div>
                                 
                                 <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: 推文内容有长度限制吗？</h3>
+                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Is there a length limit for tweet content?</h3>
                                     <p className="text-gray-700">
-                                        A: 是的，Twitter推文有280字符的限制。建议将推文内容控制在280字符以内，
-                                        这样用户扫描后可以直接发布，无需修改。
+                                        A: Yes, Twitter tweets have a 280 character limit. It&apos;s recommended to keep tweet content within 280 characters,
+                                        so users can post directly after scanning without modification.
                                     </p>
                                 </div>
                                 
                                 <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: 可以在推文中添加话题标签吗？</h3>
+                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Can I add hashtags in tweets?</h3>
                                     <p className="text-gray-700">
-                                        A: 可以！您可以在推文内容中添加话题标签（#标签），这样可以增加推文的曝光度。
-                                        建议使用相关且热门的话题标签。
+                                        A: Yes! You can add hashtags (#tags) in tweet content to increase tweet exposure.
+                                        It&apos;s recommended to use relevant and trending hashtags.
                                     </p>
                                 </div>
                                 
                                 <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: 扫描后会自动关注吗？</h3>
+                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Will it automatically follow after scanning?</h3>
                                     <p className="text-gray-700">
-                                        A: 不会自动关注。扫描个人资料链接的QR码后，会跳转到您的Twitter个人资料页面，
-                                        用户需要手动点击关注按钮来关注您。
+                                        A: No automatic following. After scanning a profile link QR code, it will redirect to your Twitter profile page,
+                                        and users need to manually click the follow button to follow you.
                                     </p>
                                 </div>
                             </div>
                         </section>
 
-                        {/* 行动号召 */}
+                        {/* Call to Action */}
                         <section className="text-center py-12 bg-gradient-to-r from-sky-50 to-blue-50 rounded-lg">
                             <h2 className="text-2xl font-bold text-gray-800 mb-4">
-                                准备制作您的Twitter QR码了吗？
+                                Ready to create your Twitter QR code?
                             </h2>
                             <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-                                现在就开始创建专业的Twitter QR码，提升您的社交媒体影响力
+                                Start creating professional Twitter QR codes now to enhance your social media influence
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <Link
@@ -460,13 +458,13 @@ export default function TwitterQRGuidePage() {
                                     className="bg-sky-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-sky-700 transition-colors flex items-center gap-2"
                                 >
                                     <FaPlay className="w-4 h-4" />
-                                    立即开始制作
+                                    Start Creating Now
                                 </Link>
                                 <Link
                                     href="/guide"
                                     className="border-2 border-sky-600 text-sky-600 px-8 py-4 rounded-lg font-semibold hover:bg-sky-50 transition-colors"
                                 >
-                                    查看其他教程
+                                    View Other Tutorials
                                 </Link>
                             </div>
                         </section>
