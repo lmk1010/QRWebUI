@@ -218,8 +218,8 @@ export default function URLQRGuidePage() {
                             
                             <div className="flex flex-wrap gap-4">
                                 <Link
-                                    href="/qr-generator"
-                                    className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2"
+                                    href="/qr-generator?template=url"
+                                    className="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2"
                                 >
                                     <FaPlay className="w-4 h-4" />
                                     Create URL QR Code Now
@@ -336,13 +336,13 @@ export default function URLQRGuidePage() {
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">Use Cases</h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 {useCases.map((useCase, index) => (
-                                    <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                                    <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow flex flex-col h-full">
                                         <div className="flex items-center gap-3 mb-4">
                                             <span className="text-2xl">{useCase.icon}</span>
                                             <h3 className="text-lg font-semibold text-gray-800">{useCase.title}</h3>
                                         </div>
-                                        <p className="text-gray-600 mb-4">{useCase.description}</p>
-                                        <div className="bg-gray-50 rounded-lg p-3">
+                                        <p className="text-gray-600 mb-4 flex-grow">{useCase.description}</p>
+                                        <div className="bg-gray-50 rounded-lg p-3 mt-auto">
                                             <p className="text-sm text-green-600 font-mono break-all">{useCase.example}</p>
                                         </div>
                                     </div>
@@ -433,7 +433,7 @@ export default function URLQRGuidePage() {
                             </p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <Link
-                                    href="/qr-generator"
+                                    href="/qr-generator?template=url"
                                     className="bg-green-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center gap-2"
                                 >
                                     <FaPlay className="w-4 h-4" />

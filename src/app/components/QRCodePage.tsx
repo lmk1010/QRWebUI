@@ -1,7 +1,7 @@
 // src/app/QRCodePage.tsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FiHome } from 'react-icons/fi';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import QrPreviewCard from '../components/QrPreviewCard';
 import QRCard from '../components/QRCard';
 import { CustomOptions } from '../components/CustomizationModal';
@@ -12,6 +12,7 @@ interface QRCodePageProps {
 
 export default function QRCodePage({ onClose }: QRCodePageProps) {
     const router = useRouter();
+    const searchParams = useSearchParams();
     
     // Save QR code content and configuration state
     const [qrValue, setQrValue] = useState('Welcome to QR Code Generator');
@@ -32,6 +33,9 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
 
     // Add ref for scrolling to preview area
     const previewRef = useRef<HTMLDivElement>(null);
+
+    // Get template type from URL parameters
+    const templateType = searchParams.get('template');
 
     // QR code generation callback
     const handleGenerateResult = (value: string) => {
@@ -91,6 +95,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                             }}
                             onCustomOptionsChange={handleCustomOptionsChange}
                             customOptions={customOptions}
+                            templateType={templateType}
                         />
                     </div>
 

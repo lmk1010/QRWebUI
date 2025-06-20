@@ -282,56 +282,50 @@ export default function GuidePage() {
                         </p>
                         
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {qrCodeTypes.map((qrType) => (
-                                <div key={qrType.type} className={`${qrType.bgColor} ${qrType.borderColor} border-2 rounded-xl p-6 hover:shadow-lg transition-all duration-300 group`}>
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className={`p-3 rounded-lg bg-gradient-to-r ${qrType.color} text-white`}>
-                                            {qrType.icon}
+                            {qrCodeTypes.map((qr) => (
+                                <div key={qr.type} className={`p-6 rounded-2xl ${qr.bgColor} border ${qr.borderColor} shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full`}>
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className={`p-3 rounded-xl bg-white shadow-md`}>
+                                            {qr.icon}
                                         </div>
-                                        <FaArrowRight className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                        <FaArrowRight className="w-6 h-6 text-gray-400" />
                                     </div>
-                                    
-                                    <h3 className="text-xl font-bold text-gray-800 mb-3">
-                                        {qrType.title}
-                                    </h3>
-                                    
-                                    <p className="text-gray-600 mb-6 leading-relaxed">
-                                        {qrType.description}
-                                    </p>
+                                    <h3 className="text-xl font-bold text-gray-800 mb-2">{qr.title}</h3>
+                                    <p className="text-gray-600 leading-relaxed mb-6 flex-grow">{qr.description}</p>
                                     
                                     <div className="mb-6">
-                                        <h4 className="font-semibold text-gray-800 mb-3">Key Features:</h4>
+                                        <h4 className="text-sm font-semibold text-gray-700 mb-3">Key Features:</h4>
                                         <ul className="space-y-2">
-                                            {qrType.features.map((feature, index) => (
-                                                <li key={index} className="flex items-center text-sm text-gray-600">
-                                                    <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-                                                    {feature}
+                                            {qr.features.map((feature, featureIndex) => (
+                                                <li key={featureIndex} className="flex items-center gap-2">
+                                                    <div className={`w-2 h-2 rounded-full ${qr.color.replace('from-', 'bg-')}`}></div>
+                                                    <span className="text-gray-700 text-sm">{feature}</span>
                                                 </li>
                                             ))}
                                         </ul>
                                     </div>
                                     
                                     <div className="mb-6">
-                                        <h4 className="font-semibold text-gray-800 mb-3">Use Cases:</h4>
+                                        <h4 className="text-sm font-semibold text-gray-700 mb-3">Use Cases:</h4>
                                         <div className="flex flex-wrap gap-2">
-                                            {qrType.examples.map((example, index) => (
-                                                <span key={index} className="px-3 py-1 bg-white rounded-full text-xs text-gray-600 border">
+                                            {qr.examples.map((example, exampleIndex) => (
+                                                <span key={exampleIndex} className="bg-white text-gray-700 text-xs px-3 py-1 rounded-full border shadow-sm">
                                                     {example}
                                                 </span>
                                             ))}
                                         </div>
                                     </div>
                                     
-                                    <div className="flex gap-3">
+                                    <div className="grid grid-cols-2 gap-3 mt-auto">
                                         <Link
-                                            href={`/guide/${qrType.type}`}
-                                            className="flex-1 bg-white text-gray-700 px-4 py-2 rounded-lg font-semibold hover:bg-gray-50 transition-colors text-center border border-gray-300"
+                                            href={`/guide/${qr.type}`}
+                                            className="bg-white text-gray-700 px-4 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors text-center shadow-sm border"
                                         >
                                             Detailed Tutorial
                                         </Link>
                                         <Link
-                                            href="/qr-generator"
-                                            className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:from-blue-600 hover:to-blue-700 transition-colors text-center"
+                                            href={`/qr-generator?template=${qr.type}`}
+                                            className={`text-white px-4 py-3 rounded-lg font-semibold transition-colors text-center shadow-md bg-gradient-to-r ${qr.color} hover:opacity-90`}
                                         >
                                             Create Now
                                         </Link>
@@ -498,7 +492,7 @@ export default function GuidePage() {
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
                             <Link
-                                href="/qr-generator"
+                                href="/qr-generator?template=text"
                                 className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-lg flex items-center gap-2"
                             >
                                 <FaPlay className="w-5 h-5" />

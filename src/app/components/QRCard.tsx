@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from 'framer-motion';
 import { FaFileAlt, FaLink, FaAddressBook, FaPalette, FaClone, FaRulerCombined, FaFile, FaEnvelope, FaWifi, FaSquare } from 'react-icons/fa';
 
@@ -17,6 +17,7 @@ interface QRCardProps {
     onLogoChange?: (logo: string | null) => void;
     onCustomOptionsChange?: (options: CustomOptions) => void;
     customOptions: CustomOptions;
+    templateType?: string | null;
 }
 
 const DEFAULT_MAIN_TYPE = 'text';
@@ -26,8 +27,25 @@ const QRCard: React.FC<QRCardProps> = ({
     onLogoChange,
     onCustomOptionsChange,
     customOptions,
+    templateType,
 }) => {
-    const [selectedMainType, setSelectedMainType] = useState<string | null>(DEFAULT_MAIN_TYPE);
+    // 映射URL参数template到实际的tab类型
+    const mapTemplateToTabType = (template: string | null | undefined): string => {
+        const templateMap: Record<string, string> = {
+            'text': 'text',
+            'url': 'url',
+            'contact': 'contact',
+            'file': 'file',
+            'twitter': 'app',  // 将twitter映射到app类型
+            'email': 'batch',  // 将email映射到batch类型
+            'wifi': 'video',   // 将wifi映射到video类型
+            'app': 'app'       // 保持向后兼容
+        };
+        
+        return template ? (templateMap[template] || DEFAULT_MAIN_TYPE) : DEFAULT_MAIN_TYPE;
+    };
+    
+    const [selectedMainType, setSelectedMainType] = useState<string | null>(mapTemplateToTabType(templateType));
     const [customText, setCustomText] = useState('');
     const [showAlert, setShowAlert] = useState(false);
     const [showUrlAlert, setShowUrlAlert] = useState(false);
@@ -85,6 +103,99 @@ const QRCard: React.FC<QRCardProps> = ({
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     };
+
+    // 根据模板类型预设内容
+    useEffect(() => {
+        if (templateType) {
+            // Set preset example content
+            const templateExamples: Record<string, any> = {
+                'text': {
+                    customText: 'Welcome to our coffee shop! Scan this QR code for today\'s special offers.',
+                },
+                'url': {
+                    customText: 'https://www.example.com',
+                },
+                'contact': {
+                    contactInfo: {
+                        firstName: 'John',
+                        lastName: 'Smith',
+                        phone: '+1 (555) 123-4567',
+                        mobile: '+1 (555) 987-6543',
+                        email: 'john.smith@example.com',
+                        website: 'https://www.johnsmith.com',
+                        company: 'Example Tech Company',
+                        jobTitle: 'Product Manager',
+                        address: '123 Main Street, Suite 100',
+                        city: 'New York',
+                        postCode: '10001',
+                        country: 'United States',
+                    }
+                },
+                'app': {
+                    twitterInfo: {
+                        profileSelected: true,
+                        tweetSelected: false,
+                        username: 'example_user',
+                        tweetText: 'Check out our amazing product! #innovation #technology #QRCode',
+                    }
+                },
+                'batch': {
+                    emailInfo: {
+                        email: 'support@example.com',
+                        subject: 'Customer Inquiry',
+                        message: 'Hello, I would like to learn more about your services.',
+                    }
+                },
+                'video': {
+                    wifiInfo: {
+                        networkName: 'Guest_WiFi',
+                        password: 'welcome123',
+                        encryption: 'WPA',
+                        hidden: false,
+                    }
+                }
+            };
+
+            const template = templateExamples[templateType];
+            if (template) {
+                if (template.customText) {
+                    setCustomText(template.customText);
+                }
+                if (template.contactInfo) {
+                    setContactInfo(template.contactInfo);
+                }
+                if (template.twitterInfo) {
+                    setTwitterInfo(template.twitterInfo);
+                }
+                if (template.emailInfo) {
+                    setEmailInfo(template.emailInfo);
+                }
+                if (template.wifiInfo) {
+                    setWifiInfo(template.wifiInfo);
+                }
+            }
+            
+            // 为Twitter模板设置默认logo和颜色
+            if (templateType === 'app') {
+                // 设置Twitter品牌颜色
+                const twitterColors = {
+                    fgColor: '#1DA1F2', // Twitter蓝色
+                    bgColor: '#ffffff'
+                };
+                
+                // 更新自定义选项
+                if (onCustomOptionsChange) {
+                    onCustomOptionsChange({
+                        ...customOptions,
+                        ...twitterColors
+                    });
+                }
+                
+                // 暂时不设置logo，因为Twitter logo文件不存在
+                // 可以后续添加Twitter logo文件到 public/assets/logo_default/icons8-twitter-480.png
+            }
+        }
+    }, [templateType, onCustomOptionsChange, onLogoChange, customOptions]);
 
     const handleSelectMainCategory = (mainType: string) => {
         setSelectedMainType(mainType);

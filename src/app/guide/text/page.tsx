@@ -206,8 +206,8 @@ export default function TextQRGuidePage() {
                             
                             <div className="flex flex-wrap gap-4">
                                 <Link
-                                    href="/qr-generator"
-                                    className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2"
+                                    href="/qr-generator?template=text"
+                                    className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2"
                                 >
                                     <FaPlay className="w-4 h-4" />
                                     Create Text QR Code Now
@@ -324,13 +324,13 @@ export default function TextQRGuidePage() {
                             <h2 className="text-2xl font-bold text-gray-800 mb-6">Use Cases</h2>
                             <div className="grid md:grid-cols-2 gap-6">
                                 {useCases.map((useCase, index) => (
-                                    <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                                    <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow flex flex-col h-full">
                                         <div className="flex items-center gap-3 mb-4">
                                             <span className="text-2xl">{useCase.icon}</span>
                                             <h3 className="text-lg font-semibold text-gray-800">{useCase.title}</h3>
                                         </div>
-                                        <p className="text-gray-600 mb-4">{useCase.description}</p>
-                                        <div className="bg-gray-50 rounded-lg p-3">
+                                        <p className="text-gray-600 mb-4 flex-grow">{useCase.description}</p>
+                                        <div className="bg-gray-50 rounded-lg p-3 mt-auto">
                                             <p className="text-sm text-gray-700 font-mono whitespace-pre-line">{useCase.example}</p>
                                         </div>
                                     </div>
@@ -395,7 +395,7 @@ export default function TextQRGuidePage() {
                             <p className="text-gray-600 mb-8 max-w-2xl mx-auto">Start now and share your information, instructions, or messages with a professional text QR code.</p>
                             <div className="flex flex-wrap justify-center gap-4">
                                 <Link
-                                    href="/qr-generator"
+                                    href="/qr-generator?template=text"
                                     className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2"
                                 >
                                     <FaPlay className="w-4 h-4" />
