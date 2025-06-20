@@ -108,7 +108,51 @@ const QRCard: React.FC<QRCardProps> = ({
     useEffect(() => {
         if (templateType) {
             // Set preset example content
-            const templateExamples: Record<string, any> = {
+            interface ContactInfo {
+                firstName: string;
+                lastName: string;
+                phone: string;
+                mobile: string;
+                email: string;
+                website: string;
+                company: string;
+                jobTitle: string;
+                fax: string;
+                address: string;
+                city: string;
+                postCode: string;
+                country: string;
+            }
+
+            interface TwitterInfo {
+                profileSelected: boolean;
+                tweetSelected: boolean;
+                username: string;
+                tweetText: string;
+            }
+
+            interface EmailInfo {
+                email: string;
+                subject: string;
+                message: string;
+            }
+
+            interface WifiInfo {
+                networkName: string;
+                password: string;
+                encryption: string;
+                hidden: boolean;
+            }
+
+            interface TemplateExample {
+                customText?: string;
+                contactInfo?: ContactInfo;
+                twitterInfo?: TwitterInfo;
+                emailInfo?: EmailInfo;
+                wifiInfo?: WifiInfo;
+            }
+
+            const templateExamples: Record<string, TemplateExample> = {
                 'text': {
                     customText: 'Welcome to our coffee shop! Scan this QR code for today\'s special offers.',
                 },
@@ -125,6 +169,7 @@ const QRCard: React.FC<QRCardProps> = ({
                         website: 'https://www.johnsmith.com',
                         company: 'Example Tech Company',
                         jobTitle: 'Product Manager',
+                        fax: '+1 (555) 123-4568',
                         address: '123 Main Street, Suite 100',
                         city: 'New York',
                         postCode: '10001',
