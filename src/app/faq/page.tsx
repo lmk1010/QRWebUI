@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
-import { FaRocket, FaShieldAlt, FaPalette, FaDownload, FaQuestionCircle, FaArrowRight, FaStar, FaCheck, FaLock } from 'react-icons/fa';
+import { FaRocket, FaShieldAlt, FaPalette, FaQuestionCircle, FaArrowRight, FaCheck, FaLock } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'QR Code Generator FAQ - Frequently Asked Questions | QRCodeHub',
@@ -93,7 +93,7 @@ export default function FAQPage() {
                         </h1>
                         <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
                             Everything you need to know about our free QR code generator. 
-                            Can't find what you're looking for? Check our detailed guides or contact us.
+                            Can&apos;t find what you&apos;re looking for? Check our detailed guides or contact us.
                         </p>
                     </header>
 
@@ -388,9 +388,9 @@ export default function FAQPage() {
                             </div>
 
                             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
-                                <h3 className="font-bold text-gray-800 mb-4 text-xl">Why won't my QR code scan?</h3>
+                                <h3 className="font-bold text-gray-800 mb-4 text-xl">Why won&apos;t my QR code scan?</h3>
                                 <p className="text-gray-700 leading-relaxed mb-4">
-                                    Common reasons why QR codes don't scan:
+                                    Common reasons why QR codes don&apos;t scan:
                                 </p>
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div>
@@ -418,7 +418,7 @@ export default function FAQPage() {
                                 <h3 className="font-bold text-gray-800 mb-4 text-xl">Is my data stored on your servers?</h3>
                                 <p className="text-gray-700 leading-relaxed mb-4">
                                     No! We prioritize your privacy. All QR code generation happens in your browser, and we 
-                                    don't store your QR code content on our servers. Your data remains completely private 
+                                    don&apos;t store your QR code content on our servers. Your data remains completely private 
                                     and secure throughout the entire process.
                                 </p>
                                 <div className="bg-green-50 p-4 rounded-lg">
@@ -432,7 +432,7 @@ export default function FAQPage() {
                             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
                                 <h3 className="font-bold text-gray-800 mb-4 text-xl">Do QR codes expire?</h3>
                                 <p className="text-gray-700 leading-relaxed mb-4">
-                                    QR codes themselves don't expire - they're just encoded data. However, if your QR code 
+                                    QR codes themselves don&apos;t expire - they&apos;re just encoded data. However, if your QR code 
                                     links to a website or online content, that content might become unavailable over time. 
                                     Static QR codes (like text or contact info) will work indefinitely as long as the 
                                     physical code remains readable.
