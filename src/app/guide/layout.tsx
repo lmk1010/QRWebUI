@@ -216,14 +216,25 @@ export default function GuideLayout({ children }: GuideLayoutProps) {
   };
 
   return (
-    <>
+    <div className="min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(guideStructuredData)
         }}
       />
-      {children}
-    </>
+      
+      {/* Background decorative elements - shared across all guide pages */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-blue-400/15 to-purple-600/15 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-indigo-400/15 to-cyan-600/15 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-400/10 to-pink-600/10 rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Content wrapper */}
+      <div className="relative z-10">
+        {children}
+      </div>
+    </div>
   );
 } 

@@ -90,7 +90,7 @@ export default function FeaturesPage() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-white">
+        <div className="flex flex-col min-h-screen">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
@@ -99,468 +99,152 @@ export default function FeaturesPage() {
             />
             <Navbar />
             
-            <main className="flex-grow container mx-auto px-4 py-8">
-                <div className="max-w-6xl mx-auto">
-                    {/* 页面标题 */}
-                    <header className="text-center mb-16">
-                        <h1 className="text-5xl font-bold text-gray-800 mb-6">
-                            Powerful QR Code Generator Features
-                        </h1>
-                        <p className="text-xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
-                            Discover why our free QR code generator is the best choice for creating professional, 
-                            customizable QR codes with advanced styling options for all your needs.
-                        </p>
-                    </header>
+            <main className="flex-grow relative">
+                {/* Background decorative elements */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                    <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-indigo-400/20 to-cyan-600/20 rounded-full blur-3xl"></div>
+                </div>
 
-                    {/* 核心功能特点 */}
-                    <section className="mb-16">
-                        <h2 className="text-4xl font-semibold text-gray-800 mb-12 text-center">
-                            Why Choose Our QR Code Generator?
-                        </h2>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div className="p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                                <div className="text-5xl mb-6">🆓</div>
-                                <h3 className="font-bold text-blue-800 mb-4 text-xl">Completely Free</h3>
-                                <p className="text-gray-700 leading-relaxed">
-                                    Create unlimited QR codes without any cost. No hidden fees, no subscription required. 
-                                    Generate as many QR codes as you need, completely free forever.
+                <div className="relative z-10">
+                    <div className="container mx-auto px-4 py-12">
+                        <div className="max-w-6xl mx-auto space-y-20">
+                            {/* 页面标题 - 现代化 */}
+                            <header className="text-center fade-in-up">
+                                <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mb-8 subtle-bounce">
+                                    <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </div>
+                                <h1 className="text-5xl md:text-6xl font-bold mb-6 gradient-text">
+                                    Powerful QR Code Generator Features
+                                </h1>
+                                <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
+                                    Discover why our free QR code generator is the best choice for creating professional, 
+                                    customizable QR codes with advanced styling options for all your needs.
                                 </p>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                                <div className="text-5xl mb-6">⚡</div>
-                                <h3 className="font-bold text-green-800 mb-4 text-xl">Instant Generation</h3>
-                                <p className="text-gray-700 leading-relaxed">
-                                    Generate QR codes instantly with our lightning-fast QR code generator. 
-                                    Create professional QR codes in seconds, not minutes.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                                <div className="text-5xl mb-6">🎨</div>
-                                <h3 className="font-bold text-purple-800 mb-4 text-xl">Advanced Customization</h3>
-                                <p className="text-gray-700 leading-relaxed">
-                                    Customize your QR codes with colors, logos, dot styles, frames, and templates. 
-                                    Create branded QR codes that match your business identity perfectly.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                                <div className="text-5xl mb-6">📱</div>
-                                <h3 className="font-bold text-orange-800 mb-4 text-xl">Built-in QR Scanner</h3>
-                                <p className="text-gray-700 leading-relaxed">
-                                    Test your QR codes instantly with our built-in QR code scanner. 
-                                    Verify that your generated QR codes work perfectly before using them.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-red-50 to-red-100 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                                <div className="text-5xl mb-6">🔒</div>
-                                <h3 className="font-bold text-red-800 mb-4 text-xl">Secure & Private</h3>
-                                <p className="text-gray-700 leading-relaxed">
-                                    Your data stays completely private. We don&apos;t store your QR code content 
-                                    on our servers. Generate QR codes with complete privacy and security.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-teal-50 to-teal-100 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300">
-                                <div className="text-5xl mb-6">📊</div>
-                                <h3 className="font-bold text-teal-800 mb-4 text-xl">High Quality Output</h3>
-                                <p className="text-gray-700 leading-relaxed">
-                                    Generate high-resolution QR codes suitable for both digital and print use. 
-                                    Download in multiple formats including PNG, JPG, SVG, and PDF.
-                                </p>
-                            </div>
+                            </header>
+
+                            {/* 核心功能特点 - 升级卡片设计 */}
+                            <section className="scale-in" style={{ animationDelay: '0.2s' }}>
+                                <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center gradient-text">
+                                    Why Choose Our QR Code Generator?
+                                </h2>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-3xl">🆓</span>
+                                        </div>
+                                        <h3 className="font-bold text-blue-800 mb-4 text-xl">Completely Free</h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            Create unlimited QR codes without any cost. No hidden fees, no subscription required. 
+                                            Generate as many QR codes as you need, completely free forever.
+                                        </p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-3xl">⚡</span>
+                                        </div>
+                                        <h3 className="font-bold text-green-800 mb-4 text-xl">Instant Generation</h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            Generate QR codes instantly with our lightning-fast QR code generator. 
+                                            Create professional QR codes in seconds, not minutes.
+                                        </p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-3xl">🎨</span>
+                                        </div>
+                                        <h3 className="font-bold text-purple-800 mb-4 text-xl">Advanced Customization</h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            Customize your QR codes with colors, logos, dot styles, frames, and templates. 
+                                            Create branded QR codes that match your business identity perfectly.
+                                        </p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-3xl">📱</span>
+                                        </div>
+                                        <h3 className="font-bold text-orange-800 mb-4 text-xl">Built-in QR Scanner</h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            Test your QR codes instantly with our built-in QR code scanner. 
+                                            Verify that your generated QR codes work perfectly before using them.
+                                        </p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-3xl">🔒</span>
+                                        </div>
+                                        <h3 className="font-bold text-red-800 mb-4 text-xl">Secure & Private</h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            Your data stays completely private. We don&apos;t store your QR code content 
+                                            on our servers. Generate QR codes with complete privacy and security.
+                                        </p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-3xl">📊</span>
+                                        </div>
+                                        <h3 className="font-bold text-teal-800 mb-4 text-xl">High Quality Output</h3>
+                                        <p className="text-gray-600 leading-relaxed">
+                                            Generate high-resolution QR codes suitable for both digital and print use. 
+                                            Download in multiple formats including PNG, JPG, SVG, and PDF.
+                                        </p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            {/* Dot Styles 功能 - 现代化设计 */}
+                            <section className="fade-in-up" style={{ animationDelay: '0.4s' }}>
+                                <h2 className="text-4xl md:text-5xl font-bold mb-16 text-center gradient-text">
+                                    Advanced Dot Style Customization
+                                </h2>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group border-l-4 border-blue-500">
+                                        <div className="text-5xl mb-4">⬜</div>
+                                        <h3 className="font-bold text-gray-800 text-lg mb-3">Square Dots</h3>
+                                        <p className="text-gray-600 text-sm">Classic square dots for traditional QR codes with professional appearance</p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group border-l-4 border-green-500">
+                                        <div className="text-5xl mb-4">⭕</div>
+                                        <h3 className="font-bold text-gray-800 text-lg mb-3">Circle Dots</h3>
+                                        <p className="text-gray-600 text-sm">Smooth circular dots for modern appearance and contemporary design</p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group border-l-4 border-purple-500">
+                                        <div className="text-5xl mb-4">💧</div>
+                                        <h3 className="font-bold text-gray-800 text-lg mb-3">Fluid Style</h3>
+                                        <p className="text-gray-600 text-sm">Organic fluid shapes that intelligently connect for smooth visual effects</p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group border-l-4 border-orange-500">
+                                        <div className="text-5xl mb-4">💎</div>
+                                        <h3 className="font-bold text-gray-800 text-lg mb-3">Diamond Style</h3>
+                                        <p className="text-gray-600 text-sm">Elegant diamond shapes for premium and luxury brand appearances</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            {/* CTA Section */}
+                            <section className="text-center fade-in-up" style={{ animationDelay: '0.6s' }}>
+                                <div className="glass-effect rounded-3xl p-12">
+                                    <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
+                                        Ready to Create Your QR Code?
+                                    </h2>
+                                    <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                                        Start creating professional QR codes with all these amazing features completely free
+                                    </p>
+                                    <Link 
+                                        href="/qr-generator" 
+                                        className="btn-primary inline-flex items-center gap-3 text-white px-12 py-5 rounded-3xl font-bold text-xl shadow-2xl transform transition-all duration-300 hover:scale-105"
+                                    >
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H3a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H3a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                                        </svg>
+                                        Create QR Code Now
+                                    </Link>
+                                </div>
+                            </section>
                         </div>
-                    </section>
-
-                    {/* Dot Styles 功能 */}
-                    <section className="mb-16">
-                        <h2 className="text-4xl font-semibold text-gray-800 mb-12 text-center">
-                            Advanced Dot Style Customization
-                        </h2>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-4xl mb-3">⬜</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Square Dots</h3>
-                                    <p className="text-gray-600 text-sm">Classic square dots for traditional QR codes with professional appearance</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-4xl mb-3">⭕</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Circle Dots</h3>
-                                    <p className="text-gray-600 text-sm">Smooth circular dots for modern appearance and contemporary design</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-4xl mb-3">💧</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Fluid Style</h3>
-                                    <p className="text-gray-600 text-sm">Organic fluid shapes that intelligently connect for smooth visual effects</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-4xl mb-3">⬡</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Hexagon</h3>
-                                    <p className="text-gray-600 text-sm">Geometric hexagon patterns for tech look and modern applications</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-4xl mb-3">⭐</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Star Style</h3>
-                                    <p className="text-gray-600 text-sm">Star-shaped dots for decorative QR codes and special occasions</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-4xl mb-3">💎</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Diamond</h3>
-                                    <p className="text-gray-600 text-sm">Diamond patterns for elegant appearance and business applications</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-4xl mb-3">❤️</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Heart Style</h3>
-                                    <p className="text-gray-600 text-sm">Heart-shaped dots for romantic themes and special events</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-4xl mb-3">🎯</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Custom Eyes</h3>
-                                    <p className="text-gray-600 text-sm">Customize position markers with different styles for unique designs</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Frame Templates 功能 */}
-                    <section className="mb-16">
-                        <h2 className="text-4xl font-semibold text-gray-800 mb-12 text-center">
-                            Professional Frame Templates
-                        </h2>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div className="p-8 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl border-4 border-yellow-400 relative">
-                                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                    <div className="bg-yellow-400 text-black text-sm font-bold px-4 py-2 rounded-full">
-                                        📱 SCAN ME
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <h3 className="font-bold text-yellow-800 text-xl mb-3">SCAN Frame</h3>
-                                    <p className="text-yellow-700 mb-4">Perfect for scanning scenarios with clear &quot;Scan Me&quot; prompts. Ideal for WeChat, Alipay, and general scanning applications.</p>
-                                    <div className="text-sm text-yellow-600">
-                                        <strong>Best for:</strong> Mobile payments, social media, contact sharing
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border-4 border-green-500 relative">
-                                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
-                                    <div className="bg-green-500 text-white text-sm font-bold px-4 py-2 rounded">
-                                        💳 PAY HERE
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <h3 className="font-bold text-green-800 text-xl mb-3">PAY Frame</h3>
-                                    <p className="text-green-700 mb-4">Business payment style with bold border design to enhance trust and credibility for payment scenarios.</p>
-                                    <div className="text-sm text-green-600">
-                                        <strong>Best for:</strong> Payment systems, e-commerce, financial services
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border-4 border-blue-500 relative">
-                                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
-                                    <div className="bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded">
-                                        👉 THIS WAY
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <h3 className="font-bold text-blue-800 text-xl mb-3">THIS Frame</h3>
-                                    <p className="text-blue-700 mb-4">Directional guide design for navigation and guidance. Perfect for locations requiring user direction.</p>
-                                    <div className="text-sm text-blue-600">
-                                        <strong>Best for:</strong> Navigation, directions, location-based services
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-gray-500 relative">
-                                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                    <div className="bg-white text-gray-600 text-sm font-medium px-3 py-1 rounded-full border border-gray-500">
-                                        ✨ MODERN
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <h3 className="font-bold text-gray-800 text-xl mb-3">MODERN Frame</h3>
-                                    <p className="text-gray-700 mb-4">Simple modern style with minimal decorative elements. Suitable for premium brands and modern scenarios.</p>
-                                    <div className="text-sm text-gray-600">
-                                        <strong>Best for:</strong> Premium brands, modern businesses, minimalist design
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-8 bg-gradient-to-br from-red-50 to-red-100 rounded-xl border-4 border-red-400 relative">
-                                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                    <div className="bg-red-400 text-white text-sm font-bold px-3 py-1 rounded-full">
-                                        🎯 WELCOME
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <h3 className="font-bold text-red-800 text-xl mb-3">COMMON Frame</h3>
-                                    <p className="text-red-700 mb-4">Classic universal design with traditional gift box elements. Suitable for various general occasions.</p>
-                                    <div className="text-sm text-red-600">
-                                        <strong>Best for:</strong> General use, events, promotions, welcome messages
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="p-8 bg-white border-2 border-gray-200 rounded-xl">
-                                <div className="text-center">
-                                    <h3 className="font-bold text-gray-800 text-xl mb-3">No Frame</h3>
-                                    <p className="text-gray-600 mb-4">Classic clean QR code without external decoration. Perfect for minimal and professional applications.</p>
-                                    <div className="text-sm text-gray-500">
-                                        <strong>Best for:</strong> Professional documents, minimal design, clean aesthetics
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Template Styles 功能 */}
-                    <section className="mb-16">
-                        <h2 className="text-4xl font-semibold text-gray-800 mb-12 text-center">
-                            Pre-built Template Styles
-                        </h2>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="w-16 h-16 bg-blue-500 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <span className="text-white text-2xl">🐦</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Twitter Style</h3>
-                                    <p className="text-gray-600 text-sm">Blue theme with circular dots for social media branding</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="w-16 h-16 bg-black rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <span className="text-white text-2xl">📚</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">GitHub Style</h3>
-                                    <p className="text-gray-600 text-sm">Classic black and white with square dots for tech projects</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <span className="text-white text-2xl">📷</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Instagram Style</h3>
-                                    <p className="text-gray-600 text-sm">Gradient colors with rounded styles for visual content</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <span className="text-white text-2xl">🎵</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Spotify Style</h3>
-                                    <p className="text-gray-600 text-sm">Green theme with modern design for music and entertainment</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="w-16 h-16 bg-blue-600 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <span className="text-white text-2xl">💼</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">LinkedIn Style</h3>
-                                    <p className="text-gray-600 text-sm">Professional blue with rounded corners for business networking</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="w-16 h-16 bg-red-600 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <span className="text-white text-2xl">📺</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">YouTube Style</h3>
-                                    <p className="text-gray-600 text-sm">Red theme with dynamic design for video content</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="w-16 h-16 bg-pink-500 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <span className="text-white text-2xl">🎨</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Dribbble Style</h3>
-                                    <p className="text-gray-600 text-sm">Pink creative design with circular aesthetics for designers</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="w-16 h-16 bg-purple-600 rounded-full mx-auto mb-3 flex items-center justify-center">
-                                        <span className="text-white text-2xl">💬</span>
-                                    </div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Slack Style</h3>
-                                    <p className="text-gray-600 text-sm">Purple theme with modern office design for team collaboration</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Logo Integration 功能 */}
-                    <section className="mb-16">
-                        <h2 className="text-4xl font-semibold text-gray-800 mb-12 text-center">
-                            Logo Integration & Branding
-                        </h2>
-                        <div className="grid md:grid-cols-2 gap-12 items-center">
-                            <div className="space-y-6">
-                                <div className="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
-                                    <h3 className="font-bold text-blue-800 text-xl mb-4">🖼️ Logo Upload</h3>
-                                    <p className="text-blue-700 mb-4">Upload your company logo or personal image to the center of your QR code for enhanced branding and recognition.</p>
-                                    <ul className="text-blue-600 space-y-2">
-                                        <li>• Support for PNG, JPG, SVG formats</li>
-                                        <li>• Automatic size optimization</li>
-                                        <li>• Maintains QR code readability</li>
-                                        <li>• Perfect for brand recognition</li>
-                                    </ul>
-                                </div>
-                                <div className="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
-                                    <h3 className="font-bold text-green-800 text-xl mb-4">🎯 Brand Consistency</h3>
-                                    <p className="text-green-700 mb-4">Create branded QR codes that perfectly match your business identity and marketing materials.</p>
-                                    <ul className="text-green-600 space-y-2">
-                                        <li>• Custom color matching</li>
-                                        <li>• Professional appearance</li>
-                                        <li>• Enhanced brand recognition</li>
-                                        <li>• Marketing material integration</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <QRCodeLogoPreview />
-                        </div>
-                    </section>
-
-                    {/* Size Options 功能 */}
-                    <section className="mb-16">
-                        <h2 className="text-4xl font-semibold text-gray-800 mb-12 text-center">
-                            Flexible Size Options
-                        </h2>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-3xl mb-3">📱</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Small Size</h3>
-                                    <p className="text-gray-600 text-sm mb-3">128px - 256px</p>
-                                    <p className="text-gray-600 text-sm">Perfect for icons, small applications, and web display</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-3xl mb-3">💼</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Medium Size</h3>
-                                    <p className="text-gray-600 text-sm mb-3">400px - 600px</p>
-                                    <p className="text-gray-600 text-sm">Ideal for business cards, social media, and brochures</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-3xl mb-3">📄</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Large Size</h3>
-                                    <p className="text-gray-600 text-sm mb-3">800px - 1200px</p>
-                                    <p className="text-gray-600 text-sm">Great for posters, banners, and high-resolution printing</p>
-                                </div>
-                            </div>
-                            <div className="p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="text-center mb-4">
-                                    <div className="text-3xl mb-3">🏢</div>
-                                    <h3 className="font-bold text-gray-800 text-lg mb-2">Extra Large</h3>
-                                    <p className="text-gray-600 text-sm mb-3">1500px - 2000px</p>
-                                    <p className="text-gray-600 text-sm">Professional printing and large displays</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* QR码类型 */}
-                    <section className="mb-16">
-                        <h2 className="text-4xl font-semibold text-gray-800 mb-12 text-center">
-                            Types of QR Codes You Can Create
-                        </h2>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div className="p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="flex items-center mb-4">
-                                    <span className="text-3xl mr-4">📱</span>
-                                    <h3 className="font-bold text-gray-800 text-xl">Website URL QR Code</h3>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed">
-                                    Create QR codes that link directly to your website, landing page, or any URL. 
-                                    Perfect for marketing campaigns and business cards.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="flex items-center mb-4">
-                                    <span className="text-3xl mr-4">📝</span>
-                                    <h3 className="font-bold text-gray-800 text-xl">Text QR Code</h3>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed">
-                                    Generate QR codes containing plain text messages, instructions, or any information 
-                                    you want to share quickly and easily.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="flex items-center mb-4">
-                                    <span className="text-3xl mr-4">📧</span>
-                                    <h3 className="font-bold text-gray-800 text-xl">Email QR Code</h3>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed">
-                                    Create QR codes that automatically compose emails with preset recipients, 
-                                    subject lines and message content.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="flex items-center mb-4">
-                                    <span className="text-3xl mr-4">📞</span>
-                                    <h3 className="font-bold text-gray-800 text-xl">Phone Number QR Code</h3>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed">
-                                    Generate QR codes that automatically dial phone numbers when scanned. 
-                                    Great for business contact information.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="flex items-center mb-4">
-                                    <span className="text-3xl mr-4">💬</span>
-                                    <h3 className="font-bold text-gray-800 text-xl">SMS QR Code</h3>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed">
-                                    Create QR codes that send pre-written text messages to specific phone numbers. 
-                                    Perfect for customer support and feedback.
-                                </p>
-                            </div>
-                            <div className="p-8 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-lg transition-all duration-300">
-                                <div className="flex items-center mb-4">
-                                    <span className="text-3xl mr-4">🌐</span>
-                                    <h3 className="font-bold text-gray-800 text-xl">WiFi QR Code</h3>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed">
-                                    Generate WiFi network sharing and connection QR codes. 
-                                    Let guests connect to your WiFi instantly.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* CTA部分 */}
-                    <section className="text-center py-16 bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 rounded-2xl">
-                        <h2 className="text-4xl font-bold text-gray-800 mb-6">
-                            Ready to Create Your Custom QR Code?
-                        </h2>
-                        <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-                            Start generating professional QR codes with all these amazing features - 
-                            dot styles, frames, templates, logo integration, and size options - completely free!
-                        </p>
-                        <Link
-                            href="/qr-generator" 
-                            className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-xl font-bold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 text-lg shadow-lg hover:shadow-xl transform hover:scale-105"
-                        >
-                            Create QR Code Now
-                        </Link>
-                    </section>
+                    </div>
                 </div>
             </main>
         </div>

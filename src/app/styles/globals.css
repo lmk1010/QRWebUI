@@ -3,7 +3,482 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 自定义全局样式 */
+/* 高级自定义全局样式 */
+:root {
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 20px 40px rgba(0, 0, 0, 0.15);
+    --shadow-strong: 0 30px 60px rgba(0, 0, 0, 0.25);
+    --backdrop-blur: backdrop-filter: blur(20px);
+}
+
 body {
-    @apply bg-gray-100;
+    @apply bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100;
+    background-attachment: fixed;
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    /* iPad专用滚动优化 */
+    -webkit-overflow-scrolling: touch;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 玻璃态效果 */
+.glass-effect {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+.glass-dark {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* 导航栏增强样式 */
+.nav-link-enhanced {
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.nav-link-enhanced:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.nav-link-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    z-index: 5;
+}
+
+.nav-link-enhanced:hover::before {
+    left: 100%;
+}
+
+.mobile-nav-link {
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+.mobile-nav-link:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 高级按钮样式 */
+.btn-primary {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+/* 卡片增强效果 */
+.card-enhanced {
+    @apply relative;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-soft);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-enhanced:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-medium);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.card-enhanced::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+}
+
+.card-enhanced:hover::after {
+    opacity: 1;
+}
+
+/* 动画效果 */
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scale-in {
+    animation: scaleIn 0.5s ease forwards;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 渐变文字效果 */
+.gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 流动边框效果 */
+.flowing-border {
+    position: relative;
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe);
+    background-size: 400% 400%;
+    animation: flowingGradient 3s ease infinite;
+    padding: 2px;
+    border-radius: 12px;
+}
+
+.flowing-border::before {
+    content: '';
+
+/* 配置菜单增强样式 */
+.config-button-enhanced {
+    position: relative;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+.config-button-enhanced:hover {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px) scale(1.05);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.config-button-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+}
+
+.config-button-enhanced:hover::before {
+    opacity: 1;
+}
+
+/* 配置图标动画 */
+.config-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.config-button-enhanced:hover .config-icon {
+    transform: scale(1.15) rotate(5deg);
+}
+
+/* 玻璃态提示卡片 */
+.glass-tip-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.glass-tip-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.05), rgba(0, 242, 254, 0.05));
+    opacity: 0.8;
+}
+    position: absolute;
+    inset: 2px;
+    background: white;
+    border-radius: 10px;
+    z-index: 1;
+}
+
+@keyframes flowingGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 微动画 */
+.subtle-bounce {
+    animation: subtleBounce 2s ease-in-out infinite;
+}
+
+@keyframes subtleBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* 响应式优化 - 重新设计断点系统 */
+/* iPad mini及类似设备 (768px - 1024px) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .container {
+        max-width: 100%;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    /* 导航栏iPad优化 */
+    .nav-tablet-optimized {
+        padding: 0.5rem 1rem;
+    }
+    
+    .nav-tablet-optimized .nav-links {
+        gap: 0.5rem;
+    }
+    
+    .nav-tablet-optimized .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+    }
+    
+    /* QR生成器页面布局优化 */
+    .qr-layout-tablet {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .qr-layout-tablet .qr-input-section {
+        width: 100%;
+        max-width: none;
+    }
+    
+    .qr-layout-tablet .qr-preview-section {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        min-height: auto;
+    }
+    
+    /* 表单元素iPad优化 */
+    .form-tablet-optimized input,
+    .form-tablet-optimized textarea,
+    .form-tablet-optimized select {
+        padding: 0.75rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+    }
+    
+    .form-tablet-optimized .grid-cols-2 {
+        gap: 0.75rem;
+    }
+    
+    .form-tablet-optimized .grid-cols-3 {
+        gap: 0.5rem;
+    }
+    
+    /* 按钮iPad优化 */
+    .btn-tablet-optimized {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        min-height: 44px; /* iOS最小触摸目标 */
+    }
+    
+    /* 卡片iPad优化 */
+    .card-tablet-optimized {
+        padding: 1rem;
+        margin: 0.5rem 0;
+    }
+    
+    /* 配置网格iPad优化 */
+    .config-grid-tablet {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .config-grid-tablet button {
+        padding: 0.75rem 0.5rem;
+        min-height: 60px;
+    }
+    
+    /* 优化配置菜单在平板上的显示 */
+    .config-enhanced-tablet .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+    }
+    
+    .config-enhanced-tablet .config-button-enhanced {
+        padding: 0.75rem;
+        min-height: 70px;
+    }
+    
+    .config-enhanced-tablet .config-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+    
+    /* 文字大小iPad优化 */
+    .text-tablet-sm { font-size: 0.875rem; }
+    .text-tablet-base { font-size: 1rem; }
+    .text-tablet-lg { font-size: 1.125rem; }
+}
+
+/* 手机设备 */
+@media (max-width: 767px) {
+    .card-enhanced:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+    
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+    
+    /* 手机端表单优化 */
+    .form-mobile-optimized input,
+    .form-mobile-optimized textarea {
+        padding: 0.875rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+    }
+    
+    /* 手机端按钮优化 */
+    .btn-mobile-optimized {
+        padding: 0.875rem 1.25rem;
+        font-size: 1rem;
+        min-height: 48px;
+    }
+    
+    /* 手机端配置网格 */
+    .config-grid-mobile {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    /* 优化配置菜单在移动端的显示 */
+    .config-enhanced-mobile .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .config-enhanced-mobile .config-button-enhanced {
+        padding: 0.5rem;
+        min-height: 65px;
+    }
+    
+    .config-enhanced-mobile .config-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+    
+    .config-enhanced-mobile .glass-tip-card {
+        padding: 0.75rem;
+        margin-top: 1rem;
+    }
+}
+
+/* 大屏设备 */
+@media (min-width: 1025px) {
+    .card-enhanced:hover {
+        transform: translateY(-8px) scale(1.02);
+    }
+}
+
+/* iPad专用视口修复 */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    html {
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    body {
+        min-width: 768px;
+        overflow-x: auto;
+    }
+    
+    .main-container {
+        min-width: 768px;
+        padding: 0 1rem;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .qr-layout-tablet {
+        flex-direction: row;
+    }
+    
+    .qr-layout-tablet .qr-input-section {
+        flex: 1;
+        max-width: 60%;
+    }
+    
+    .qr-layout-tablet .qr-preview-section {
+        flex: 0 0 40%;
+        max-width: 400px;
+    }
 }

@@ -40,13 +40,23 @@ export const metadata: Metadata = {
 
 export default function QRGeneratorPage() {
     return (
-        <div className="flex flex-col min-h-screen bg-white">
+        <div className="flex flex-col min-h-screen">
             {/* Navigation */}
             <Navbar />
 
-            {/* Main Content */}
-            <main className="flex-grow">
-                <QRGeneratorClient />
+            {/* Main Content with Modern Background */}
+            <main className="flex-grow relative">
+                {/* Background decorative elements */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                    <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-indigo-400/20 to-cyan-600/20 rounded-full blur-3xl"></div>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-purple-400/10 to-pink-600/10 rounded-full blur-3xl"></div>
+                </div>
+
+                {/* Content */}
+                <div className="relative z-10 fade-in-up">
+                    <QRGeneratorClient />
+                </div>
             </main>
         </div>
     );

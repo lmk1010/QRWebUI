@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../../components/Navbar';
 import Link from 'next/link';
-import { FaFileAlt, FaArrowLeft, FaPlay, FaCheck, FaLightbulb } from 'react-icons/fa';
+import { FaFileAlt, FaArrowLeft, FaPlay, FaCheck, FaLightbulb, FaArrowRight } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'Text QR Code Creation Tutorial - Detailed Step-by-Step Guide | QRCodeHub',
@@ -73,7 +73,7 @@ export default function TextQRGuidePage() {
                 "@type": "HowToStep",
                 "position": 1,
                 "name": "Select Text Type",
-                "text": "Open the QR code generator and click the &quot;Text&quot; option in the left function area to enter text QR code mode.",
+                "text": "Open the QR code generator and click the \"Text\" option in the left function area to enter text QR code mode.",
                 "image": "https://qrcodehub.net/step1-text.png"
             },
             {
@@ -87,14 +87,14 @@ export default function TextQRGuidePage() {
                 "@type": "HowToStep",
                 "position": 3,
                 "name": "Customize Style (Optional)",
-                "text": "Click the &quot;Customize&quot; button to adjust colors, add a logo, or modify the style to personalize your QR code.",
+                "text": "Click the \"Customize\" button to adjust colors, add a logo, or modify the style to personalize your QR code.",
                 "image": "https://qrcodehub.net/step3-text.png"
             },
             {
                 "@type": "HowToStep",
                 "position": 4,
                 "name": "Generate and Download",
-                "text": "Click the &quot;Generate QR Code&quot; button to instantly create your text QR code. Then select the download format (PNG, JPG, SVG, PDF).",
+                "text": "Click the \"Generate QR Code\" button to instantly create your text QR code. Then select the download format (PNG, JPG, SVG, PDF).",
                 "image": "https://qrcodehub.net/step4-text.png"
             }
         ],
@@ -112,7 +112,7 @@ export default function TextQRGuidePage() {
         {
             title: "Welcome Message",
             description: "Create a welcome message for a store, restaurant, or event",
-            example: "Welcome to our coffee shop! Scan the QR code for today&apos;s special offers.",
+            example: "Welcome to our coffee shop! Scan the QR code for today's special offers.",
             icon: "🏪"
         },
         {
@@ -130,13 +130,13 @@ export default function TextQRGuidePage() {
         {
             title: "Discount Coupon Code",
             description: "Provide a discount code or promotional information",
-            example: "Discount Coupon Code: SPRING2024\nDiscount: Full Store 80% Off\nValidity Period: March 31, 2024\nUsage Method: Enter the code at checkout to enjoy the discount",
+            example: "Discount Coupon Code: SPRING2024\nDiscount: Full Store 20% Off\nValidity Period: March 31, 2024\nUsage Method: Enter the code at checkout to enjoy the discount",
             icon: "🎫"
         },
         {
             title: "Contact Information",
             description: "Share contact information",
-            example: "Customer Service Hotline: 400-123-4567\nWork Hours: Monday to Friday 9:00-18:00\nEmail: service@example.com\nAddress: No. xxx, xxx Street, Chaoyang District, Beijing",
+            example: "Customer Service Hotline: 400-123-4567\nWork Hours: Monday to Friday 9:00-18:00\nEmail: service@example.com\nAddress: No. xxx, xxx Street, Business District",
             icon: "📞"
         },
         {
@@ -147,26 +147,8 @@ export default function TextQRGuidePage() {
         }
     ];
 
-    const bestPractices = [
-        {
-            title: "Use High Contrast",
-            description: "Ensure the QR code is easy to scan by using dark foreground and light background.",
-            icon: <FaCheck className="w-5 h-5 text-green-500" />
-        },
-        {
-            title: "Test on Multiple Devices",
-            description: "Test the QR code with different devices and apps before publishing.",
-            icon: <FaCheck className="w-5 h-5 text-green-500" />
-        }
-    ];
-
-    const tips = [
-        "Keep the text concise for better scanning and display.",
-        "Avoid using special characters that may not be supported by all scanners."
-    ];
-
     return (
-        <div className="flex flex-col min-h-screen bg-white">
+        <div className="flex flex-col min-h-screen">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
@@ -176,162 +158,102 @@ export default function TextQRGuidePage() {
             <Navbar />
             
             <main className="flex-grow">
-                {/* Page Title */}
-                <section className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-12">
+                {/* Hero Section */}
+                <section className="py-16">
                     <div className="container mx-auto px-4">
-                        <div className="max-w-4xl mx-auto">
-                            <div className="flex items-center mb-6">
+                        <div className="max-w-4xl mx-auto fade-in-up">
+                            {/* Breadcrumb */}
+                            <div className="flex items-center mb-8">
                                 <Link
                                     href="/guide"
-                                    className="flex items-center gap-2 text-blue-100 hover:text-white transition-colors"
+                                    className="flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors font-medium"
                                 >
                                     <FaArrowLeft className="w-4 h-4" />
-                                    Back to Tutorial Home
+                                    Back to Guide Home
                                 </Link>
                             </div>
                             
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="p-3 bg-white bg-opacity-20 rounded-lg">
-                                    <FaFileAlt className="w-8 h-8" />
+                            {/* Title Section */}
+                            <div className="text-center mb-12">
+                                <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl mb-6 subtle-bounce">
+                                    <FaFileAlt className="w-10 h-10 text-white" />
                                 </div>
-                                <div>
-                                    <h1 className="text-3xl md:text-4xl font-bold mb-2">
-                                        Text QR Code Creation Tutorial
-                                    </h1>
-                                    <p className="text-blue-100 text-lg">
-                                        Learn how to create text QR codes, share messages, instructions, or any text content
-                                    </p>
-                                </div>
+                                <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+                                    Text QR Code Tutorial
+                                </h1>
+                                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                                    Learn how to create QR codes for plain text messages, instructions, or any text content. 
+                                    Perfect for sharing information quickly and efficiently.
+                                </p>
                             </div>
-                            
-                            <div className="flex flex-wrap gap-4">
+
+                            {/* Quick Action */}
+                            <div className="text-center mb-16">
                                 <Link
-                                    href="/qr-generator?template=text"
-                                    className="bg-white text-purple-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2"
+                                    href="/qr-generator?type=text"
+                                    className="btn-primary inline-flex items-center gap-3 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl transform transition-all duration-300 hover:scale-105"
                                 >
-                                    <FaPlay className="w-4 h-4" />
+                                    <FaPlay className="w-5 h-5" />
                                     Create Text QR Code Now
-                                </Link>
-                                <Link
-                                    href="/guide"
-                                    className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-                                >
-                                    View Other Type Tutorials
                                 </Link>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                {/* Main Content */}
-                <div className="container mx-auto px-4 py-12">
-                    <div className="max-w-4xl mx-auto">
-                        {/* What is a Text QR Code */}
-                        <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">What is a Text QR Code?</h2>
-                            <div className="bg-blue-50 rounded-lg p-6 mb-8">
-                                <p className="text-gray-700 leading-relaxed mb-4">
-                                    A text QR code is a type of QR code that contains only text information. When a user scans this QR code, it will directly display the text content without redirecting to a website or performing other operations. This makes text QR codes ideal for sharing messages, instructions, contact information, etc.
-                                </p>
-                                <div className="grid md:grid-cols-3 gap-4">
-                                    <div className="text-center">
-                                        <div className="text-2xl mb-2">📝</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">Pure Text Content</h4>
-                                        <p className="text-sm text-gray-600">Directly display text information</p>
+                <div className="container mx-auto px-4 pb-16">
+                    <div className="max-w-6xl mx-auto space-y-20">
+                        {/* Step by Step Guide */}
+                        <section className="scale-in" style={{ animationDelay: '0.2s' }}>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">
+                                Step-by-Step Guide
+                            </h2>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                    <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <span className="text-white font-bold text-2xl">1</span>
                                     </div>
-                                    <div className="text-center">
-                                        <div className="text-2xl mb-2">🌐</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">No Network Required</h4>
-                                        <p className="text-sm text-gray-600">Can be used offline</p>
-                                    </div>
-                                    <div className="text-center">
-                                        <div className="text-2xl mb-2">📱</div>
-                                        <h4 className="font-semibold text-gray-800 mb-1">High Compatibility</h4>
-                                        <p className="text-sm text-gray-600">All devices can scan</p>
-                                    </div>
+                                    <h3 className="font-bold text-gray-800 text-lg mb-3">Select Text Type</h3>
+                                    <p className="text-gray-600 text-sm">Open the QR generator and choose "Text" from the options menu</p>
                                 </div>
-                            </div>
-                        </section>
-
-                        {/* Creation Steps */}
-                        <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">How to Create a Text QR Code</h2>
-                            <div className="space-y-6">
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg">1</div>
-                                    <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Select Text Type</h3>
-                                        <p className="text-gray-700 mb-3">
-                                            Open the QR code generator and click the &quot;Text&quot; option in the left function area to enter text QR code mode.
-                                        </p>
-                                        <div className="bg-gray-50 rounded-lg p-4">
-                                            <p className="text-sm text-gray-600">
-                                                <strong>Tip:</strong> Text type is the default option, usually no extra selection is needed.
-                                            </p>
-                                        </div>
+                                <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                    <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <span className="text-white font-bold text-2xl">2</span>
                                     </div>
+                                    <h3 className="font-bold text-gray-800 text-lg mb-3">Enter Your Text</h3>
+                                    <p className="text-gray-600 text-sm">Type or paste the text content you want to encode</p>
                                 </div>
-
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg">2</div>
-                                    <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Enter Text Content</h3>
-                                        <p className="text-gray-700 mb-3">
-                                            Enter the content you want to encode in the text input box. Supports English, numbers, symbols, etc.
-                                        </p>
-                                        <div className="bg-gray-50 rounded-lg p-4">
-                                            <p className="text-sm text-gray-600">
-                                                <strong>Example:</strong> &quot;Welcome to our coffee shop! Scan the QR code for today&apos;s special offers.&quot;
-                                            </p>
-                                        </div>
+                                <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                    <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <span className="text-white font-bold text-2xl">3</span>
                                     </div>
+                                    <h3 className="font-bold text-gray-800 text-lg mb-3">Customize Design</h3>
+                                    <p className="text-gray-600 text-sm">Add colors, logos, and adjust styling to match your brand</p>
                                 </div>
-
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg">3</div>
-                                    <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Customize Style (Optional)</h3>
-                                        <p className="text-gray-700 mb-3">
-                                            Click the &quot;Customize&quot; button to adjust colors, add a logo, or modify the style to personalize your QR code.
-                                        </p>
-                                        <div className="bg-gray-50 rounded-lg p-4">
-                                            <p className="text-sm text-gray-600">
-                                                <strong>Recommendation:</strong> Keep high contrast for better scanning. Logo size should not exceed 20% of the QR code area.
-                                            </p>
-                                        </div>
+                                <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                    <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <span className="text-white font-bold text-2xl">4</span>
                                     </div>
-                                </div>
-
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0 w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg">4</div>
-                                    <div className="flex-1">
-                                        <h3 className="font-semibold text-gray-800 mb-2 text-lg">Generate and Download</h3>
-                                        <p className="text-gray-700 mb-3">
-                                            Click the &quot;Generate QR Code&quot; button to instantly create your text QR code. Then select the download format (PNG, JPG, SVG, PDF).
-                                        </p>
-                                        <div className="bg-gray-50 rounded-lg p-4">
-                                            <p className="text-sm text-gray-600">
-                                                <strong>Format Selection:</strong> PNG for web, SVG for vector, PDF for print.
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <h3 className="font-bold text-gray-800 text-lg mb-3">Generate & Download</h3>
+                                    <p className="text-gray-600 text-sm">Create your QR code and download in your preferred format</p>
                                 </div>
                             </div>
                         </section>
 
                         {/* Use Cases */}
-                        <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Use Cases</h2>
-                            <div className="grid md:grid-cols-2 gap-6">
+                        <section className="fade-in-up" style={{ animationDelay: '0.4s' }}>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">
+                                Popular Use Cases
+                            </h2>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {useCases.map((useCase, index) => (
-                                    <div key={index} className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow flex flex-col h-full">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <span className="text-2xl">{useCase.icon}</span>
-                                            <h3 className="text-lg font-semibold text-gray-800">{useCase.title}</h3>
-                                        </div>
-                                        <p className="text-gray-600 mb-4 flex-grow">{useCase.description}</p>
-                                        <div className="bg-gray-50 rounded-lg p-3 mt-auto">
-                                            <p className="text-sm text-gray-700 font-mono whitespace-pre-line">{useCase.example}</p>
+                                    <div key={index} className="card-enhanced rounded-3xl p-8 group border-l-4 border-blue-500">
+                                        <div className="text-4xl mb-4">{useCase.icon}</div>
+                                        <h3 className="font-bold text-gray-800 text-xl mb-3">{useCase.title}</h3>
+                                        <p className="text-gray-600 mb-4 leading-relaxed">{useCase.description}</p>
+                                        <div className="bg-gray-50 rounded-xl p-4">
+                                            <h4 className="font-semibold text-gray-700 mb-2">Example:</h4>
+                                            <p className="text-gray-600 text-sm whitespace-pre-line">{useCase.example}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -339,74 +261,93 @@ export default function TextQRGuidePage() {
                         </section>
 
                         {/* Best Practices */}
-                        <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Best Practices</h2>
-                            <div className="grid md:grid-cols-2 gap-6">
-                                {bestPractices.map((practice, index) => (
-                                    <div key={index} className="flex items-start space-x-3">
-                                        {practice.icon}
-                                        <div>
-                                            <h4 className="font-semibold text-gray-800 mb-1">{practice.title}</h4>
-                                            <p className="text-gray-600 text-sm">{practice.description}</p>
+                        <section className="scale-in" style={{ animationDelay: '0.6s' }}>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">
+                                Best Practices & Tips
+                            </h2>
+                            <div className="grid md:grid-cols-2 gap-8">
+                                <div className="glass-effect rounded-3xl p-8">
+                                    <div className="flex items-center mb-6">
+                                        <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4">
+                                            <FaCheck className="w-6 h-6 text-white" />
                                         </div>
+                                        <h3 className="text-xl font-bold text-gray-800">Do's</h3>
                                     </div>
-                                ))}
-                            </div>
-                        </section>
-
-                        {/* Tips */}
-                        <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">Tips</h2>
-                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <FaLightbulb className="w-6 h-6 text-yellow-600" />
-                                    <h3 className="text-lg font-semibold text-gray-800">Tips</h3>
-                                </div>
-                                <ul className="space-y-3">
-                                    {tips.map((tip, index) => (
-                                        <li key={index} className="flex items-start space-x-3">
-                                            <span className="text-yellow-600 mt-1">•</span>
-                                            <span className="text-gray-700">{tip}</span>
+                                    <ul className="space-y-3">
+                                        <li className="text-gray-600 flex items-start">
+                                            <span className="text-green-500 mr-2">•</span>
+                                            Keep text concise and clear
                                         </li>
-                                    ))}
-                                </ul>
+                                        <li className="text-gray-600 flex items-start">
+                                            <span className="text-green-500 mr-2">•</span>
+                                            Test QR code before publishing
+                                        </li>
+                                        <li className="text-gray-600 flex items-start">
+                                            <span className="text-green-500 mr-2">•</span>
+                                            Use high contrast colors
+                                        </li>
+                                        <li className="text-gray-600 flex items-start">
+                                            <span className="text-green-500 mr-2">•</span>
+                                            Include context about the content
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="glass-effect rounded-3xl p-8">
+                                    <div className="flex items-center mb-6">
+                                        <div className="w-12 h-12 bg-gradient-to-r from-red-500 to-red-600 rounded-xl flex items-center justify-center mr-4">
+                                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </div>
+                                        <h3 className="text-xl font-bold text-gray-800">Don'ts</h3>
+                                    </div>
+                                    <ul className="space-y-3">
+                                        <li className="text-gray-600 flex items-start">
+                                            <span className="text-red-500 mr-2">•</span>
+                                            Don't use extremely long text
+                                        </li>
+                                        <li className="text-gray-600 flex items-start">
+                                            <span className="text-red-500 mr-2">•</span>
+                                            Avoid low contrast color combinations
+                                        </li>
+                                        <li className="text-gray-600 flex items-start">
+                                            <span className="text-red-500 mr-2">•</span>
+                                            Don't make QR codes too small
+                                        </li>
+                                        <li className="text-gray-600 flex items-start">
+                                            <span className="text-red-500 mr-2">•</span>
+                                            Avoid special characters that may not scan
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </section>
 
-                        {/* FAQ */}
-                        <section className="mb-16">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-6">FAQ</h2>
-                            <div className="space-y-6">
-                                <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Is there a length limit for text QR codes?</h3>
-                                    <p className="text-gray-700">A: There is no strict limit, but it is recommended to keep it within 1000 characters for best results.</p>
+                        {/* CTA Section */}
+                        <section className="text-center fade-in-up" style={{ animationDelay: '0.8s' }}>
+                            <div className="glass-effect rounded-3xl p-12">
+                                <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
+                                    Ready to Create Your Text QR Code?
+                                </h2>
+                                <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                                    Start creating professional text QR codes now with our free generator
+                                </p>
+                                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                    <Link 
+                                        href="/qr-generator?type=text" 
+                                        className="btn-primary inline-flex items-center gap-3 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl transform transition-all duration-300 hover:scale-105"
+                                    >
+                                        <FaFileAlt className="w-5 h-5" />
+                                        Create Text QR Code
+                                    </Link>
+                                    <Link 
+                                        href="/guide" 
+                                        className="inline-flex items-center gap-3 text-gray-600 border-2 border-gray-300 px-10 py-4 rounded-2xl font-bold text-lg hover:border-blue-500 hover:text-blue-600 transition-all duration-300"
+                                    >
+                                        <FaArrowRight className="w-5 h-5" />
+                                        View All Tutorials
+                                    </Link>
                                 </div>
-                                
-                                <div className="bg-white border border-gray-200 rounded-lg p-6">
-                                    <h3 className="font-semibold text-gray-800 mb-3">Q: Can I use special characters?</h3>
-                                    <p className="text-gray-700">A: Most common characters are supported, but avoid rare or complex symbols for maximum compatibility.</p>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Call to Action */}
-                        <section className="text-center py-12 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
-                            <h2 className="text-2xl font-bold text-gray-800 mb-4">Ready to create your text QR code?</h2>
-                            <p className="text-gray-600 mb-8 max-w-2xl mx-auto">Start now and share your information, instructions, or messages with a professional text QR code.</p>
-                            <div className="flex flex-wrap justify-center gap-4">
-                                <Link
-                                    href="/qr-generator?template=text"
-                                    className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center gap-2"
-                                >
-                                    <FaPlay className="w-4 h-4" />
-                                    Start Now
-                                </Link>
-                                <Link
-                                    href="/guide"
-                                    className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
-                                >
-                                    View Other Tutorials
-                                </Link>
                             </div>
                         </section>
                     </div>

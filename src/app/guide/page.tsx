@@ -49,7 +49,7 @@ const qrCodeTypes = [
         bgColor: 'bg-blue-50',
         borderColor: 'border-blue-200',
         examples: ['Welcome Message', 'Product Description', 'Event Details', 'Coupon Code'],
-        features: ['Supports Chinese Characters', 'No Length Limit', 'Fast Scanning', 'High Compatibility']
+        features: ['Supports All Characters', 'No Length Limit', 'Fast Scanning', 'High Compatibility']
     },
     {
         type: 'url',
@@ -179,7 +179,7 @@ export default function GuidePage() {
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-white">
+        <div className="flex flex-col min-h-screen">
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
@@ -188,325 +188,229 @@ export default function GuidePage() {
             />
             <Navbar />
             
-            <main className="flex-grow">
-                {/* Page Title Section */}
-                <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
-                    <div className="container mx-auto px-4 text-center">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                            QR Code Generation Tutorial
-                        </h1>
-                        <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
-                            Learn how to create various types of professional QR codes, from basic to advanced, master the complete production process
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-4">
-                            <Link
+            <main className="flex-grow relative">
+                {/* Background decorative elements */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                    <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-indigo-400/20 to-cyan-600/20 rounded-full blur-3xl"></div>
+                </div>
+
+                <div className="relative z-10">
+                    {/* Page Title Section */}
+                    <section className="py-20">
+                        <div className="container mx-auto px-4 text-center fade-in-up">
+                            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mb-8 subtle-bounce">
+                                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                            </div>
+                            <h1 className="text-5xl md:text-6xl font-bold mb-6 gradient-text">
+                                QR Code Generation Tutorial
+                            </h1>
+                            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
+                                Learn how to create various types of professional QR codes, from basic to advanced, master the complete production process
+                            </p>
+                            <Link 
                                 href="/qr-generator"
-                                className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors flex items-center gap-2"
-                            >
-                                <FaPlay className="w-4 h-4" />
-                                Start Creating QR Codes
-                            </Link>
-                            <Link
-                                href="/faq"
-                                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors"
-                            >
-                                View FAQ
-                            </Link>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Quick Start Guide */}
-                <section className="py-16 bg-gray-50">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-4xl mx-auto">
-                            <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-                                Quick Start - Learn to Create QR Codes in 5 Minutes
-                            </h2>
-                            
-                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-                                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <span className="text-blue-600 font-bold text-xl">1</span>
-                                    </div>
-                                    <h3 className="font-semibold text-gray-800 mb-2">Choose Type</h3>
-                                    <p className="text-gray-600 text-sm">Select the appropriate QR code type based on your needs</p>
-                                </div>
-                                
-                                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-                                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <span className="text-green-600 font-bold text-xl">2</span>
-                                    </div>
-                                    <h3 className="font-semibold text-gray-800 mb-2">Enter Content</h3>
-                                    <p className="text-gray-600 text-sm">Fill in the information or content to be encoded</p>
-                                </div>
-                                
-                                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-                                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <span className="text-purple-600 font-bold text-xl">3</span>
-                                    </div>
-                                    <h3 className="font-semibold text-gray-800 mb-2">Customize Style</h3>
-                                    <p className="text-gray-600 text-sm">Choose colors, add logos and other personalized settings</p>
-                                </div>
-                                
-                                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 text-center">
-                                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                        <span className="text-orange-600 font-bold text-xl">4</span>
-                                    </div>
-                                    <h3 className="font-semibold text-gray-800 mb-2">Generate & Download</h3>
-                                    <p className="text-gray-600 text-sm">Generate QR codes and download for use</p>
-                                </div>
-                            </div>
-
-                            <div className="text-center">
-                                <Link
-                                    href="/qr-generator"
-                                    className="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors text-lg"
-                                >
-                                    <FaPlay className="w-5 h-5" />
-                                    Start Creating Now
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* QR Code Type Cards */}
-                <section className="py-16">
-                    <div className="container mx-auto px-4">
-                        <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
-                            Choose Your QR Code Type
-                        </h2>
-                        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-                            We support multiple types of QR code generation, each with its specific purpose and advantages
-                        </p>
-                        
-                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {qrCodeTypes.map((qr) => (
-                                <div key={qr.type} className={`p-6 rounded-2xl ${qr.bgColor} border ${qr.borderColor} shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full`}>
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div className={`p-3 rounded-xl bg-white shadow-md`}>
-                                            {qr.icon}
-                                        </div>
-                                        <FaArrowRight className="w-6 h-6 text-gray-400" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">{qr.title}</h3>
-                                    <p className="text-gray-600 leading-relaxed mb-6 flex-grow">{qr.description}</p>
-                                    
-                                    <div className="mb-6">
-                                        <h4 className="text-sm font-semibold text-gray-700 mb-3">Key Features:</h4>
-                                        <ul className="space-y-2">
-                                            {qr.features.map((feature, featureIndex) => (
-                                                <li key={featureIndex} className="flex items-center gap-2">
-                                                    <div className={`w-2 h-2 rounded-full ${qr.color.replace('from-', 'bg-')}`}></div>
-                                                    <span className="text-gray-700 text-sm">{feature}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    
-                                    <div className="mb-6">
-                                        <h4 className="text-sm font-semibold text-gray-700 mb-3">Use Cases:</h4>
-                                        <div className="flex flex-wrap gap-2">
-                                            {qr.examples.map((example, exampleIndex) => (
-                                                <span key={exampleIndex} className="bg-white text-gray-700 text-xs px-3 py-1 rounded-full border shadow-sm">
-                                                    {example}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="grid grid-cols-2 gap-3 mt-auto">
-                                        <Link
-                                            href={`/guide/${qr.type}`}
-                                            className="bg-white text-gray-700 px-4 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors text-center shadow-sm border"
-                                        >
-                                            Detailed Tutorial
-                                        </Link>
-                                        <Link
-                                            href={`/qr-generator?template=${qr.type}`}
-                                            className={`text-white px-4 py-3 rounded-lg font-semibold transition-colors text-center shadow-md bg-gradient-to-r ${qr.color} hover:opacity-90`}
-                                        >
-                                            Create Now
-                                        </Link>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Advanced Features Showcase */}
-                <section className="py-16 bg-gray-50">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-4xl mx-auto">
-                            <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
-                                Advanced Features & Customization Options
-                            </h2>
-                            <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-                                Beyond basic QR code generation, we also provide rich customization options to meet your professional needs
-                            </p>
-                            
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-4">
-                                        <FaPalette className="w-6 h-6 text-white" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-3">Color Customization</h3>
-                                    <p className="text-gray-600 mb-4">
-                                        Customize foreground and background colors to create personalized QR codes that match your brand
-                                    </p>
-                                    <ul className="text-sm text-gray-600 space-y-1">
-                                        <li>• Support for any color selection</li>
-                                        <li>• High contrast ensures readability</li>
-                                        <li>• Brand color matching</li>
-                                    </ul>
-                                </div>
-                                
-                                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg flex items-center justify-center mb-4">
-                                        <FaDownload className="w-6 h-6 text-white" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-3">Multiple Formats</h3>
-                                    <p className="text-gray-600 mb-4">
-                                        Support for PNG, JPG, SVG, PDF and other formats to meet different usage scenarios
-                                    </p>
-                                    <ul className="text-sm text-gray-600 space-y-1">
-                                        <li>• PNG - Transparent background</li>
-                                        <li>• SVG - Vector format</li>
-                                        <li>• PDF - Print specific</li>
-                                    </ul>
-                                </div>
-                                
-                                <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-                                    <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center mb-4">
-                                        <FaFileAlt className="w-6 h-6 text-white" />
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-3">Logo Addition</h3>
-                                    <p className="text-gray-600 mb-4">
-                                        Add your logo to the center of the QR code to enhance brand recognition and professionalism
-                                    </p>
-                                    <ul className="text-sm text-gray-600 space-y-1">
-                                        <li>• Support for multiple image formats</li>
-                                        <li>• Smart size adjustment</li>
-                                        <li>• Maintains scanning reliability</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Best Practices */}
-                <section className="py-16">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-4xl mx-auto">
-                            <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
-                                QR Code Usage Best Practices
-                            </h2>
-                            <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-                                Follow these best practices to ensure your QR codes can be scanned and used correctly
-                            </p>
-                            
-                            <div className="grid md:grid-cols-2 gap-8">
-                                <div className="space-y-6">
-                                    <h3 className="text-2xl font-semibold text-green-800">✅ Recommended Practices</h3>
-                                    <ul className="space-y-4">
-                                        <li className="flex items-start space-x-3">
-                                            <span className="text-green-500 mt-1">•</span>
-                                            <div>
-                                                <span className="font-semibold text-gray-800">Test Your QR Code</span>
-                                                <p className="text-gray-600 text-sm mt-1">Test scanning effects with multiple devices before official use</p>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start space-x-3">
-                                            <span className="text-green-500 mt-1">•</span>
-                                            <div>
-                                                <span className="font-semibold text-gray-800">Use High Contrast</span>
-                                                <p className="text-gray-600 text-sm mt-1">Dark foreground with light background ensures scanning reliability</p>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start space-x-3">
-                                            <span className="text-green-500 mt-1">•</span>
-                                            <div>
-                                                <span className="font-semibold text-gray-800">Maintain Appropriate Size</span>
-                                                <p className="text-gray-600 text-sm mt-1">Minimum 2cm x 2cm, adjust size based on scanning distance</p>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start space-x-3">
-                                            <span className="text-green-500 mt-1">•</span>
-                                            <div>
-                                                <span className="font-semibold text-gray-800">Add Instructions</span>
-                                                <p className="text-gray-600 text-sm mt-1">Add usage instructions or call-to-action near the QR code</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-                                <div className="space-y-6">
-                                    <h3 className="text-2xl font-semibold text-red-800">❌ Practices to Avoid</h3>
-                                    <ul className="space-y-4">
-                                        <li className="flex items-start space-x-3">
-                                            <span className="text-red-500 mt-1">•</span>
-                                            <div>
-                                                <span className="font-semibold text-gray-800">Low Contrast Colors</span>
-                                                <p className="text-gray-600 text-sm mt-1">Avoid using similar colors for foreground and background</p>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start space-x-3">
-                                            <span className="text-red-500 mt-1">•</span>
-                                            <div>
-                                                <span className="font-semibold text-gray-800">Too Small Size</span>
-                                                <p className="text-gray-600 text-sm mt-1">Don&apos;t make QR codes too small, affecting scanning effects</p>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start space-x-3">
-                                            <span className="text-red-500 mt-1">•</span>
-                                            <div>
-                                                <span className="font-semibold text-gray-800">Logo Too Large</span>
-                                                <p className="text-gray-600 text-sm mt-1">Logo should not exceed 20% of QR code area</p>
-                                            </div>
-                                        </li>
-                                        <li className="flex items-start space-x-3">
-                                            <span className="text-red-500 mt-1">•</span>
-                                            <div>
-                                                <span className="font-semibold text-gray-800">Curved Surface Placement</span>
-                                                <p className="text-gray-600 text-sm mt-1">Avoid placing QR codes on curved or wrinkled surfaces</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Call to Action */}
-                <section className="py-16 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                    <div className="container mx-auto px-4 text-center">
-                        <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                            Ready to Create Your QR Code?
-                        </h2>
-                        <p className="text-xl mb-8 max-w-2xl mx-auto">
-                            Start creating professional QR codes now to improve your business efficiency and user experience
-                        </p>
-                        <div className="flex flex-wrap justify-center gap-4">
-                            <Link
-                                href="/qr-generator?template=text"
-                                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-lg flex items-center gap-2"
+                                className="btn-primary inline-flex items-center gap-3 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl transform transition-all duration-300 hover:scale-105"
                             >
                                 <FaPlay className="w-5 h-5" />
                                 Start Creating Now
                             </Link>
-                            <Link
-                                href="/faq"
-                                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-lg"
-                            >
-                                View FAQ
-                            </Link>
+                        </div>
+                    </section>
+
+                    <div className="container mx-auto px-4 py-12">
+                        <div className="max-w-7xl mx-auto space-y-20">
+                            {/* Quick Start Guide */}
+                            <section className="scale-in" style={{ animationDelay: '0.2s' }}>
+                                <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">
+                                    Quick Start Guide
+                                </h2>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-white font-bold text-2xl">1</span>
+                                        </div>
+                                        <h3 className="font-bold text-gray-800 text-lg mb-3">Choose Type</h3>
+                                        <p className="text-gray-600 text-sm">Select the QR code type that best fits your needs</p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-white font-bold text-2xl">2</span>
+                                        </div>
+                                        <h3 className="font-bold text-gray-800 text-lg mb-3">Enter Content</h3>
+                                        <p className="text-gray-600 text-sm">Input the information you want to encode</p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-white font-bold text-2xl">3</span>
+                                        </div>
+                                        <h3 className="font-bold text-gray-800 text-lg mb-3">Customize Style</h3>
+                                        <p className="text-gray-600 text-sm">Add colors, logos, and personalize your design</p>
+                                    </div>
+                                    <div className="card-enhanced rounded-3xl p-8 text-center group">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                            <span className="text-white font-bold text-2xl">4</span>
+                                        </div>
+                                        <h3 className="font-bold text-gray-800 text-lg mb-3">Download</h3>
+                                        <p className="text-gray-600 text-sm">Generate and download in your preferred format</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            {/* QR Code Types Section */}
+                            <section className="fade-in-up" style={{ animationDelay: '0.4s' }}>
+                                <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">
+                                    QR Code Types & Tutorials
+                                </h2>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                    {qrCodeTypes.map((type, index) => (
+                                        <Link key={type.type} href={`/guide/${type.type}`} className="group">
+                                            <div className="card-enhanced rounded-3xl p-8 h-full group-hover:scale-105 transition-all duration-300 border-l-4" style={{borderLeftColor: `rgb(${type.color.includes('blue') ? '59 130 246' : type.color.includes('green') ? '34 197 94' : type.color.includes('purple') ? '147 51 234' : type.color.includes('sky') ? '14 165 233' : type.color.includes('orange') ? '249 115 22' : '239 68 68'})`}}>
+                                                <div className={`w-16 h-16 bg-gradient-to-r ${type.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                                                    <div className="text-white">
+                                                        {type.icon}
+                                                    </div>
+                                                </div>
+                                                <h3 className="font-bold text-gray-800 text-xl mb-4 group-hover:text-blue-600 transition-colors">
+                                                    {type.title}
+                                                </h3>
+                                                <p className="text-gray-600 mb-6 leading-relaxed">
+                                                    {type.description}
+                                                </p>
+                                                <div className="mb-6">
+                                                    <h4 className="font-semibold text-gray-700 mb-3">Examples:</h4>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {type.examples.map((example, i) => (
+                                                            <span key={i} className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm">
+                                                                {example}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <div className="mb-6">
+                                                    <h4 className="font-semibold text-gray-700 mb-3">Features:</h4>
+                                                    <ul className="space-y-1">
+                                                        {type.features.map((feature, i) => (
+                                                            <li key={i} className="text-gray-600 text-sm flex items-center">
+                                                                <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                                </svg>
+                                                                {feature}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                                <div className="flex items-center justify-between mt-auto">
+                                                    <span className="text-blue-600 font-semibold group-hover:text-blue-700">
+                                                        Learn More
+                                                    </span>
+                                                    <FaArrowRight className="text-blue-600 group-hover:translate-x-2 transition-transform" />
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </section>
+
+                            {/* Best Practices Section */}
+                            <section className="scale-in" style={{ animationDelay: '0.6s' }}>
+                                <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">
+                                    Best Practices & Tips
+                                </h2>
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="glass-effect rounded-3xl p-8">
+                                        <div className="flex items-center mb-6">
+                                            <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4">
+                                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                            </div>
+                                            <h3 className="text-xl font-bold text-gray-800">Design Tips</h3>
+                                        </div>
+                                        <ul className="space-y-3">
+                                            <li className="text-gray-600 flex items-start">
+                                                <span className="text-green-500 mr-2">•</span>
+                                                Use high contrast colors (dark on light)
+                                            </li>
+                                            <li className="text-gray-600 flex items-start">
+                                                <span className="text-green-500 mr-2">•</span>
+                                                Keep logos small (max 20% of code size)
+                                            </li>
+                                            <li className="text-gray-600 flex items-start">
+                                                <span className="text-green-500 mr-2">•</span>
+                                                Test QR codes before printing or sharing
+                                            </li>
+                                            <li className="text-gray-600 flex items-start">
+                                                <span className="text-green-500 mr-2">•</span>
+                                                Choose appropriate size for intended use
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div className="glass-effect rounded-3xl p-8">
+                                        <div className="flex items-center mb-6">
+                                            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4">
+                                                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                            </div>
+                                            <h3 className="text-xl font-bold text-gray-800">Usage Guidelines</h3>
+                                        </div>
+                                        <ul className="space-y-3">
+                                            <li className="text-gray-600 flex items-start">
+                                                <span className="text-blue-500 mr-2">•</span>
+                                                Include clear scanning instructions
+                                            </li>
+                                            <li className="text-gray-600 flex items-start">
+                                                <span className="text-blue-500 mr-2">•</span>
+                                                Position QR codes at eye level when possible
+                                            </li>
+                                            <li className="text-gray-600 flex items-start">
+                                                <span className="text-blue-500 mr-2">•</span>
+                                                Ensure clean, flat surfaces for printing
+                                            </li>
+                                            <li className="text-gray-600 flex items-start">
+                                                <span className="text-blue-500 mr-2">•</span>
+                                                Add context about what the code does
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </section>
+
+                            {/* CTA Section */}
+                            <section className="text-center fade-in-up" style={{ animationDelay: '0.8s' }}>
+                                <div className="glass-effect rounded-3xl p-12">
+                                    <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
+                                        Ready to Create Your First QR Code?
+                                    </h2>
+                                    <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                                        Put your new knowledge to use and start creating professional QR codes today
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                                        <Link 
+                                            href="/qr-generator" 
+                                            className="btn-primary inline-flex items-center gap-3 text-white px-10 py-4 rounded-2xl font-bold text-lg shadow-xl transform transition-all duration-300 hover:scale-105"
+                                        >
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H3a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H3a1 1 0 00-1 1v2a1 1 0 001 1z" />
+                                            </svg>
+                                            Create QR Code Now
+                                        </Link>
+                                        <Link 
+                                            href="/features" 
+                                            className="inline-flex items-center gap-3 text-gray-600 border-2 border-gray-300 px-10 py-4 rounded-2xl font-bold text-lg hover:border-blue-500 hover:text-blue-600 transition-all duration-300"
+                                        >
+                                            <FaPalette className="w-5 h-5" />
+                                            View All Features
+                                        </Link>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                     </div>
-                </section>
+                </div>
             </main>
         </div>
     );

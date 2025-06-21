@@ -12,6 +12,18 @@ export default {
 
   theme: {
     extend: {
+      // 自定义断点 - 添加iPad专用断点
+      screens: {
+        'xs': '475px',        // 小手机
+        'sm': '640px',        // 标准小屏
+        'md': '768px',        // iPad mini开始
+        'ipad': '768px',      // iPad专用
+        'lg': '1024px',       // 大屏设备
+        'xl': '1280px',       // 超大屏
+        '2xl': '1536px',      // 2K屏
+        // iPad专用范围断点
+        'ipad-only': {'min': '768px', 'max': '1023px'},
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
@@ -42,7 +54,53 @@ export default {
         '200px': '200px', // 更多自定义高度
         '300px': '300px',
       },
+      // 自定义间距
+      spacing: {
+        '18': '4.5rem',   // 72px
+        '88': '22rem',    // 352px
+        '128': '32rem',   // 512px
+      },
+      // 自定义最大宽度
+      maxWidth: {
+        'ipad': '768px',
+        '8xl': '88rem',
+        '9xl': '96rem',
+      },
+      // 自定义字体大小
+      fontSize: {
+        'xxs': ['0.625rem', { lineHeight: '0.75rem' }], // 10px
+        '2.5xl': ['1.75rem', { lineHeight: '2rem' }],    // 28px
+      },
+      // 自定义边框宽度
+      borderWidth: {
+        '3': '3px',
+        '5': '5px',
+      },
     },
   },
-  plugins: [aspectRatio],
+  plugins: [
+    aspectRatio,
+    // 添加自定义工具类插件
+    function({ addUtilities }: any) {
+      const newUtilities = {
+        // iPad专用工具类
+        '.ipad-safe-area': {
+          paddingLeft: '1rem',
+          paddingRight: '1rem',
+          '@media (min-width: 768px) and (max-width: 1023px)': {
+            paddingLeft: '1.5rem',
+            paddingRight: '1.5rem',
+          },
+        },
+        // 防止水平滚动
+        '.prevent-horizontal-scroll': {
+          overflowX: 'hidden',
+          width: '100%',
+          maxWidth: '100vw',
+        },
+      };
+      
+      addUtilities(newUtilities);
+    }
+  ],
 } satisfies Config;

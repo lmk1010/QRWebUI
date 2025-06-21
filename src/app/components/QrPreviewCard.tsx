@@ -948,9 +948,15 @@ showpage
 
     return (
         <div
-            className="bg-white shadow-md rounded-md p-4 w-full max-w-sm flex flex-col items-center h-full"
+            className="relative bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl rounded-xl p-6 w-full max-w-sm flex flex-col items-center h-full overflow-hidden"
             ref={cardRef}
         >
+            {/* 玻璃效果光晕 */}
+            <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-orange-500/10 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-white/5 to-white/10 pointer-events-none" />
+            
+            {/* 内容容器 */}
+            <div className="relative z-10 w-full h-full flex flex-col items-center">
             {/* 顶部标题和重置区域 */}
             <div className="mb-4 text-gray-700 text-sm self-start flex items-center justify-between w-full">
                 <div>
@@ -1106,17 +1112,6 @@ showpage
 
             {/* 下载区域 */}
             <div className="w-full flex-1 flex flex-col justify-end">
-                {/* 功能提示区域 - 确保与左侧配置网格对齐 */}
-                <div className="mb-4 bg-blue-50 rounded-lg p-3 border border-blue-100">
-                    <div className="text-sm font-medium text-blue-800 mb-2">💡 Download Tips</div>
-                    <div className="text-xs text-blue-600 space-y-0.5">
-                        <div>• PNG: Suitable for web and social media use</div>
-                        <div>• SVG: Vector format, infinitely scalable</div>
-                        <div>• PDF: Suitable for printing and document embedding</div>
-                        <div>• EPS: Professional printing and design software</div>
-                    </div>
-                </div>
-                
                 <div className="flex flex-col w-full space-y-2">
                     <div className="text-center mb-3">
                         <h3 className="text-gray-700 font-semibold text-sm mb-2">Download Format Selection</h3>
@@ -1175,6 +1170,7 @@ showpage
                         <span className="text-sm font-medium">Download All Formats</span>
                     </button>
                 </div>
+            </div>
             </div>
         </div>
     );

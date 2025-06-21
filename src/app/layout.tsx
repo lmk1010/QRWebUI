@@ -141,12 +141,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
     };
 
     return (
-        <html lang="en-US">
+        <html lang="en">
             <head>
-                <meta name="format-detection" content="telephone=no" />
-                <meta name="mobile-web-app-capable" content="yes" />
+                {/* iPad专用视口优化 */}
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+                <meta name="format-detection" content="telephone=no" />
                 <meta name="apple-mobile-web-app-title" content="QRCodeHub" />
                 <link rel="icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -163,7 +164,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                     }}
                 />
             </head>
-            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased prevent-horizontal-scroll`}>
                 <GoogleAnalytics />
                 {children}
             </body>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from 'framer-motion';
-import { FaFileAlt, FaLink, FaAddressBook, FaPalette, FaClone, FaRulerCombined, FaFile, FaEnvelope, FaWifi, FaSquare } from 'react-icons/fa';
+import { FaFileAlt, FaLink, FaAddressBook, FaPalette, FaClone, FaRulerCombined, FaFile, FaEnvelope, FaWifi, FaSquare, FaLayerGroup, FaEdit } from 'react-icons/fa';
 
 import FeatureCard from './FeatureCard';
 import { mainCategories } from './Categories';
@@ -13,7 +13,7 @@ import TemplateModal from './TemplateModal';
 import FrameModal from './FrameModal';
 
 interface QRCardProps {
-    onGenerateResult: (value: string) => void;
+    onGenerateResult: (value: string, shouldScroll?: boolean) => void;
     onLogoChange?: (logo: string | null) => void;
     onCustomOptionsChange?: (options: CustomOptions) => void;
     customOptions: CustomOptions;
@@ -46,7 +46,7 @@ const QRCard: React.FC<QRCardProps> = ({
     };
     
     const [selectedMainType, setSelectedMainType] = useState<string | null>(mapTemplateToTabType(templateType));
-    const [customText, setCustomText] = useState('');
+    const [customText, setCustomText] = useState('qrcodehub');
     const [showAlert, setShowAlert] = useState(false);
     const [showUrlAlert, setShowUrlAlert] = useState(false);
     const [showEmailAlert, setShowEmailAlert] = useState(false);
@@ -241,6 +241,14 @@ const QRCard: React.FC<QRCardProps> = ({
             }
         }
     }, [templateType, onCustomOptionsChange, onLogoChange, customOptions]);
+
+    // 自动生成默认二维码
+    useEffect(() => {
+        // 只在组件首次加载且没有特定模板时生成默认二维码，不触发滚动
+        if (!templateType && customText === 'qrcodehub' && selectedMainType === 'text') {
+            onGenerateResult(customText, false); // 传递 false 表示不滚动
+        }
+    }, []); // 空依赖数组确保只在组件挂载时执行一次
 
     const handleSelectMainCategory = (mainType: string) => {
         setSelectedMainType(mainType);
@@ -497,16 +505,454 @@ const QRCard: React.FC<QRCardProps> = ({
 
     return (
         <motion.div
-            className="relative bg-white rounded-xl shadow-lg p-4 flex flex-col items-center w-full h-full"
-            style={{
-                backgroundSize: 'cover',
-                backgroundPosition: 'center'
-            }}
+            className="w-full h-full"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.5 }}
         >
+            {/* Main Layout Container */}
+            <div className="flex flex-col lg:flex-row gap-4 h-full">
+                {/* Left Sidebar - Customization Panel */}
+                <div className="w-full lg:w-64 flex-shrink-0">
+                    {/* Advanced Customization Panel */}
+                    <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-white/5 border border-white/20 rounded-2xl p-4 shadow-2xl h-full flex flex-col">
+                        {/* Background Glow Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-2xl"></div>
+                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgb3BhY2l0eT0iMC4wNSI+CjxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHN2Zz4K')] opacity-20"></div>
+                        
+                        {/* Header */}
+                        <div className="relative mb-4 flex-shrink-0">
+                            <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                                    <FaPalette className="w-4 h-4 text-white" />
+                                </div>
+                                <div>
+                                    <h3 className="text-sm font-bold text-gray-800">Customization</h3>
+                                    <p className="text-xs text-gray-500">Personalize QR code</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Vertical Layout for Customization Options - 填满剩余空间 */}
+                        <div className="relative flex-1 flex flex-col justify-center space-y-3">
+                            {/* Dot Style */}
+                            <motion.button
+                                onClick={() => setIsDotStyleModalOpen(true)}
+                                className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
+                                whileHover={{ x: 2, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                <div className="relative flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-purple-100 to-blue-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm flex-shrink-0">
+                                        <FaRulerCombined className="w-5 h-5 text-purple-600" />
+                                    </div>
+                                    <div className="text-left">
+                                        <div className="text-sm font-semibold text-gray-800 group-hover:text-gray-900">Dot Style</div>
+                                        <div className="text-xs text-gray-500">Customize patterns</div>
+                                    </div>
+                                </div>
+                            </motion.button>
+
+                            {/* Logo */}
+                            <motion.button
+                                onClick={() => setIsLogoModalOpen(true)}
+                                className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
+                                whileHover={{ x: 2, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                <div className="relative flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-green-100 to-emerald-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm flex-shrink-0">
+                                        <FaFile className="w-5 h-5 text-green-600" />
+                                    </div>
+                                    <div className="text-left">
+                                        <div className="text-sm font-semibold text-gray-800 group-hover:text-gray-900">Logo</div>
+                                        <div className="text-xs text-gray-500">Add brand logo</div>
+                                    </div>
+                                </div>
+                            </motion.button>
+
+                            {/* Colors */}
+                            <motion.button
+                                onClick={() => setIsColorModalOpen(true)}
+                                className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
+                                whileHover={{ x: 2, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                <div className="relative flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-pink-100 to-rose-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm flex-shrink-0">
+                                        <FaPalette className="w-5 h-5 text-pink-600" />
+                                    </div>
+                                    <div className="text-left">
+                                        <div className="text-sm font-semibold text-gray-800 group-hover:text-gray-900">Colors</div>
+                                        <div className="text-xs text-gray-500">Theme colors</div>
+                                    </div>
+                                </div>
+                            </motion.button>
+
+                            {/* Frame */}
+                            <motion.button
+                                onClick={() => setIsFrameModalOpen(true)}
+                                className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
+                                whileHover={{ x: 2, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                <div className="relative flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-orange-100 to-amber-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm flex-shrink-0">
+                                        <FaSquare className="w-5 h-5 text-orange-600" />
+                                    </div>
+                                    <div className="text-left">
+                                        <div className="text-sm font-semibold text-gray-800 group-hover:text-gray-900">Frame</div>
+                                        <div className="text-xs text-gray-500">Border styles</div>
+                                    </div>
+                                </div>
+                            </motion.button>
+
+                            {/* Template */}
+                            <motion.button
+                                onClick={() => setIsTemplateModalOpen(true)}
+                                className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
+                                whileHover={{ x: 2, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                <div className="relative flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm flex-shrink-0">
+                                        <FaClone className="w-5 h-5 text-blue-600" />
+                                    </div>
+                                    <div className="text-left">
+                                        <div className="text-sm font-semibold text-gray-800 group-hover:text-gray-900">Template</div>
+                                        <div className="text-xs text-gray-500">Quick presets</div>
+                                    </div>
+                                </div>
+                            </motion.button>
+
+                            {/* Size */}
+                            <motion.button
+                                onClick={() => setIsSizeModalOpen(true)}
+                                className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
+                                whileHover={{ x: 2, scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
+                                <div className="relative flex items-center space-x-3">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm flex-shrink-0">
+                                        <FaRulerCombined className="w-5 h-5 text-indigo-600" />
+                                    </div>
+                                    <div className="text-left">
+                                        <div className="text-sm font-semibold text-gray-800 group-hover:text-gray-900">Size</div>
+                                        <div className="text-xs text-gray-500">Download size</div>
+                                    </div>
+                                </div>
+                            </motion.button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right Content Area - QR Type & Form */}
+                <div className="flex-1">
+                    <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-white/5 border border-white/20 rounded-2xl p-4 shadow-2xl h-full">
+                        {/* Background Glow Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-orange-500/5 rounded-2xl"></div>
+                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgb3BhY2l0eT0iMC4wNSI+CjxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHN2Zz4K')] opacity-20"></div>
+                        
+                        {/* QR Type Selection - Horizontal */}
+                        <div className="relative mb-6">
+                            <div className="flex items-center space-x-3 mb-4">
+                                <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
+                                    <FaLayerGroup className="w-4 h-4 text-white" />
+                                </div>
+                                <div>
+                                    <h3 className="text-sm font-bold text-gray-800">QR Type</h3>
+                                    <p className="text-xs text-gray-500">Choose content type</p>
+                                </div>
+                            </div>
+                            
+                            {/* Horizontal Tab container */}
+                            <div className="relative grid grid-cols-3 gap-2 md:flex md:flex-wrap md:gap-3">
+                                {mainCategories.map((cat, index) => (
+                                    <FeatureCard
+                                        key={cat.type}
+                                        title={cat.title}
+                                        isActive={selectedMainType === cat.type}
+                                        onClick={() => handleSelectMainCategory(cat.type)}
+                                        icon={cat.type === 'text' ? <FaFileAlt />
+                                            : cat.type === 'url' ? <FaLink />
+                                                : cat.type === 'contact' ? <FaAddressBook />
+                                                    : cat.type === 'file' ? <FaFile />
+                                                        : cat.type === 'app' ? <span style={{ fontSize: '14px' }}>𝕏</span>
+                                                            : cat.type === 'batch' ? <FaEnvelope />
+                                                                : cat.type === 'video' ? <FaWifi />
+                                                                    : null}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Content Section */}
+                        <div className="relative">
+                            <div className="flex items-center space-x-3 mb-4">
+                                <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg">
+                                    <FaEdit className="w-4 h-4 text-white" />
+                                </div>
+                                <div>
+                                    <h3 className="text-sm font-bold text-gray-800">Content</h3>
+                                    <p className="text-xs text-gray-500">Enter your information</p>
+                                </div>
+                            </div>
+
+                            {/* Input form */}
+                            {selectedMainType && (
+                                <div className="relative flex flex-col h-full">
+                                    <div className="flex-1 pb-20">
+                                        {selectedMainType === 'contact' ? (
+                                            // Contact input form - simplified
+                                            <div className="space-y-3">
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <div>
+                                                        <label className="block text-gray-700 text-sm">First Name</label>
+                                                        <input
+                                                            type="text"
+                                                            name="firstName"
+                                                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                                                            placeholder="Enter First Name"
+                                                            value={contactInfo.firstName}
+                                                            onChange={(e) => handleContactInputChange(e)}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label className="block text-gray-700 text-sm">Last Name</label>
+                                                        <input
+                                                            type="text"
+                                                            name="lastName"
+                                                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                                                            placeholder="Enter Last Name"
+                                                            value={contactInfo.lastName}
+                                                            onChange={(e) => handleContactInputChange(e)}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <div>
+                                                        <label className="block text-gray-700 text-sm">Phone</label>
+                                                        <input
+                                                            type="text"
+                                                            name="phone"
+                                                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                                                            placeholder="Enter Phone"
+                                                            value={contactInfo.phone}
+                                                            onChange={(e) => handleContactInputChange(e)}
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <label className="block text-gray-700 text-sm">Email</label>
+                                                        <input
+                                                            type="email"
+                                                            name="email"
+                                                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                                                            placeholder="Enter Email"
+                                                            value={contactInfo.email}
+                                                            onChange={(e) => handleContactInputChange(e)}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <label className="block text-gray-700 text-sm">Company</label>
+                                                    <input
+                                                        type="text"
+                                                        name="company"
+                                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                                                        placeholder="Enter Company"
+                                                        value={contactInfo.company}
+                                                        onChange={(e) => handleContactInputChange(e)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ) : selectedMainType === 'app' ? (
+                                            // Twitter input form - simplified
+                                            <div className="space-y-3">
+                                                <div>
+                                                    <label className="block text-gray-700 mb-2 font-medium text-sm">Choose an option</label>
+                                                    <div className="grid grid-cols-2 gap-2">
+                                                        <div className="flex items-center p-2.5 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer">
+                                                            <input
+                                                                type="checkbox"
+                                                                name="profileSelected"
+                                                                id="profileSelected"
+                                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 mr-2"
+                                                                checked={twitterInfo.profileSelected}
+                                                                onChange={(e) => handleTwitterInputChange(e)}
+                                                            />
+                                                            <label htmlFor="profileSelected" className="text-gray-700 text-xs font-medium cursor-pointer flex-1">
+                                                                Link to profile
+                                                            </label>
+                                                        </div>
+                                                        <div className="flex items-center p-2.5 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer">
+                                                            <input
+                                                                type="checkbox"
+                                                                name="tweetSelected"
+                                                                id="tweetSelected"
+                                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 mr-2"
+                                                                checked={twitterInfo.tweetSelected}
+                                                                onChange={(e) => handleTwitterInputChange(e)}
+                                                            />
+                                                            <label htmlFor="tweetSelected" className="text-gray-700 text-xs font-medium cursor-pointer flex-1">
+                                                                Post a tweet
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                {twitterInfo.profileSelected && (
+                                                    <div>
+                                                        <label className="block text-gray-700 mb-1 font-medium text-sm">Username</label>
+                                                        <div className="relative">
+                                                            <input
+                                                                type="text"
+                                                                name="username"
+                                                                className="w-full p-2.5 pl-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                                                                placeholder="username"
+                                                                value={twitterInfo.username}
+                                                                onChange={(e) => handleTwitterInputChange(e)}
+                                                            />
+                                                            <span className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">@</span>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                
+                                                {twitterInfo.tweetSelected && (
+                                                    <div>
+                                                        <label className="block text-gray-700 mb-1 font-medium text-sm">Tweet Text</label>
+                                                        <textarea
+                                                            name="tweetText"
+                                                            className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[60px] resize-none text-sm"
+                                                            placeholder="What's happening?"
+                                                            value={twitterInfo.tweetText}
+                                                            onChange={(e) => handleTwitterInputChange(e)}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        ) : selectedMainType === 'batch' ? (
+                                            // Email form - simplified
+                                            <div className="space-y-2">
+                                                <div>
+                                                    <label className="block text-gray-700 mb-1 font-medium text-xs">Email Address <span className="text-red-500">*</span></label>
+                                                    <input
+                                                        type="email"
+                                                        name="email"
+                                                        className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xs"
+                                                        placeholder="example@gmail.com"
+                                                        value={emailInfo.email}
+                                                        onChange={(e) => handleEmailInputChange(e)}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-gray-700 mb-1 font-medium text-xs">Subject</label>
+                                                    <input
+                                                        type="text"
+                                                        name="subject"
+                                                        className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xs"
+                                                        placeholder="Email subject"
+                                                        value={emailInfo.subject}
+                                                        onChange={(e) => handleEmailInputChange(e)}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-gray-700 mb-1 font-medium text-xs">Message</label>
+                                                    <textarea
+                                                        name="message"
+                                                        className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[60px] resize-none text-xs"
+                                                        placeholder="Your message..."
+                                                        value={emailInfo.message}
+                                                        onChange={(e) => handleEmailInputChange(e)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ) : selectedMainType === 'video' ? (
+                                            // WiFi form - simplified
+                                            <div className="space-y-2">
+                                                <div>
+                                                    <label className="block text-gray-700 font-medium text-xs">Network Name <span className="text-red-500">*</span></label>
+                                                    <input
+                                                        type="text"
+                                                        name="networkName"
+                                                        className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xs"
+                                                        placeholder="WiFi Name"
+                                                        value={wifiInfo.networkName}
+                                                        onChange={(e) => handleWifiInputChange(e)}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="block text-gray-700 mb-1 font-medium text-xs">Password</label>
+                                                    <input
+                                                        type="password"
+                                                        name="password"
+                                                        className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xs"
+                                                        placeholder="WiFi password"
+                                                        value={wifiInfo.password}
+                                                        onChange={(e) => handleWifiInputChange(e)}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <textarea
+                                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[200px] resize-none text-base"
+                                                    placeholder={selectedMainType === 'url' ? "Enter URL..." : "Enter content..."}
+                                                    value={customText}
+                                                    onChange={(e) => setCustomText(e.target.value)}
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                    
+                                    {/* Generate Button - Fixed at bottom */}
+                                    <div className="absolute bottom-0 left-4 right-4">
+                                        <motion.button
+                                            className="w-full relative overflow-hidden
+                                                     backdrop-blur-xl bg-gradient-to-r from-blue-500/90 via-blue-600/90 to-indigo-600/90 
+                                                     text-white px-6 py-4 rounded-xl font-semibold text-base
+                                                     shadow-lg hover:shadow-xl border border-white/20
+                                                     transition-all duration-300 ease-in-out
+                                                     hover:from-blue-600/90 hover:via-blue-700/90 hover:to-indigo-700/90
+                                                     active:scale-95"
+                                            onClick={handleGenerate}
+                                            whileHover={{ 
+                                                y: -2,
+                                                boxShadow: "0 20px 40px -12px rgba(59, 130, 246, 0.3)"
+                                            }}
+                                            whileTap={{ scale: 0.95 }}
+                                        >
+                                            {/* Glass effect overlay */}
+                                            <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/5 to-transparent rounded-xl"></div>
+                                            
+                                            {/* Shimmer effect */}
+                                            <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500">
+                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 animate-pulse"></div>
+                                            </div>
+                                            
+                                            {/* Button content */}
+                                            <div className="relative flex items-center justify-center space-x-2">
+                                                <span>Generate QR Code</span>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                </svg>
+                                            </div>
+                                        </motion.button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
             {/* Alert Message */}
             {showAlert && (
                 <motion.div
@@ -549,720 +995,6 @@ const QRCard: React.FC<QRCardProps> = ({
                 </motion.div>
             )}
 
-            {/* Category selection */}
-            <div className="w-full">
-                <div className="flex justify-between border-b border-gray-200 mb-4">
-                    {mainCategories.map((cat) => (
-                        // 在FeatureCard组件的渲染部分添加图标
-                        <FeatureCard
-                            key={cat.type}
-                            title={cat.title}
-                            isActive={selectedMainType === cat.type}
-                            onClick={() => handleSelectMainCategory(cat.type)}
-                            icon={cat.type === 'text' ? <FaFileAlt className="mr-2" />
-                                : cat.type === 'url' ? <FaLink className="mr-2" />
-                                    : cat.type === 'contact' ? <FaAddressBook className="mr-2" />
-                                        : cat.type === 'file' ? <FaFile className="mr-2" />
-                                            : cat.type === 'app' ? <span className="mr-2">𝕏</span>
-                                                : cat.type === 'batch' ? <FaEnvelope className="mr-2" />
-                                                    : cat.type === 'video' ? <FaWifi className="mr-2" />
-                                                        : null}
-                        />
-                    ))}
-                </div>
-            </div>
-
-              {/* Input form */}
-              {selectedMainType && (
-                <div className="w-full mt-4">
-                    {selectedMainType === 'contact' ? (
-                        // Contact input form
-                        <div className="space-y-3">
-                            {/* Name Fields - Side by side */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label className="block text-gray-700 text-sm">First Name</label>
-                                    <input
-                                        type="text"
-                                        name="firstName"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter First Name"
-                                        value={contactInfo.firstName}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Last Name</label>
-                                    <input
-                                        type="text"
-                                        name="lastName"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Last Name"
-                                        value={contactInfo.lastName}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Contact Fields - 2 columns */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Phone Number</label>
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Phone Number"
-                                        value={contactInfo.phone}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Mobile</label>
-                                    <input
-                                        type="text"
-                                        name="mobile"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Mobile"
-                                        value={contactInfo.mobile}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Online Contact - 2 columns */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Email"
-                                        value={contactInfo.email}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Website (URL)</label>
-                                    <input
-                                        type="text"
-                                        name="website"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Website"
-                                        value={contactInfo.website}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Work Information - 2 columns */}
-                            <div className="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Company</label>
-                                    <input
-                                        type="text"
-                                        name="company"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Company"
-                                        value={contactInfo.company}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Job Title</label>
-                                    <input
-                                        type="text"
-                                        name="jobTitle"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Job Title"
-                                        value={contactInfo.jobTitle}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Address Information */}
-                            <div>
-                                <label className="block text-gray-700 text-sm">Address</label>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                    placeholder="Enter Address"
-                                    value={contactInfo.address}
-                                    onChange={(e) => handleContactInputChange(e)}
-                                />
-                            </div>
-
-                            {/* Location Details - 3 columns */}
-                            <div className="grid grid-cols-3 gap-3">
-                                <div>
-                                    <label className="block text-gray-700 text-sm">City</label>
-                                    <input
-                                        type="text"
-                                        name="city"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter City"
-                                        value={contactInfo.city}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Post Code</label>
-                                    <input
-                                        type="text"
-                                        name="postCode"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Post Code"
-                                        value={contactInfo.postCode}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-gray-700 text-sm">Country</label>
-                                    <input
-                                        type="text"
-                                        name="country"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                        placeholder="Enter Country"
-                                        value={contactInfo.country}
-                                        onChange={(e) => handleContactInputChange(e)}
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Optional Fields */}
-                            <div>
-                                <label className="block text-gray-700 text-sm">Fax</label>
-                                <input
-                                    type="text"
-                                    name="fax"
-                                    className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                                    placeholder="Enter Fax"
-                                    value={contactInfo.fax}
-                                    onChange={(e) => handleContactInputChange(e)}
-                                />
-                            </div>
-                        </div>
-                    ) : selectedMainType === 'app' ? (
-                        // Twitter input form
-                        <div className="space-y-3">
-                            {/* Choose an option - 横向布局 */}
-                            <div>
-                                <label className="block text-gray-700 mb-2 font-medium text-sm">Choose an option</label>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {/* Link to your profile checkbox */}
-                                    <div className="flex items-center p-2.5 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            name="profileSelected"
-                                            id="profileSelected"
-                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 mr-2"
-                                            checked={twitterInfo.profileSelected}
-                                            onChange={(e) => handleTwitterInputChange(e)}
-                                        />
-                                        <label htmlFor="profileSelected" className="text-gray-700 text-xs font-medium cursor-pointer flex-1">
-                                            <div className="flex items-center">
-                                                <span className="mr-1">🔗</span>
-                                                Link to your profile
-                                            </div>
-                                        </label>
-                                    </div>
-                                    
-                                    {/* Post a tweet checkbox */}
-                                    <div className="flex items-center p-2.5 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            name="tweetSelected"
-                                            id="tweetSelected"
-                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 mr-2"
-                                            checked={twitterInfo.tweetSelected}
-                                            onChange={(e) => handleTwitterInputChange(e)}
-                                        />
-                                        <label htmlFor="tweetSelected" className="text-gray-700 text-xs font-medium cursor-pointer flex-1">
-                                            <div className="flex items-center">
-                                                <span className="mr-1">𝕏</span>
-                                                Post a tweet
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            {/* Username input - only show when Link to your profile is selected */}
-                            {twitterInfo.profileSelected && (
-                                <div>
-                                    <label className="block text-gray-700 mb-1 font-medium text-sm">Username</label>
-                                    <div className="relative">
-                                        <input
-                                            type="text"
-                                            name="username"
-                                            className="w-full p-2.5 pl-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
-                                            placeholder="username"
-                                            value={twitterInfo.username}
-                                            onChange={(e) => handleTwitterInputChange(e)}
-                                        />
-                                        <span className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">@</span>
-                                    </div>
-                                </div>
-                            )}
-                            
-                            {/* Tweet text input - only show when Post a tweet is selected */}
-                            {twitterInfo.tweetSelected && (
-                                <div>
-                                    <label className="block text-gray-700 mb-1 font-medium text-sm">Tweet Text</label>
-                                    <textarea
-                                        name="tweetText"
-                                        className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[60px] resize-none text-sm"
-                                        placeholder="What's happening?"
-                                        value={twitterInfo.tweetText}
-                                        onChange={(e) => handleTwitterInputChange(e)}
-                                    />
-                                    <div className="text-xs text-gray-500 mt-1">
-                                        {280 - twitterInfo.tweetText.length} characters remaining
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Twitter Tips Section */}
-                            <div className="mt-4 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-3 border border-blue-100">
-                                <div className="flex items-center mb-2">
-                                    <div className="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                                        <span className="text-blue-600 text-xs">𝕏</span>
-                                    </div>
-                                    <h3 className="text-sm font-semibold text-gray-800">Twitter QR Code Tips</h3>
-                                </div>
-                                
-                                <div className="space-y-2">
-                                    <div className="flex items-start space-x-2">
-                                        <div className="w-4 h-4 bg-cyan-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-cyan-600 text-xs">🔗</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Profile Link</h4>
-                                            <p className="text-xs text-gray-600">Generate QR code that directly opens your Twitter profile. Perfect for business cards and networking.</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="flex items-start space-x-2">
-                                        <div className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-purple-600 text-xs">✍️</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Pre-filled Tweet</h4>
-                                            <p className="text-xs text-gray-600">Create QR code with pre-written tweet content. Great for event hashtags and campaigns.</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="flex items-start space-x-2">
-                                        <div className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-green-600 text-xs">📱</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Mobile Optimized</h4>
-                                            <p className="text-xs text-gray-600">QR codes automatically open Twitter app on mobile devices for seamless user experience.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="mt-2 p-2 bg-white/60 rounded-lg border border-blue-200">
-                                    <div className="flex items-center text-xs text-blue-700">
-                                        <svg className="w-3 h-3 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span className="font-medium">Pro Tip:</span>
-                                        <span className="ml-1">Choose the option that best fits your needs - profile sharing or tweet creation!</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ) : selectedMainType === 'batch' ? (
-                        // Email input form
-                        <div className="space-y-2">
-                            {/* Email Address */}
-                            <div>
-                                <label className="block text-gray-700 mb-1 font-medium text-xs">Recipient Email Address <span className="text-red-500">*</span></label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xs"
-                                    placeholder="example@gmail.com"
-                                    value={emailInfo.email}
-                                    onChange={(e) => handleEmailInputChange(e)}
-                                />
-                            </div>
-                            
-                            {/* Subject */}
-                            <div>
-                                <label className="block text-gray-700 mb-1 font-medium text-xs">Email Subject <span className="text-gray-400 text-xs">(Optional)</span></label>
-                                <input
-                                    type="text"
-                                    name="subject"
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xs"
-                                    placeholder="Enter email subject, e.g.: Product Inquiry"
-                                    value={emailInfo.subject}
-                                    onChange={(e) => handleEmailInputChange(e)}
-                                />
-                            </div>
-                            
-                            {/* Message */}
-                            <div>
-                                <label className="block text-gray-700 mb-1 font-medium text-xs">Email Message <span className="text-gray-400 text-xs">(Optional)</span></label>
-                                <textarea
-                                    name="message"
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[60px] resize-none text-xs"
-                                    placeholder="Enter your message content, e.g.: Hello, I would like to know more about..."
-                                    value={emailInfo.message}
-                                    onChange={(e) => handleEmailInputChange(e)}
-                                />
-                            </div>
-
-                            {/* Email Tips Section */}
-                            <div className="mt-3 bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-2.5 border border-green-100">
-                                <div className="flex items-center mb-1.5">
-                                    <div className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center mr-1.5">
-                                        <span className="text-green-600 text-xs">📧</span>
-                                    </div>
-                                    <h3 className="text-xs font-semibold text-gray-800">Email QR Code Guide</h3>
-                                </div>
-                                
-                                <div className="space-y-1.5">
-                                    <div className="flex items-start space-x-1.5">
-                                        <div className="w-3 h-3 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-blue-600 text-xs">📬</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Auto-Fill Email</h4>
-                                            <p className="text-xs text-gray-600 leading-tight">QR code automatically opens email client with pre-filled content</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="flex items-start space-x-1.5">
-                                        <div className="w-3 h-3 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-purple-600 text-xs">📱</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Cross-Platform Compatible</h4>
-                                            <p className="text-xs text-gray-600 leading-tight">Works with Gmail, Outlook, Apple Mail, and more</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="flex items-start space-x-1.5">
-                                        <div className="w-3 h-3 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-orange-600 text-xs">⚡</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Quick Contact</h4>
-                                            <p className="text-xs text-gray-600 leading-tight">Perfect for business cards and marketing campaigns</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="mt-1.5 p-1.5 bg-white/60 rounded-lg border border-green-200">
-                                    <div className="flex items-center text-xs text-green-700">
-                                        <svg className="w-2.5 h-2.5 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span className="font-medium">Pro Tip:</span>
-                                        <span className="ml-1">Only email address is required!</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ) : selectedMainType === 'video' ? (
-                        // WiFi input form
-                        <div className="space-y-2">
-                            {/* Network Name */}
-                            <div>
-                                <div className="flex items-center justify-between mb-1">
-                                    <label className="block text-gray-700 font-medium text-xs">Network Name <span className="text-red-500">*</span></label>
-                                    <div className="flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            name="hidden"
-                                            id="hidden"
-                                            className="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-1 mr-1"
-                                            checked={wifiInfo.hidden}
-                                            onChange={(e) => handleWifiInputChange(e)}
-                                        />
-                                        <label htmlFor="hidden" className="text-xs text-gray-600">Hidden</label>
-                                    </div>
-                                </div>
-                                <input
-                                    type="text"
-                                    name="networkName"
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xs"
-                                    placeholder="SSID"
-                                    value={wifiInfo.networkName}
-                                    onChange={(e) => handleWifiInputChange(e)}
-                                />
-                            </div>
-                            
-                            {/* Password */}
-                            <div>
-                                <label className="block text-gray-700 mb-1 font-medium text-xs">Password <span className="text-gray-400 text-xs">(Optional)</span></label>
-                                <input
-                                    type="password"
-                                    name="password"
-                                    className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-xs"
-                                    placeholder="Enter WiFi password"
-                                    value={wifiInfo.password}
-                                    onChange={(e) => handleWifiInputChange(e)}
-                                />
-                            </div>
-                            
-                            {/* Encryption */}
-                            <div>
-                                <label className="block text-gray-700 mb-1 font-medium text-xs">Encryption</label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    <div className="flex items-center p-2 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="encryption"
-                                            value="nopass"
-                                            id="none"
-                                            className="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-1 mr-1.5"
-                                            checked={wifiInfo.encryption === 'nopass'}
-                                            onChange={(e) => handleWifiInputChange(e)}
-                                        />
-                                        <label htmlFor="none" className="text-xs font-medium cursor-pointer text-gray-700">None</label>
-                                    </div>
-                                    
-                                    <div className="flex items-center p-2 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="encryption"
-                                            value="WPA"
-                                            id="wpa"
-                                            className="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-1 mr-1.5"
-                                            checked={wifiInfo.encryption === 'WPA'}
-                                            onChange={(e) => handleWifiInputChange(e)}
-                                        />
-                                        <label htmlFor="wpa" className="text-xs font-medium cursor-pointer text-gray-700">WPA/WPA2</label>
-                                    </div>
-                                    
-                                    <div className="flex items-center p-2 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="encryption"
-                                            value="WEP"
-                                            id="wep"
-                                            className="w-3 h-3 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-1 mr-1.5"
-                                            checked={wifiInfo.encryption === 'WEP'}
-                                            onChange={(e) => handleWifiInputChange(e)}
-                                        />
-                                        <label htmlFor="wep" className="text-xs font-medium cursor-pointer text-gray-700">WEP</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* WiFi Tips Section */}
-                            <div className="mt-3 bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-2.5 border border-purple-100">
-                                <div className="flex items-center mb-1.5">
-                                    <div className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center mr-1.5">
-                                        <span className="text-purple-600 text-xs">📶</span>
-                                    </div>
-                                    <h3 className="text-xs font-semibold text-gray-800">WiFi QR Code Guide</h3>
-                                </div>
-                                
-                                <div className="space-y-1.5">
-                                    <div className="flex items-start space-x-1.5">
-                                        <div className="w-3 h-3 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-green-600 text-xs">📱</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Auto Connect</h4>
-                                            <p className="text-xs text-gray-600 leading-tight">Scan to automatically connect to WiFi network</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="flex items-start space-x-1.5">
-                                        <div className="w-3 h-3 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-blue-600 text-xs">🔒</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Secure Sharing</h4>
-                                            <p className="text-xs text-gray-600 leading-tight">Share WiFi credentials securely without revealing password</p>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="flex items-start space-x-1.5">
-                                        <div className="w-3 h-3 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                            <span className="text-orange-600 text-xs">🌐</span>
-                                        </div>
-                                        <div>
-                                            <h4 className="font-medium text-gray-800 text-xs mb-0.5">Cross Platform</h4>
-                                            <p className="text-xs text-gray-600 leading-tight">Works on Android and iOS devices</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div className="mt-1.5 p-1.5 bg-white/60 rounded-lg border border-purple-200">
-                                    <div className="flex items-center text-xs text-purple-700">
-                                        <svg className="w-2.5 h-2.5 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        <span className="font-medium">Pro Tip:</span>
-                                        <span className="ml-1">Perfect for guest access and business networks!</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <textarea
-                            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[150px] resize-none text-base"
-                            placeholder={selectedMainType === 'url' ? "Enter URL..." : "Enter content..."}
-                            value={customText}
-                            onChange={(e) => setCustomText(e.target.value)}
-                        />
-                    )}
-                    <button
-                        className="mt-3 w-full bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors font-medium"
-                        onClick={handleGenerate}
-                    >
-                        Generate QR Code
-                    </button>
-
-                    {/* Configuration Grid */}
-                    <div className="mt-4 grid grid-rows-2 gap-3">
-                        {/* Row 1 */}
-                        <div className="grid grid-cols-3 gap-3">
-                            <button
-                                onClick={() => {
-                                    setIsDotStyleModalOpen(true);
-                                }}
-                                className="p-2.5 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                            >
-                                <div className="flex flex-col items-center">
-                                    <FaRulerCombined className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">Dot Style</div>
-                                    <div className="text-xs text-gray-400 mt-0.5">Square/Circle</div>
-                                </div>
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setIsLogoModalOpen(true);
-                                }}
-                                className="p-2.5 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                            >
-                                <div className="flex flex-col items-center">
-                                    <FaFile className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">Logo</div>
-                                    <div className="text-xs text-gray-400 mt-0.5">Upload/Edit</div>
-                                </div>
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setIsColorModalOpen(true);
-                                }}
-                                className="p-2.5 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                            >
-                                <div className="flex flex-col items-center">
-                                    <FaPalette className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">Color</div>
-                                    <div className="text-xs text-gray-400 mt-0.5">Custom Colors</div>
-                                </div>
-                            </button>
-                        </div>
-                        {/* Row 2 */}
-                        <div className="grid grid-cols-3 gap-3">
-                            <button
-                                onClick={() => {
-                                    setIsFrameModalOpen(true);
-                                }}
-                                className="p-2.5 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                            >
-                                <div className="flex flex-col items-center">
-                                    <FaSquare className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">Frame</div>
-                                    <div className="text-xs text-gray-400 mt-0.5">Frame Style</div>
-                                </div>
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setIsTemplateModalOpen(true);
-                                }}
-                                className="p-2.5 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                            >
-                                <div className="flex flex-col items-center">
-                                    <FaClone className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">Template</div>
-                                    <div className="text-xs text-gray-400 mt-0.5">Select Template</div>
-                                </div>
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setIsSizeModalOpen(true);
-                                }}
-                                className="p-2.5 text-center bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                            >
-                                <div className="flex flex-col items-center">
-                                    <FaRulerCombined className="text-gray-600 mb-1" />
-                                    <div className="text-sm font-medium text-gray-600">Size</div>
-                                    <div className="text-xs text-gray-400 mt-0.5">Adjust Size</div>
-                                </div>
-                            </button>
-                        </div>
-                    </div>
-
-                    {/* 功能提示区域 - 仅在text和url类型下显示 */}
-                    {(selectedMainType === 'text' || selectedMainType === 'url') && (
-                        <div className="mt-8 mb-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-3 border border-blue-100">
-                            <div className="flex items-center mb-2">
-                                <div className="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center mr-2">
-                                    <svg className="w-3 h-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-sm font-semibold text-gray-800">Customization Features</h3>
-                            </div>
-                            
-                            <div className="space-y-2">
-                                <div className="flex items-start space-x-2">
-                                    <div className="w-4 h-4 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                        <FaRulerCombined className="w-2 h-2 text-purple-600" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-medium text-gray-800 text-xs mb-0.5">Dot Style</h4>
-                                        <p className="text-xs text-gray-600">Choose QR code data point shapes: squares, circles, and more styles.</p>
-                                    </div>
-                                </div>
-                                
-                                <div className="flex items-start space-x-2">
-                                    <div className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                        <FaFile className="w-2 h-2 text-green-600" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-medium text-gray-800 text-xs mb-0.5">Logo Embedding</h4>
-                                        <p className="text-xs text-gray-600">Add your brand logo to the center of QR code for better recognition.</p>
-                                    </div>
-                                </div>
-                                
-                                <div className="flex items-start space-x-2">
-                                    <div className="w-4 h-4 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                        <FaPalette className="w-2 h-2 text-orange-600" />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-medium text-gray-800 text-xs mb-0.5">Color Customization</h4>
-                                        <p className="text-xs text-gray-600">Freely choose foreground and background colors to create professional QR codes.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div className="mt-2 p-2 bg-white/60 rounded-lg border border-blue-200">
-                                <div className="flex items-center text-xs text-blue-700">
-                                    <svg className="w-3 h-3 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                                    </svg>
-                                    <span className="font-medium">Tip:</span>
-                                    <span className="ml-1">All custom settings will be reflected in the preview on the right in real time.</span>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-            )}
             {/* Color Modal */}
             <ColorModal
                 isOpen={isColorModalOpen}

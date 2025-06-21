@@ -45,20 +45,32 @@ export const metadata: Metadata = {
 
 export default function Page() {
     return (
-        <div className="flex flex-col min-h-screen bg-white">
+        <div className="flex flex-col min-h-screen">
             {/* 导航栏 */}
             <Navbar />
 
-            {/* 主体内容 */}
-            <main className="flex-grow container mx-auto px-4 py-8">
-                {/* SEO内容 - 只包含标题和主要CTA按钮 */}
-                <SEOContent showOnlyHeader={true} />
-                
-                {/* 客户端交互内容 */}
-                <ClientHomePage />
-                
-                {/* SEO内容的其余部分 - 功能介绍等 */}
-                <SEOContent showOnlyContent={true} />
+            {/* 主体内容容器 */}
+            <main className="flex-grow relative prevent-horizontal-scroll">
+                {/* 背景装饰元素 */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute -top-40 -right-40 w-96 h-96 bg-gradient-to-r from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                    <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-r from-indigo-400/20 to-cyan-600/20 rounded-full blur-3xl"></div>
+                </div>
+
+                {/* 内容区域 */}
+                <div className="relative z-10">
+                    <div className="container mx-auto px-4 pt-8 md:pt-16 pb-8 main-container ipad-safe-area">
+                        {/* Hero区域 - 整合了标题和CTA的区域 */}
+                        <div className="scale-in mb-8 md:mb-16" style={{ animationDelay: '0.2s' }}>
+                            <ClientHomePage />
+                        </div>
+                        
+                        {/* 功能展示区域 */}
+                        <div className="fade-in-up" style={{ animationDelay: '0.4s' }}>
+                            <SEOContent showOnlyContent={true} />
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     );

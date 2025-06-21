@@ -17,7 +17,7 @@ export const mainCategories: MainCategory[] = [
     },
     {
         type: 'url',
-        title: 'URL'
+        title: 'Website'
     },
     {
         type: 'contact',
@@ -29,7 +29,7 @@ export const mainCategories: MainCategory[] = [
     // },
     {
         type: 'app',
-        title: 'twitter'
+        title: 'Twitter'
     },
     {
         type: 'batch',
@@ -37,7 +37,7 @@ export const mainCategories: MainCategory[] = [
     },
     {
         type: 'video',
-        title: 'wifi'
+        title: 'WiFi'
     }
 ];
 
