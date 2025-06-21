@@ -264,7 +264,7 @@ export default function GuidePage() {
                                 <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center gradient-text">
                                     QR Code Types & Tutorials
                                 </h2>
-                                <div className="grid md:grid-cols-2 lg:grid-cols-6 xl:grid-cols-6 2xl:grid-cols-6 gap-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {qrCodeTypes.map((type) => (
                                         <Link key={type.type} href={`/guide/${type.type}`} className="group">
                                             <div className="card-enhanced rounded-3xl p-8 h-full group-hover:scale-105 transition-all duration-300 border-l-4" style={{borderLeftColor: `rgb(${type.color.includes('blue') ? '59 130 246' : type.color.includes('green') ? '34 197 94' : type.color.includes('purple') ? '147 51 234' : type.color.includes('sky') ? '14 165 233' : type.color.includes('orange') ? '249 115 22' : '239 68 68'})`}}>
