@@ -2,6 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
+import QRCodeLogoPreview from '../components/QRCodeLogoPreview';
 
 export const metadata: Metadata = {
     title: 'QR Code Generator Features - Free Online QR Code Creator | QRCodeHub',
@@ -430,33 +431,7 @@ export default function FeaturesPage() {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="text-center">
-                                <div className="w-64 h-64 bg-white border-4 border-gray-300 rounded-xl mx-auto flex items-center justify-center relative">
-                                    <div className="grid grid-cols-8 gap-1 p-4">
-                                        {Array.from({ length: 64 }).map((_, index) => {
-                                            const isCorner = (
-                                                (index < 9 || index > 54) && (index % 8 < 2 || index % 8 > 5) ||
-                                                (index >= 8 && index <= 15) || 
-                                                (index >= 48 && index <= 55)
-                                            );
-                                            const shouldFill = isCorner || Math.random() > 0.4;
-                                            
-                                            return (
-                                                <div
-                                                    key={index}
-                                                    className={`w-2 h-2 ${shouldFill ? 'bg-gray-800' : 'bg-transparent'}`}
-                                                />
-                                            );
-                                        })}
-                                    </div>
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center">
-                                            <span className="text-white text-2xl font-bold">LOGO</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="text-gray-600 mt-4 text-sm">Example: QR Code with integrated logo</p>
-                            </div>
+                            <QRCodeLogoPreview />
                         </div>
                     </section>
 
