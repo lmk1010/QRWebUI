@@ -150,7 +150,7 @@ export default function ContactQRGuidePage() {
                                         <span className="text-white font-bold text-2xl">1</span>
                                     </div>
                                     <h3 className="font-bold text-gray-800 text-lg mb-3">Select Contact Type</h3>
-                                    <p className="text-gray-600 text-sm">Choose "Contact" or "vCard" from the QR code options</p>
+                                    <p className="text-gray-600 text-sm">Choose &quot;Contact&quot; or &quot;vCard&quot; from the QR code options</p>
                                 </div>
                                 <div className="card-enhanced rounded-3xl p-8 text-center group">
                                     <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -271,7 +271,7 @@ export default function ContactQRGuidePage() {
                                         </li>
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-blue-500 mr-2">•</span>
-                                            Add "Scan to add contact" instruction
+                                            Add &quot;Scan to add contact&quot; instruction
                                         </li>
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-blue-500 mr-2">•</span>
@@ -308,7 +308,7 @@ export default function ContactQRGuidePage() {
                                             <span className="text-white font-bold text-2xl">3</span>
                                         </div>
                                         <h3 className="font-bold text-gray-800 mb-2">Save to Contacts</h3>
-                                        <p className="text-gray-600 text-sm">Contact is automatically added to phone's address book</p>
+                                        <p className="text-gray-600 text-sm">Contact is automatically added to phone&apos;s address book</p>
                                     </div>
                                 </div>
                             </div>

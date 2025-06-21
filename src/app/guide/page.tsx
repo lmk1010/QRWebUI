@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
-import { FaFileAlt, FaLink, FaAddressBook, FaTwitter, FaEnvelope, FaWifi, FaArrowRight, FaPlay, FaDownload, FaPalette } from 'react-icons/fa';
+import { FaFileAlt, FaLink, FaAddressBook, FaTwitter, FaEnvelope, FaWifi, FaArrowRight, FaPlay, FaPalette } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'QR Code Generation Tutorial - Complete User Guide | QRCodeHub',
@@ -265,7 +265,7 @@ export default function GuidePage() {
                                     QR Code Types & Tutorials
                                 </h2>
                                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {qrCodeTypes.map((type, index) => (
+                                    {qrCodeTypes.map((type) => (
                                         <Link key={type.type} href={`/guide/${type.type}`} className="group">
                                             <div className="card-enhanced rounded-3xl p-8 h-full group-hover:scale-105 transition-all duration-300 border-l-4" style={{borderLeftColor: `rgb(${type.color.includes('blue') ? '59 130 246' : type.color.includes('green') ? '34 197 94' : type.color.includes('purple') ? '147 51 234' : type.color.includes('sky') ? '14 165 233' : type.color.includes('orange') ? '249 115 22' : '239 68 68'})`}}>
                                                 <div className={`w-16 h-16 bg-gradient-to-r ${type.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>

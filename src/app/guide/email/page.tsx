@@ -146,7 +146,7 @@ export default function EmailQRGuidePage() {
                                         <span className="text-white font-bold text-2xl">1</span>
                                     </div>
                                     <h3 className="font-bold text-gray-800 text-lg mb-3">Select Email Type</h3>
-                                    <p className="text-gray-600 text-sm">Choose "Email" from the QR code type options</p>
+                                    <p className="text-gray-600 text-sm">Choose &quot;Email&quot; from the QR code type options</p>
                                 </div>
                                 <div className="card-enhanced rounded-3xl p-8 text-center group">
                                     <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">

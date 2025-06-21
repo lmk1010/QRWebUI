@@ -139,7 +139,7 @@ export default function URLQRGuidePage() {
                                         <span className="text-white font-bold text-2xl">1</span>
                                     </div>
                                     <h3 className="font-bold text-gray-800 text-lg mb-3">Select URL Type</h3>
-                                    <p className="text-gray-600 text-sm">Choose "URL" or "Website" from the QR code type options</p>
+                                    <p className="text-gray-600 text-sm">Choose &quot;URL&quot; or &quot;Website&quot; from the QR code type options</p>
                                 </div>
                                 <div className="card-enhanced rounded-3xl p-8 text-center group">
                                     <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -196,7 +196,7 @@ export default function URLQRGuidePage() {
                                         <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4">
                                             <FaCheck className="w-6 h-6 text-white" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-800">Do's</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">Do&apos;s</h3>
                                     </div>
                                     <ul className="space-y-3">
                                         <li className="text-gray-600 flex items-start">
@@ -224,12 +224,12 @@ export default function URLQRGuidePage() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-800">Don'ts</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">Don&apos;ts</h3>
                                     </div>
                                     <ul className="space-y-3">
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-red-500 mr-2">•</span>
-                                            Don't use broken or expired links
+                                            Don&apos;t use broken or expired links
                                         </li>
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-red-500 mr-2">•</span>
@@ -237,7 +237,7 @@ export default function URLQRGuidePage() {
                                         </li>
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-red-500 mr-2">•</span>
-                                            Don't link to pages requiring login
+                                            Don&apos;t link to pages requiring login
                                         </li>
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-red-500 mr-2">•</span>

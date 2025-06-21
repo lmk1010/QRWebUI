@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../../components/Navbar';
 import Link from 'next/link';
-import { FaFileAlt, FaArrowLeft, FaPlay, FaCheck, FaLightbulb, FaArrowRight } from 'react-icons/fa';
+import { FaFileAlt, FaArrowLeft, FaPlay, FaCheck, FaArrowRight } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'Text QR Code Creation Tutorial - Detailed Step-by-Step Guide | QRCodeHub',
@@ -214,7 +214,7 @@ export default function TextQRGuidePage() {
                                         <span className="text-white font-bold text-2xl">1</span>
                                     </div>
                                     <h3 className="font-bold text-gray-800 text-lg mb-3">Select Text Type</h3>
-                                    <p className="text-gray-600 text-sm">Open the QR generator and choose "Text" from the options menu</p>
+                                    <p className="text-gray-600 text-sm">Open the QR generator and choose &quot;Text&quot; from the options menu</p>
                                 </div>
                                 <div className="card-enhanced rounded-3xl p-8 text-center group">
                                     <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -271,7 +271,7 @@ export default function TextQRGuidePage() {
                                         <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-4">
                                             <FaCheck className="w-6 h-6 text-white" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-800">Do's</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">Do&apos;s</h3>
                                     </div>
                                     <ul className="space-y-3">
                                         <li className="text-gray-600 flex items-start">
@@ -299,12 +299,12 @@ export default function TextQRGuidePage() {
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                             </svg>
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-800">Don'ts</h3>
+                                        <h3 className="text-xl font-bold text-gray-800">Don&apos;ts</h3>
                                     </div>
                                     <ul className="space-y-3">
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-red-500 mr-2">•</span>
-                                            Don't use extremely long text
+                                            Don&apos;t use extremely long text
                                         </li>
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-red-500 mr-2">•</span>
@@ -312,7 +312,7 @@ export default function TextQRGuidePage() {
                                         </li>
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-red-500 mr-2">•</span>
-                                            Don't make QR codes too small
+                                            Don&apos;t make QR codes too small
                                         </li>
                                         <li className="text-gray-600 flex items-start">
                                             <span className="text-red-500 mr-2">•</span>

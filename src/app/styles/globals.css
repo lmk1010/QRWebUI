@@ -12,6 +12,9 @@
     --shadow-medium: 0 20px 40px rgba(0, 0, 0, 0.15);
     --shadow-strong: 0 30px 60px rgba(0, 0, 0, 0.25);
     --backdrop-blur: backdrop-filter: blur(20px);
+    --glass-primary: rgba(255, 255, 255, 0.15);
+    --glass-secondary: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
 }
 
 body {
@@ -42,6 +45,360 @@ body {
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* QR类型卡片专用玻璃质感样式 */
+.qr-card-glass {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.4) 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(31, 38, 135, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.qr-card-glass-active {
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.25) 0%, 
+        rgba(99, 102, 241, 0.20) 50%, 
+        rgba(139, 92, 246, 0.15) 100%
+    );
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.3),
+        0 0 0 1px rgba(59, 130, 246, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.qr-card-glass:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.5) 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        rgba(255, 255, 255, 0.2) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 16px 48px rgba(31, 38, 135, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Generate QR Code按钮专用样式 */
+.generate-btn-glass {
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.9) 0%, 
+        rgba(99, 102, 241, 0.9) 50%, 
+        rgba(139, 92, 246, 0.9) 100%
+    );
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 20px 40px rgba(59, 130, 246, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.generate-btn-glass:hover {
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.95) 0%, 
+        rgba(99, 102, 241, 0.95) 50%, 
+        rgba(139, 92, 246, 0.95) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 25px 50px rgba(59, 130, 246, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+/* 按钮闪烁动画 */
+@keyframes buttonShimmer {
+    0% { transform: translateX(-100%) skewX(-12deg); }
+    100% { transform: translateX(300%) skewX(-12deg); }
+}
+
+.generate-btn-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.generate-btn-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: buttonShimmer 2s infinite;
+    border-radius: inherit;
+}
+
+/* 按钮脉冲光效 */
+@keyframes buttonPulse {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.generate-btn-pulse {
+    animation: buttonPulse 2s infinite;
+}
+
+/* 按钮内部粒子效果 */
+.generate-btn-particles {
+    position: relative;
+}
+
+.generate-btn-particles::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    right: 15%;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    animation: particleFloat 3s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+    0%, 100% { 
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+    }
+    50% { 
+        transform: translateY(-8px) scale(1.2);
+        opacity: 1;
+    }
+}
+
+/* 彩虹边框效果 */
+.generate-btn-rainbow {
+    position: relative;
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe, #43e97b, #38f9d7);
+    background-size: 400% 400%;
+    animation: rainbowGradient 3s ease infinite;
+    border-radius: 1rem;
+    padding: 2px;
+}
+
+.generate-btn-rainbow::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: inherit;
+    border-radius: inherit;
+    background-clip: padding-box;
+}
+
+@keyframes rainbowGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 下载按钮专用样式 */
+.download-btn-glass {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.download-btn-glass:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 
+        0 16px 48px rgba(0, 0, 0, 0.15),
+        inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+/* PNG按钮特殊效果 */
+.download-btn-png {
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.8) 0%,
+        rgba(37, 99, 235, 0.8) 50%,
+        rgba(6, 182, 212, 0.8) 100%
+    );
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.download-btn-png:hover {
+    box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+}
+
+/* SVG按钮特殊效果 */
+.download-btn-svg {
+    background: linear-gradient(135deg, 
+        rgba(147, 51, 234, 0.8) 0%,
+        rgba(124, 58, 237, 0.8) 50%,
+        rgba(99, 102, 241, 0.8) 100%
+    );
+    box-shadow: 0 8px 25px rgba(147, 51, 234, 0.3);
+}
+
+.download-btn-svg:hover {
+    box-shadow: 0 15px 35px rgba(147, 51, 234, 0.4);
+}
+
+/* PDF按钮特殊效果 */
+.download-btn-pdf {
+    background: linear-gradient(135deg, 
+        rgba(239, 68, 68, 0.8) 0%,
+        rgba(220, 38, 127, 0.8) 50%,
+        rgba(236, 72, 153, 0.8) 100%
+    );
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+}
+
+.download-btn-pdf:hover {
+    box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+}
+
+/* EPS按钮特殊效果 */
+.download-btn-eps {
+    background: linear-gradient(135deg, 
+        rgba(249, 115, 22, 0.8) 0%,
+        rgba(245, 158, 11, 0.8) 50%,
+        rgba(234, 179, 8, 0.8) 100%
+    );
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+}
+
+.download-btn-eps:hover {
+    box-shadow: 0 15px 35px rgba(249, 115, 22, 0.4);
+}
+
+/* 下载全部按钮特殊效果 */
+.download-btn-all {
+    background: linear-gradient(135deg, 
+        rgba(16, 185, 129, 0.8) 0%,
+        rgba(34, 197, 94, 0.8) 50%,
+        rgba(20, 184, 166, 0.8) 100%
+    );
+    box-shadow: 0 12px 30px rgba(16, 185, 129, 0.3);
+}
+
+.download-btn-all:hover {
+    box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
+}
+
+/* 按钮图标动画 */
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+.download-btn-icon-bounce {
+    animation: iconBounce 1s ease-in-out infinite;
+}
+
+/* 按钮文字光效 */
+@keyframes textGlow {
+    0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); }
+    50% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
+}
+
+.download-btn-text-glow {
+    animation: textGlow 2s ease-in-out infinite;
+}
+
+/* 下载进度指示器 */
+.download-progress {
+    position: relative;
+    overflow: hidden;
+}
+
+.download-progress::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: downloadProgress 1.5s ease-in-out;
+}
+
+@keyframes downloadProgress {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* QR卡片图标容器玻璃效果 */
+.qr-icon-glass {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.5) 0%, 
+        rgba(255, 255, 255, 0.3) 100%
+    );
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.qr-icon-glass-active {
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.4) 0%, 
+        rgba(99, 102, 241, 0.3) 50%,
+        rgba(139, 92, 246, 0.2) 100%
+    );
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    box-shadow: 
+        0 8px 24px rgba(59, 130, 246, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.4);
+}
+
+/* 悬浮光晕效果 */
+.qr-card-glow {
+    position: relative;
+}
+
+.qr-card-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.3) 0%, 
+        rgba(139, 92, 246, 0.3) 100%
+    );
+    border-radius: inherit;
+    opacity: 0;
+    filter: blur(6px);
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.qr-card-glow:hover::before {
+    opacity: 1;
+}
+
+/* 渐变边框动画 */
+@keyframes borderGlow {
+    0% { border-color: rgba(59, 130, 246, 0.3); }
+    50% { border-color: rgba(139, 92, 246, 0.5); }
+    100% { border-color: rgba(59, 130, 246, 0.3); }
+}
+
+.qr-card-border-glow {
+    animation: borderGlow 2s ease-in-out infinite;
 }
 
 /* 导航栏增强样式 */
@@ -198,70 +555,6 @@ body {
 
 .flowing-border::before {
     content: '';
-
-/* 配置菜单增强样式 */
-.config-button-enhanced {
-    position: relative;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: center;
-}
-
-.config-button-enhanced:hover {
-    background: rgba(255, 255, 255, 0.85);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    transform: translateY(-3px) scale(1.05);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.config-button-enhanced::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    border-radius: inherit;
-}
-
-.config-button-enhanced:hover::before {
-    opacity: 1;
-}
-
-/* 配置图标动画 */
-.config-icon {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.config-button-enhanced:hover .config-icon {
-    transform: scale(1.15) rotate(5deg);
-}
-
-/* 玻璃态提示卡片 */
-.glass-tip-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow: hidden;
-}
-
-.glass-tip-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(79, 172, 254, 0.05), rgba(0, 242, 254, 0.05));
-    opacity: 0.8;
-}
     position: absolute;
     inset: 2px;
     background: white;

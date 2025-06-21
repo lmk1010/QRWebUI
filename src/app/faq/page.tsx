@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
-import { FaRocket, FaShieldAlt, FaPalette, FaQuestionCircle, FaArrowRight, FaCheck, FaLock } from 'react-icons/fa';
+import { FaRocket, FaQuestionCircle, FaArrowRight, FaCheck, FaLock } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'QR Code Generator FAQ - Frequently Asked Questions | QRCodeHub',
@@ -304,7 +304,7 @@ export default function FAQPage() {
                                             🔒 Is my data stored on your servers?
                                         </h3>
                                         <p className="text-gray-600 leading-relaxed">
-                                            No! All QR code generation happens locally in your browser. We don't store your QR code content, 
+                                            No! All QR code generation happens locally in your browser. We don&apos;t store your QR code content, 
                                             personal information, or any data on our servers. Your privacy is completely protected.
                                         </p>
                                     </div>

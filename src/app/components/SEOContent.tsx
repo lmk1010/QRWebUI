@@ -69,7 +69,7 @@ const SEOContent: React.FC<SEOContentProps> = ({ showOnlyContent }) => {
                             </div>
                             <h3 className="font-bold text-red-800 mb-4 text-lg">Secure & Private</h3>
                             <p className="text-gray-600 leading-relaxed text-sm">
-                                Complete data privacy - we don't store any personal information
+                                Complete data privacy - we don&apos;t store any personal information
                             </p>
                         </div>
                         
@@ -182,7 +182,7 @@ const SEOContent: React.FC<SEOContentProps> = ({ showOnlyContent }) => {
                             </div>
                             
                             <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
-                                QR Code Beginner's Guide
+                                QR Code Beginner&apos;s Guide
                             </h2>
                             <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
                                 Learn how to create professional QR codes from scratch with detailed step-by-step instructions

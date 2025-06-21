@@ -137,7 +137,17 @@ const LogoModal: React.FC<LogoModalProps> = ({
                 <div className="mt-6">
                     <h3 className="text-sm font-medium text-gray-700 mb-3">Preset Icons</h3>
                     <div className="grid grid-cols-5 gap-1">
-                        {["/assets/logo_default/icons8-discord-480.png", "/assets/logo_default/icons8-facebook-480 copy.png", "/assets/logo_default/icons8-facebook-480.png", "/assets/logo_default/icons8-github-480.png", "/assets/logo_default/icons8-instagram-480.png", "/assets/logo_default/icons8-telegram-app-480.png", "/assets/logo_default/icons8-tiktok-144.png", "/assets/logo_default/icons8-whatsapp-144.png", "/assets/logo_default/icons8-youtube-480.png"].map((icon, index) => (
+                        {[
+                            "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/svgs/brands/discord.svg",
+                            "https://img.icons8.com/color/480/facebook-new.png",
+                            "https://img.icons8.com/color/480/instagram-new.png",
+                            "https://img.icons8.com/color/480/github--v1.png",
+                            "https://img.icons8.com/color/480/twitter--v1.png",
+                            "https://img.icons8.com/color/480/telegram-app--v1.png",
+                            "https://img.icons8.com/color/480/tiktok--v1.png",
+                            "https://img.icons8.com/color/480/whatsapp--v1.png",
+                            "https://img.icons8.com/color/480/youtube-play.png"
+                        ].map((icon, index) => (
                             <div
                                 key={index}
                                 className="aspect-square border rounded-lg p-1 cursor-pointer hover:border-blue-500 transition-colors flex items-center justify-center"

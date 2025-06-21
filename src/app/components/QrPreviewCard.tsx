@@ -3,6 +3,7 @@ import { CustomOptions } from './CustomizationModal';
 import QRCodeJS from 'qrcode';
 import jsPDF from 'jspdf';
 import { FaDownload, FaFileImage, FaFilePdf, FaVectorSquare, FaFileCode } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 interface QrPreviewCardProps {
     generatedValue: string;
@@ -1119,42 +1120,192 @@ showpage
                     </div>
                     
                     {/* 下载按钮网格布局 */}
-                    <div className="grid grid-cols-2 gap-2">
-                        <button
+                    <div className="grid grid-cols-2 gap-3">
+                        <motion.button
                             onClick={handleDownloadPNG}
-                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-2 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+                            className="relative overflow-hidden flex items-center justify-center gap-2 
+                                     backdrop-blur-xl bg-gradient-to-r from-blue-500/80 via-blue-600/80 to-cyan-500/80
+                                     text-white px-4 py-3 rounded-xl font-semibold text-sm
+                                     shadow-lg hover:shadow-blue-500/40 border border-white/20
+                                     transition-all duration-300 ease-out group"
+                            whileHover={{ 
+                                scale: 1.05,
+                                y: -2,
+                                boxShadow: "0 20px 30px -8px rgba(59, 130, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                            }}
+                            whileTap={{ 
+                                scale: 0.95,
+                                transition: { duration: 0.1 }
+                            }}
                         >
-                            <FaFileImage className="text-sm" />
-                            <span className="text-sm font-medium">PNG</span>
-                        </button>
+                            {/* 玻璃背景层 */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/5 to-transparent rounded-xl"></div>
+                            
+                            {/* 悬浮光效 */}
+                            <motion.div 
+                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                initial={{ opacity: 0 }}
+                                whileHover={{ opacity: 1 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent transform -skew-x-12 animate-pulse rounded-xl"></div>
+                            </motion.div>
+                            
+                            {/* 边框高光 */}
+                            <div className="absolute inset-0 rounded-xl border border-white/30 group-hover:border-white/50 transition-colors duration-300"></div>
+                            
+                            {/* 内容 */}
+                            <div className="relative flex items-center gap-2 z-10">
+                                <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
+                                    <FaFileImage className="text-sm" />
+                                </motion.div>
+                                <span className="font-semibold">PNG</span>
+                            </div>
+                            
+                            {/* 底部反射 */}
+                            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                        </motion.button>
                         
-                        <button
+                        <motion.button
                             onClick={handleDownloadSVG}
-                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-purple-500 to-purple-600 text-white px-3 py-2 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+                            className="relative overflow-hidden flex items-center justify-center gap-2 
+                                     backdrop-blur-xl bg-gradient-to-r from-purple-500/80 via-violet-600/80 to-indigo-500/80
+                                     text-white px-4 py-3 rounded-xl font-semibold text-sm
+                                     shadow-lg hover:shadow-purple-500/40 border border-white/20
+                                     transition-all duration-300 ease-out group"
+                            whileHover={{ 
+                                scale: 1.05,
+                                y: -2,
+                                boxShadow: "0 20px 30px -8px rgba(147, 51, 234, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                            }}
+                            whileTap={{ 
+                                scale: 0.95,
+                                transition: { duration: 0.1 }
+                            }}
                         >
-                            <FaVectorSquare className="text-sm" />
-                            <span className="text-sm font-medium">SVG</span>
-                        </button>
+                            {/* 玻璃背景层 */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/5 to-transparent rounded-xl"></div>
+                            
+                            {/* 悬浮光效 */}
+                            <motion.div 
+                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                initial={{ opacity: 0 }}
+                                whileHover={{ opacity: 1 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent transform -skew-x-12 animate-pulse rounded-xl"></div>
+                            </motion.div>
+                            
+                            {/* 边框高光 */}
+                            <div className="absolute inset-0 rounded-xl border border-white/30 group-hover:border-white/50 transition-colors duration-300"></div>
+                            
+                            {/* 内容 */}
+                            <div className="relative flex items-center gap-2 z-10">
+                                <motion.div whileHover={{ scale: 1.2 }} transition={{ duration: 0.3 }}>
+                                    <FaVectorSquare className="text-sm" />
+                                </motion.div>
+                                <span className="font-semibold">SVG</span>
+                            </div>
+                            
+                            {/* 底部反射 */}
+                            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                        </motion.button>
                         
-                        <button
+                        <motion.button
                             onClick={handleDownloadPDF}
-                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-2 rounded-lg hover:from-red-600 hover:to-red-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+                            className="relative overflow-hidden flex items-center justify-center gap-2 
+                                     backdrop-blur-xl bg-gradient-to-r from-red-500/80 via-rose-600/80 to-pink-500/80
+                                     text-white px-4 py-3 rounded-xl font-semibold text-sm
+                                     shadow-lg hover:shadow-red-500/40 border border-white/20
+                                     transition-all duration-300 ease-out group"
+                            whileHover={{ 
+                                scale: 1.05,
+                                y: -2,
+                                boxShadow: "0 20px 30px -8px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                            }}
+                            whileTap={{ 
+                                scale: 0.95,
+                                transition: { duration: 0.1 }
+                            }}
                         >
-                            <FaFilePdf className="text-sm" />
-                            <span className="text-sm font-medium">PDF</span>
-                        </button>
+                            {/* 玻璃背景层 */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/5 to-transparent rounded-xl"></div>
+                            
+                            {/* 悬浮光效 */}
+                            <motion.div 
+                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                initial={{ opacity: 0 }}
+                                whileHover={{ opacity: 1 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent transform -skew-x-12 animate-pulse rounded-xl"></div>
+                            </motion.div>
+                            
+                            {/* 边框高光 */}
+                            <div className="absolute inset-0 rounded-xl border border-white/30 group-hover:border-white/50 transition-colors duration-300"></div>
+                            
+                            {/* 内容 */}
+                            <div className="relative flex items-center gap-2 z-10">
+                                <motion.div 
+                                    whileHover={{ y: -2 }} 
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <FaFilePdf className="text-sm" />
+                                </motion.div>
+                                <span className="font-semibold">PDF</span>
+                            </div>
+                            
+                            {/* 底部反射 */}
+                            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                        </motion.button>
                         
-                        <button
+                        <motion.button
                             onClick={handleDownloadEPS}
-                            className="flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-2 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-200 transform hover:scale-105 shadow-md"
+                            className="relative overflow-hidden flex items-center justify-center gap-2 
+                                     backdrop-blur-xl bg-gradient-to-r from-orange-500/80 via-amber-600/80 to-yellow-500/80
+                                     text-white px-4 py-3 rounded-xl font-semibold text-sm
+                                     shadow-lg hover:shadow-orange-500/40 border border-white/20
+                                     transition-all duration-300 ease-out group"
+                            whileHover={{ 
+                                scale: 1.05,
+                                y: -2,
+                                boxShadow: "0 20px 30px -8px rgba(249, 115, 22, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                            }}
+                            whileTap={{ 
+                                scale: 0.95,
+                                transition: { duration: 0.1 }
+                            }}
                         >
-                            <FaFileCode className="text-sm" />
-                            <span className="text-sm font-medium">EPS</span>
-                        </button>
+                            {/* 玻璃背景层 */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-white/5 to-transparent rounded-xl"></div>
+                            
+                            {/* 悬浮光效 */}
+                            <motion.div 
+                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                initial={{ opacity: 0 }}
+                                whileHover={{ opacity: 1 }}
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent transform -skew-x-12 animate-pulse rounded-xl"></div>
+                            </motion.div>
+                            
+                            {/* 边框高光 */}
+                            <div className="absolute inset-0 rounded-xl border border-white/30 group-hover:border-white/50 transition-colors duration-300"></div>
+                            
+                            {/* 内容 */}
+                            <div className="relative flex items-center gap-2 z-10">
+                                <motion.div 
+                                    whileHover={{ rotate: [0, -10, 10, 0] }} 
+                                    transition={{ duration: 0.4 }}
+                                >
+                                    <FaFileCode className="text-sm" />
+                                </motion.div>
+                                <span className="font-semibold">EPS</span>
+                            </div>
+                            
+                            {/* 底部反射 */}
+                            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                        </motion.button>
                     </div>
                     
                     {/* 一键下载所有格式 */}
-                    <button
+                    <motion.button
                         onClick={async () => {
                             await handleDownloadPNG();
                             await new Promise(resolve => setTimeout(resolve, 500));
@@ -1164,11 +1315,70 @@ showpage
                             await new Promise(resolve => setTimeout(resolve, 500));
                             await handleDownloadEPS();
                         }}
-                        className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-2 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-200 transform hover:scale-105 shadow-md mt-3"
+                        className="relative overflow-hidden flex items-center justify-center gap-3 
+                                 backdrop-blur-xl bg-gradient-to-r from-emerald-500/80 via-green-600/80 to-teal-500/80
+                                 text-white px-4 py-3 rounded-xl font-bold text-sm
+                                 shadow-xl hover:shadow-emerald-500/40 border border-white/30
+                                 transition-all duration-300 ease-out group mt-3"
+                        whileHover={{ 
+                            scale: 1.03,
+                            y: -3,
+                            boxShadow: "0 25px 40px -10px rgba(16, 185, 129, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.2)"
+                        }}
+                        whileTap={{ 
+                            scale: 0.97,
+                            transition: { duration: 0.1 }
+                        }}
+                        animate={{
+                            boxShadow: [
+                                "0 8px 20px -6px rgba(16, 185, 129, 0.3)",
+                                "0 12px 25px -6px rgba(34, 197, 94, 0.3)",
+                                "0 8px 20px -6px rgba(16, 185, 129, 0.3)"
+                            ]
+                        }}
+                        transition={{
+                            boxShadow: {
+                                duration: 2,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }
+                        }}
                     >
-                        <FaDownload className="text-sm" />
-                        <span className="text-sm font-medium">Download All Formats</span>
-                    </button>
+                        {/* 主玻璃背景层 */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/25 via-white/10 to-white/5 rounded-xl"></div>
+                        
+                        {/* 内层光效 */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-transparent rounded-xl"></div>
+                        
+                        {/* 动态光线效果 */}
+                        <motion.div 
+                            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            initial={{ opacity: 0 }}
+                            whileHover={{ opacity: 1 }}
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 animate-pulse rounded-xl"></div>
+                        </motion.div>
+                        
+                        {/* 边框高光 */}
+                        <div className="absolute inset-0 rounded-xl border border-white/40 group-hover:border-white/60 transition-colors duration-300"></div>
+                        
+                        {/* 内容 */}
+                        <div className="relative flex items-center gap-3 z-10">
+                            <motion.div
+                                animate={{ rotate: [0, 360] }}
+                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                            >
+                                <FaDownload className="text-sm" />
+                            </motion.div>
+                            <span className="font-bold tracking-wide">Download All Formats</span>
+                        </div>
+                        
+                        {/* 底部反射光 */}
+                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent rounded-b-xl"></div>
+                        
+                        {/* 顶部高光 */}
+                        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent rounded-t-xl"></div>
+                    </motion.button>
                 </div>
             </div>
             </div>

@@ -149,8 +149,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
                 <meta name="format-detection" content="telephone=no" />
                 <meta name="apple-mobile-web-app-title" content="QRCodeHub" />
-                <link rel="icon" href="/favicon.ico" />
-                <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+                <link rel="icon" href="/qr-icon.svg" type="image/svg+xml" />
+                <link rel="apple-touch-icon" href="/qr-icon.svg" />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{

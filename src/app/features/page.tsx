@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
-import QRCodeLogoPreview from '../components/QRCodeLogoPreview';
+
 
 export const metadata: Metadata = {
     title: 'QR Code Generator Features - Free Online QR Code Creator | QRCodeHub',

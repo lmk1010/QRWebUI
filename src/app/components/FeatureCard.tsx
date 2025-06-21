@@ -18,137 +18,214 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         <motion.div
             className={`
                 relative flex-1 flex items-center justify-center
-                px-2 py-3 md:px-3 md:py-4 cursor-pointer
-                transition-all duration-300 ease-in-out
-                border-b-3 overflow-hidden min-h-[80px] md:min-h-[90px]
+                px-3 py-4 md:px-4 md:py-5 cursor-pointer
+                rounded-2xl md:rounded-3xl
+                backdrop-blur-md
+                min-h-[90px] md:min-h-[100px]
+                shadow-lg hover:shadow-2xl
+                border border-white/20
+                transition-all duration-500 ease-out
                 ${isActive 
-                    ? 'bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-500 text-blue-600' 
-                    : 'bg-white hover:bg-gray-50 border-transparent text-gray-600 hover:text-gray-800'
+                    ? 'bg-gradient-to-br from-blue-500/20 via-indigo-500/15 to-purple-500/20 border-blue-400/40 shadow-blue-500/25' 
+                    : 'bg-gradient-to-br from-white/30 via-white/20 to-white/10 hover:from-white/40 hover:via-white/30 hover:to-white/20 hover:border-white/30'
                 }
             `}
             onClick={onClick}
-            whileHover={{ y: -1 }}
-            whileTap={{ y: 0, scale: 0.98 }}
+            whileHover={{ 
+                y: -8, 
+                scale: 1.05,
+                transition: { duration: 0.3, ease: "easeOut" }
+            }}
+            whileTap={{ 
+                y: -2, 
+                scale: 0.95,
+                transition: { duration: 0.1 }
+            }}
             initial={false}
             animate={{
-                backgroundColor: isActive 
-                    ? 'linear-gradient(135deg, rgb(239 246 255) 0%, rgb(238 242 255) 100%)' 
-                    : 'rgb(255 255 255)',
+                y: isActive ? -4 : 0,
+                scale: isActive ? 1.02 : 1,
+                boxShadow: isActive 
+                    ? "0 20px 40px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
+                    : "0 8px 16px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15)",
             }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
         >
-            {/* Active tab background glow */}
-            {isActive && (
-                <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-indigo-500/5 to-purple-500/5"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                />
-            )}
-            
-            {/* Hover effect background */}
+            {/* 玻璃质感内层光效 */}
             <motion.div
-                className="absolute inset-0 bg-gradient-to-br from-gray-500/5 to-slate-500/5 opacity-0"
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.2 }}
+                className="absolute inset-0 rounded-2xl md:rounded-3xl"
+                style={{
+                    background: isActive 
+                        ? "linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%)"
+                        : "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)",
+                }}
+                animate={{
+                    opacity: isActive ? 1 : 0,
+                }}
+                transition={{ duration: 0.3 }}
+            />
+            
+            {/* 悬浮时的光晕效果 */}
+            <motion.div
+                className="absolute inset-0 rounded-2xl md:rounded-3xl opacity-0"
+                style={{
+                    background: "linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%)",
+                    filter: "blur(2px)",
+                }}
+                whileHover={{ 
+                    opacity: 0.6,
+                    scale: 1.1,
+                    transition: { duration: 0.3 }
+                }}
             />
 
-            {/* Content */}
-            <div className="relative flex flex-col items-center space-y-2 z-10">
-                {/* Icon container with enhanced design */}
+            {/* 内容容器 */}
+            <div className="relative flex flex-col items-center space-y-3 z-10">
+                {/* 图标容器 - 增强玻璃质感 */}
                 <motion.div
                     className={`
                         relative flex items-center justify-center
-                        w-10 h-10 md:w-12 md:h-12 rounded-xl transition-all duration-300
+                        w-12 h-12 md:w-14 md:h-14 
+                        rounded-2xl
+                        backdrop-blur-sm
+                        shadow-lg
+                        border border-white/30
+                        transition-all duration-400
                         ${isActive 
-                            ? 'bg-gradient-to-br from-blue-100 via-blue-50 to-indigo-100 shadow-lg border-2 border-blue-200/50' 
-                            : 'bg-gradient-to-br from-gray-100 to-gray-50 hover:from-gray-200 hover:to-gray-100 shadow-sm border-2 border-gray-200/30'
+                            ? 'bg-gradient-to-br from-blue-400/30 via-indigo-400/25 to-purple-400/30 shadow-blue-400/40' 
+                            : 'bg-gradient-to-br from-white/40 via-white/30 to-white/20 hover:from-white/50 hover:via-white/40 hover:to-white/30'
+                        }
+                    `}
+                    animate={{
+                        scale: isActive ? 1.1 : 1,
+                        rotate: isActive ? [0, -2, 2, 0] : 0,
+                        boxShadow: isActive 
+                            ? "0 8px 16px rgba(59, 130, 246, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3)"
+                            : "0 4px 8px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.2)"
+                    }}
+                    transition={{
+                        scale: { duration: 0.3 },
+                        rotate: { duration: 0.6, times: [0, 0.3, 0.7, 1] },
+                        boxShadow: { duration: 0.3 }
+                    }}
+                    whileHover={{
+                        scale: 1.2,
+                        rotate: 5,
+                        transition: { duration: 0.2 }
+                    }}
+                >
+                    {/* 图标内部光效 */}
+                    <motion.div
+                        className="absolute inset-0 rounded-2xl"
+                        style={{
+                            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%)",
+                        }}
+                        animate={{
+                            opacity: isActive ? 1 : 0.7,
+                        }}
+                        transition={{ duration: 0.3 }}
+                    />
+                    
+                    {/* 图标 */}
+                    {icon && (
+                        <motion.span 
+                            className={`relative text-lg md:text-xl font-semibold z-10 ${
+                                isActive ? 'text-blue-700' : 'text-gray-700'
+                            }`}
+                            animate={{
+                                color: isActive ? "#1d4ed8" : "#374151",
+                            }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            {icon}
+                        </motion.span>
+                    )}
+                    
+                    {/* 顶部高光 */}
+                    <div className="absolute top-1 left-1 right-1 h-2 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-t-2xl" />
+                </motion.div>
+
+                {/* 标题背景 */}
+                <motion.div
+                    className={`
+                        px-3 py-2 rounded-xl
+                        backdrop-blur-sm
+                        border border-white/20
+                        transition-all duration-300
+                        ${isActive 
+                            ? 'bg-gradient-to-r from-blue-50/80 via-indigo-50/80 to-purple-50/80 shadow-sm' 
+                            : 'bg-white/20 hover:bg-white/30'
                         }
                     `}
                     animate={{
                         scale: isActive ? 1.05 : 1,
-                        rotate: isActive ? [0, -3, 3, 0] : 0,
+                        boxShadow: isActive 
+                            ? "0 4px 8px rgba(59, 130, 246, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3)"
+                            : "0 2px 4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.2)"
                     }}
-                    transition={{
-                        scale: { duration: 0.2 },
-                        rotate: { duration: 0.4, times: [0, 0.3, 0.7, 1] }
-                    }}
-                >
-                    {/* Icon background glow */}
-                    {isActive && (
-                        <motion.div
-                            className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-xl blur-sm"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.3 }}
-                        />
-                    )}
-                    
-                    {/* Icon */}
-                    {icon && (
-                        <span className={`relative text-base md:text-lg font-medium ${isActive ? 'text-blue-600' : 'text-gray-600'}`}>
-                            {icon}
-                        </span>
-                    )}
-                    
-                    {/* Subtle corner decoration */}
-                    <div className={`absolute -top-1 -right-1 w-3 h-3 rounded-full transition-all duration-300 ${
-                        isActive ? 'bg-blue-400/30' : 'bg-transparent'
-                    }`} />
-                </motion.div>
-
-                {/* Title with background */}
-                <motion.div
-                    className={`
-                        px-2 py-1 rounded-md transition-all duration-300
-                        ${isActive 
-                            ? 'bg-blue-50/80 backdrop-blur-sm' 
-                            : 'bg-transparent'
-                        }
-                    `}
-                    animate={{
-                        scale: isActive ? 1.02 : 1,
-                    }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.3 }}
                 >
                     <motion.h2 
                         className={`
-                            text-xs md:text-sm font-semibold text-center leading-tight
+                            text-sm md:text-base font-bold text-center leading-tight
                             transition-all duration-300
-                            ${isActive ? 'text-blue-700' : 'text-gray-600'}
+                            ${isActive ? 'text-blue-800' : 'text-gray-800'}
                         `}
                         animate={{
-                            fontWeight: isActive ? 600 : 500,
+                            fontWeight: isActive ? 700 : 600,
                         }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.3 }}
                     >
                         {title}
                     </motion.h2>
                 </motion.div>
             </div>
 
-            {/* Active indicator bar */}
-            <motion.div
-                className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: isActive ? 1 : 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                style={{ transformOrigin: "center" }}
-            />
-
-            {/* Corner accent */}
+            {/* 激活状态的边框光效 */}
             {isActive && (
                 <motion.div
-                    className="absolute top-2 right-2 w-2 h-2 bg-blue-400 rounded-full opacity-20"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.1, duration: 0.3 }}
+                    className="absolute inset-0 rounded-2xl md:rounded-3xl border-2 border-blue-400/50"
+                    initial={{ opacity: 0, scale: 1.1 }}
+                    animate={{ 
+                        opacity: [0, 1, 0],
+                        scale: [1.1, 1, 1.1],
+                    }}
+                    transition={{ 
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
                 />
             )}
-            
-            {/* Grid separator lines - only visible on mobile */}
-            <div className="absolute right-0 top-2 bottom-2 w-px bg-gray-200 md:hidden opacity-50"></div>
-            <div className="absolute bottom-0 left-2 right-2 h-px bg-gray-200 md:hidden opacity-50"></div>
+
+            {/* 底部指示器 */}
+            <motion.div
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ 
+                    scaleX: isActive ? 1 : 0,
+                    opacity: isActive ? 1 : 0
+                }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+            />
+
+            {/* 角落装饰点 */}
+            {isActive && (
+                <>
+                    <motion.div
+                        className="absolute top-3 right-3 w-2 h-2 bg-blue-400/60 rounded-full"
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.2, duration: 0.3 }}
+                    />
+                    <motion.div
+                        className="absolute bottom-3 left-3 w-1.5 h-1.5 bg-indigo-400/60 rounded-full"
+                        initial={{ scale: 0, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: 0.3, duration: 0.3 }}
+                    />
+                </>
+            )}
         </motion.div>
     );
 };

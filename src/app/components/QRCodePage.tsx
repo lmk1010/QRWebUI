@@ -5,13 +5,8 @@ import QrPreviewCard from '../components/QrPreviewCard';
 import QRCard from '../components/QRCard';
 import { CustomOptions } from '../components/CustomizationModal';
 
-interface QRCodePageProps {
-    onClose?: () => void;
-}
-
 // 提取使用useSearchParams的逻辑到单独的组件
-function QRCodeContent({ onClose, onGenerateResult, onCustomOptionsChange, customOptions }: {
-    onClose?: () => void;
+function QRCodeContent({ onGenerateResult, onCustomOptionsChange, customOptions }: {
     onGenerateResult: (value: string, shouldScroll?: boolean) => void;
     onCustomOptionsChange: (options: CustomOptions) => void;
     customOptions: CustomOptions;
@@ -101,7 +96,7 @@ function QRCodeContent({ onClose, onGenerateResult, onCustomOptionsChange, custo
     );
 }
 
-export default function QRCodePage({ onClose }: QRCodePageProps) {
+export default function QRCodePage() {
     // Save QR code content and configuration state
     const [customOptions, setCustomOptions] = useState<CustomOptions>({
         content: "qrcodehub",
@@ -119,7 +114,7 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
     });
 
     // QR code generation callback
-    const handleGenerateResult = (value: string, shouldScroll?: boolean) => {
+    const handleGenerateResult = (value: string) => {
         setCustomOptions(prev => ({ ...prev, content: value }));
     };
 
@@ -136,7 +131,6 @@ export default function QRCodePage({ onClose }: QRCodePageProps) {
                     </div>
                 }>
                     <QRCodeContent 
-                        onClose={onClose}
                         onGenerateResult={handleGenerateResult}
                         onCustomOptionsChange={handleCustomOptionsChange}
                         customOptions={customOptions}
