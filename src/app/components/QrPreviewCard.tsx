@@ -975,7 +975,7 @@ showpage
             </div>
 
             {/* 二维码信息卡片 */}
-            <div className="w-full bg-gray-50 rounded-lg p-3 mb-4">
+            <div className="w-full bg-gray-50 rounded-lg p-3 mb-6">
                 <div className="grid grid-cols-5 gap-2 text-xs">
                     <div className="text-center">
                         <div className="text-gray-500 mb-1">Size</div>
@@ -1007,32 +1007,33 @@ showpage
                 </div>
             </div>
 
-            {/* 二维码显示区域 */}
-            <div
-                className={`relative mb-4 shadow-inner ${
-                    customOptions.frameStyle === 'none' ? 'bg-white border-2 border-gray-200 rounded-lg p-3' :
-                    customOptions.frameStyle === 'scan' ? 'bg-yellow-50 rounded-xl p-6 relative' :
-                    customOptions.frameStyle === 'pay' ? 'bg-green-50 rounded-lg p-6 relative' :
-                    customOptions.frameStyle === 'this' ? 'bg-blue-50 rounded-lg p-6 relative' :
-                    customOptions.frameStyle === 'modern' ? 'bg-gray-50 rounded-lg p-6 relative' :
-                    customOptions.frameStyle === 'common' ? 'bg-red-50 rounded-xl p-6 relative' :
-                    'bg-white border-2 border-gray-200 rounded-lg p-3'
-                }`}
-                style={{
-                    backgroundColor: customOptions.frameStyle === 'scan' ? '#fffbeb' : 
-                                   customOptions.frameStyle === 'pay' ? '#f0fdf4' :
-                                   customOptions.frameStyle === 'this' ? '#eff6ff' :
-                                   customOptions.frameStyle === 'common' ? '#fef2f2' :
-                                   customOptions.bgColor,
-                    borderColor: customOptions.frameStyle !== 'none' ? customOptions.frameColor || '#000000' : undefined,
-                    borderWidth: customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'common' ? '4px' : 
-                                customOptions.frameStyle === 'pay' ? '5px' :
-                                customOptions.frameStyle === 'this' ? '4px' :
-                                customOptions.frameStyle === 'modern' ? '2px' : undefined,
-                    borderStyle: customOptions.frameStyle !== 'none' ? 'solid' : undefined,
-                }}
-                ref={qrCodeRef}
-            >
+            {/* 二维码显示区域 - 居中显示 */}
+            <div className="flex-1 flex items-center justify-center w-full">
+                <div
+                    className={`relative shadow-inner ${
+                        customOptions.frameStyle === 'none' ? 'bg-white border-2 border-gray-200 rounded-lg p-3' :
+                        customOptions.frameStyle === 'scan' ? 'bg-yellow-50 rounded-xl p-6 relative' :
+                        customOptions.frameStyle === 'pay' ? 'bg-green-50 rounded-lg p-6 relative' :
+                        customOptions.frameStyle === 'this' ? 'bg-blue-50 rounded-lg p-6 relative' :
+                        customOptions.frameStyle === 'modern' ? 'bg-gray-50 rounded-lg p-6 relative' :
+                        customOptions.frameStyle === 'common' ? 'bg-red-50 rounded-xl p-6 relative' :
+                        'bg-white border-2 border-gray-200 rounded-lg p-3'
+                    }`}
+                    style={{
+                        backgroundColor: customOptions.frameStyle === 'scan' ? '#fffbeb' : 
+                                       customOptions.frameStyle === 'pay' ? '#f0fdf4' :
+                                       customOptions.frameStyle === 'this' ? '#eff6ff' :
+                                       customOptions.frameStyle === 'common' ? '#fef2f2' :
+                                       customOptions.bgColor,
+                        borderColor: customOptions.frameStyle !== 'none' ? customOptions.frameColor || '#000000' : undefined,
+                        borderWidth: customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'common' ? '4px' : 
+                                    customOptions.frameStyle === 'pay' ? '5px' :
+                                    customOptions.frameStyle === 'this' ? '4px' :
+                                    customOptions.frameStyle === 'modern' ? '2px' : undefined,
+                        borderStyle: customOptions.frameStyle !== 'none' ? 'solid' : undefined,
+                    }}
+                    ref={qrCodeRef}
+                >
                 {/* Frame装饰元素 */}
                 {customOptions.frameStyle === 'scan' && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
@@ -1105,14 +1106,15 @@ showpage
                     </div>
                 )}
                 
-                {/* 二维码canvas容器 */}
-                <div className="flex items-center justify-center">
-                    <canvas ref={canvasRef} />
+                    {/* 二维码canvas容器 */}
+                    <div className="flex items-center justify-center">
+                        <canvas ref={canvasRef} />
+                    </div>
                 </div>
             </div>
 
             {/* 下载区域 */}
-            <div className="w-full flex-1 flex flex-col justify-end">
+            <div className="w-full mt-6">
                 <div className="flex flex-col w-full space-y-2">
                     <div className="text-center mb-3">
                         <h3 className="text-gray-700 font-semibold text-sm mb-2">Download Format Selection</h3>

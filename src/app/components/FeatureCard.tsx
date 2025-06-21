@@ -18,10 +18,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         <motion.div
             className={`
                 relative flex-1 flex items-center justify-center
-                px-3 py-4 md:px-4 md:py-5 cursor-pointer
-                rounded-2xl md:rounded-3xl
+                px-1.5 py-2 md:px-2 md:py-3 cursor-pointer
+                rounded-lg md:rounded-xl
                 backdrop-blur-md
-                min-h-[90px] md:min-h-[100px]
+                min-h-[55px] md:min-h-[65px]
                 shadow-lg hover:shadow-2xl
                 border border-white/20
                 transition-all duration-500 ease-out
@@ -32,19 +32,19 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             `}
             onClick={onClick}
             whileHover={{ 
-                y: -8, 
-                scale: 1.05,
+                y: -4, 
+                scale: 1.02,
                 transition: { duration: 0.3, ease: "easeOut" }
             }}
             whileTap={{ 
-                y: -2, 
-                scale: 0.95,
+                y: -1, 
+                scale: 0.98,
                 transition: { duration: 0.1 }
             }}
             initial={false}
             animate={{
-                y: isActive ? -4 : 0,
-                scale: isActive ? 1.02 : 1,
+                y: isActive ? -2 : 0,
+                scale: isActive ? 1.01 : 1,
                 boxShadow: isActive 
                     ? "0 20px 40px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)"
                     : "0 8px 16px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.15)",
@@ -53,7 +53,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         >
             {/* 玻璃质感内层光效 */}
             <motion.div
-                className="absolute inset-0 rounded-2xl md:rounded-3xl"
+                className="absolute inset-0 rounded-lg md:rounded-xl"
                 style={{
                     background: isActive 
                         ? "linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%)"
@@ -67,7 +67,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             
             {/* 悬浮时的光晕效果 */}
             <motion.div
-                className="absolute inset-0 rounded-2xl md:rounded-3xl opacity-0"
+                className="absolute inset-0 rounded-lg md:rounded-xl opacity-0"
                 style={{
                     background: "linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%)",
                     filter: "blur(2px)",
@@ -80,13 +80,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             />
 
             {/* 内容容器 */}
-            <div className="relative flex flex-col items-center space-y-3 z-10">
+            <div className="relative flex flex-col items-center space-y-1.5 z-10">
                 {/* 图标容器 - 增强玻璃质感 */}
                 <motion.div
                     className={`
                         relative flex items-center justify-center
-                        w-12 h-12 md:w-14 md:h-14 
-                        rounded-2xl
+                        w-7 h-7 md:w-8 md:h-8 
+                        rounded-lg
                         backdrop-blur-sm
                         shadow-lg
                         border border-white/30
@@ -109,14 +109,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
                         boxShadow: { duration: 0.3 }
                     }}
                     whileHover={{
-                        scale: 1.2,
-                        rotate: 5,
+                        scale: 1.1,
+                        rotate: 3,
                         transition: { duration: 0.2 }
                     }}
                 >
                     {/* 图标内部光效 */}
                     <motion.div
-                        className="absolute inset-0 rounded-2xl"
+                        className="absolute inset-0 rounded-lg"
                         style={{
                             background: "linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%)",
                         }}
@@ -129,7 +129,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
                     {/* 图标 */}
                     {icon && (
                         <motion.span 
-                            className={`relative text-lg md:text-xl font-semibold z-10 ${
+                            className={`relative text-xs md:text-sm font-semibold z-10 ${
                                 isActive ? 'text-blue-700' : 'text-gray-700'
                             }`}
                             animate={{
@@ -142,13 +142,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
                     )}
                     
                     {/* 顶部高光 */}
-                    <div className="absolute top-1 left-1 right-1 h-2 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-t-2xl" />
+                    <div className="absolute top-0.5 left-0.5 right-0.5 h-1 bg-gradient-to-r from-transparent via-white/40 to-transparent rounded-t-lg" />
                 </motion.div>
 
                 {/* 标题背景 */}
                 <motion.div
                     className={`
-                        px-3 py-2 rounded-xl
+                        px-1.5 py-0.5 rounded-md
                         backdrop-blur-sm
                         border border-white/20
                         transition-all duration-300
@@ -158,7 +158,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
                         }
                     `}
                     animate={{
-                        scale: isActive ? 1.05 : 1,
+                        scale: isActive ? 1.02 : 1,
                         boxShadow: isActive 
                             ? "0 4px 8px rgba(59, 130, 246, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.3)"
                             : "0 2px 4px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.2)"
@@ -167,7 +167,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
                 >
                     <motion.h2 
                         className={`
-                            text-sm md:text-base font-bold text-center leading-tight
+                            text-xs md:text-xs font-bold text-center leading-tight
                             transition-all duration-300
                             ${isActive ? 'text-blue-800' : 'text-gray-800'}
                         `}
@@ -184,7 +184,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             {/* 激活状态的边框光效 */}
             {isActive && (
                 <motion.div
-                    className="absolute inset-0 rounded-2xl md:rounded-3xl border-2 border-blue-400/50"
+                    className="absolute inset-0 rounded-lg md:rounded-xl border-2 border-blue-400/50"
                     initial={{ opacity: 0, scale: 1.1 }}
                     animate={{ 
                         opacity: [0, 1, 0],
@@ -200,7 +200,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
             {/* 底部指示器 */}
             <motion.div
-                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
+                className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{ 
                     scaleX: isActive ? 1 : 0,
@@ -213,13 +213,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             {isActive && (
                 <>
                     <motion.div
-                        className="absolute top-3 right-3 w-2 h-2 bg-blue-400/60 rounded-full"
+                        className="absolute top-1.5 right-1.5 w-1 h-1 bg-blue-400/60 rounded-full"
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.2, duration: 0.3 }}
                     />
                     <motion.div
-                        className="absolute bottom-3 left-3 w-1.5 h-1.5 bg-indigo-400/60 rounded-full"
+                        className="absolute bottom-1.5 left-1.5 w-0.5 h-0.5 bg-indigo-400/60 rounded-full"
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: 0.3, duration: 0.3 }}

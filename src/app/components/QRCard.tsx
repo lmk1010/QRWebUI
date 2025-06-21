@@ -535,8 +535,8 @@ const QRCard: React.FC<QRCardProps> = ({
                             </div>
                         </div>
 
-                        {/* Vertical Layout for Customization Options - 填满剩余空间 */}
-                        <div className="relative flex-1 flex flex-col justify-center space-y-3">
+                        {/* Vertical Layout for Customization Options - 从上向下布局 */}
+                        <div className="relative flex-1 flex flex-col justify-start space-y-3">
                             {/* Dot Style */}
                             <motion.button
                                 onClick={() => setIsDotStyleModalOpen(true)}
@@ -649,14 +649,32 @@ const QRCard: React.FC<QRCardProps> = ({
                                         <div className="text-xs text-gray-500">Download size</div>
                                     </div>
                                 </div>
-                            </motion.button>
+                                                            </motion.button>
+                        </div>
+                        
+                        {/* Left Tips Section */}
+                        <div className="relative mt-3 p-2.5 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg">
+                            <div className="flex items-start space-x-2">
+                                <div className="w-4 h-4 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div className="text-xs text-gray-600 leading-snug">
+                                    <p className="font-semibold text-gray-700 mb-1">🎨 Customization</p>
+                                    <p>• Style: Change dots & eye patterns</p>
+                                    <p>• Logo: Add brand icons to center</p>
+                                    <p>• Colors: Choose theme colors</p>
+                                    <p>• Templates: Apply preset styles</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Right Content Area - QR Type & Form */}
                 <div className="flex-1">
-                    <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-white/5 border border-white/20 rounded-2xl p-4 shadow-2xl h-full">
+                    <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-white/5 border border-white/20 rounded-2xl p-4 shadow-2xl h-full flex flex-col">
                         {/* Background Glow Effect */}
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-orange-500/5 rounded-2xl"></div>
                         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgb3BhY2l0eT0iMC4wNSI+CjxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHN2Zz4K')] opacity-20"></div>
@@ -695,7 +713,7 @@ const QRCard: React.FC<QRCardProps> = ({
                         </div>
 
                         {/* Content Section */}
-                        <div className="relative">
+                        <div className="relative flex-1 flex flex-col">
                             <div className="flex items-center space-x-3 mb-4">
                                 <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center shadow-lg">
                                     <FaEdit className="w-4 h-4 text-white" />
@@ -709,10 +727,10 @@ const QRCard: React.FC<QRCardProps> = ({
                             {/* Input form */}
                             {selectedMainType && (
                                 <div className="relative flex flex-col h-full">
-                                    <div className="flex-1 pb-20">
+                                    <div>
                                         {selectedMainType === 'contact' ? (
                                             // Contact input form - simplified
-                                            <div className="space-y-3">
+                                            <div className="space-y-3 min-h-[180px]">
                                                 <div className="grid grid-cols-2 gap-3">
                                                     <div>
                                                         <label className="block text-gray-700 text-sm">First Name</label>
@@ -777,7 +795,7 @@ const QRCard: React.FC<QRCardProps> = ({
                                             </div>
                                         ) : selectedMainType === 'app' ? (
                                             // Twitter input form - simplified
-                                            <div className="space-y-3">
+                                            <div className="space-y-3 min-h-[180px]">
                                                 <div>
                                                     <label className="block text-gray-700 mb-2 font-medium text-sm">Choose an option</label>
                                                     <div className="grid grid-cols-2 gap-2">
@@ -842,7 +860,7 @@ const QRCard: React.FC<QRCardProps> = ({
                                             </div>
                                         ) : selectedMainType === 'batch' ? (
                                             // Email form - simplified
-                                            <div className="space-y-2">
+                                            <div className="space-y-2 min-h-[180px]">
                                                 <div>
                                                     <label className="block text-gray-700 mb-1 font-medium text-xs">Email Address <span className="text-red-500">*</span></label>
                                                     <input
@@ -878,7 +896,7 @@ const QRCard: React.FC<QRCardProps> = ({
                                             </div>
                                         ) : selectedMainType === 'video' ? (
                                             // WiFi form - simplified
-                                            <div className="space-y-2">
+                                            <div className="space-y-2 min-h-[180px]">
                                                 <div>
                                                     <label className="block text-gray-700 font-medium text-xs">Network Name <span className="text-red-500">*</span></label>
                                                     <input
@@ -903,9 +921,9 @@ const QRCard: React.FC<QRCardProps> = ({
                                                 </div>
                                             </div>
                                         ) : (
-                                            <div>
+                                            <div className="min-h-[180px]">
                                                 <textarea
-                                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[200px] resize-none text-base"
+                                                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-h-[150px] resize-none text-base"
                                                     placeholder={selectedMainType === 'url' ? "Enter URL..." : "Enter content..."}
                                                     value={customText}
                                                     onChange={(e) => setCustomText(e.target.value)}
@@ -914,8 +932,8 @@ const QRCard: React.FC<QRCardProps> = ({
                                         )}
                                     </div>
                                     
-                                    {/* Generate Button - Fixed at bottom */}
-                                    <div className="absolute bottom-0 left-4 right-4">
+                                    {/* Generate Button */}
+                                    <div className="mt-3">
                                         <motion.button
                                             className="w-full relative overflow-hidden
                                                      backdrop-blur-2xl bg-gradient-to-r from-blue-500/80 via-indigo-500/80 to-purple-500/80 
@@ -1038,6 +1056,26 @@ const QRCard: React.FC<QRCardProps> = ({
                                             {/* 底部反射光 */}
                                             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-b-2xl"></div>
                                         </motion.button>
+                                        
+                                        {/* Tips Section */}
+                                        <div className="mt-3 p-3 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg flex-1 flex flex-col justify-center">
+                                            <div className="flex items-start space-x-2">
+                                                <div className="w-4 h-4 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                                    </svg>
+                                                </div>
+                                                <div className="text-xs text-gray-600 leading-relaxed">
+                                                    <p className="font-semibold text-gray-700 mb-2">💡 Tips</p>
+                                                    <p className="mb-1">• Click left options to customize QR code</p>
+                                                    <p className="mb-1">• Support text, links, contacts & more</p>
+                                                    <p className="mb-1">• Download generated QR codes directly</p>
+                                                    <p className="mb-1">• Save QR codes in various formats (PNG, SVG)</p>
+                                                    <p className="mb-1">• Share QR codes on social media</p>
+                                                    <p>• Perfect for business cards and marketing</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             )}
