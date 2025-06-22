@@ -40,298 +40,11 @@ const QrPreviewCard: React.FC<QrPreviewCardProps> = ({
     const qrCodeRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
-    const handleDownloadPNG = async () => {
-        if (!canvasRef.current) return;
-
-        // 创建下载用的画布
-        const downloadCanvas = document.createElement('canvas');
-        const downloadSize = customOptions.downloadSize;
-        downloadCanvas.width = downloadSize;
-        downloadCanvas.height = downloadSize;
-
-        // 根据Frame样式处理下载
-        if (customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'pay' || 
-            customOptions.frameStyle === 'this' || customOptions.frameStyle === 'common') {
-            // 使用Canvas绘制的Frame
-            await handleDownloadWithCanvasFrame(downloadSize);
-        } else {
-            // 普通样式
-            drawQRCodeForDownload(downloadCanvas, downloadSize);
-            
-            const link = document.createElement('a');
-            link.download = `qrcode-${Date.now()}.png`;
-            link.href = downloadCanvas.toDataURL();
-            link.click();
-        }
-    };
-
-    // 新的Canvas Frame下载处理函数
-    const handleDownloadWithCanvasFrame = async (downloadSize: number) => {
-        // 这里可以集成GiftBoxCanvas的绘制逻辑
+    // 创建一个统一的下载功能，包含Frame和Logo
+    const createDownloadCanvas = async (size: number): Promise<HTMLCanvasElement> => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        canvas.width = downloadSize + 200; // 增加空间用于Frame装饰
-        canvas.height = downloadSize + 250;
-
-        // 简化的Frame绘制逻辑（基于GiftBoxCanvas）
-        ctx.fillStyle = customOptions.bgColor;
-        ctx.fillRect(50, 50, downloadSize + 100, downloadSize + 150);
-        
-        // 绘制QR码
-        const qrCanvas = document.createElement('canvas');
-        drawQRCodeForDownload(qrCanvas, downloadSize);
-        
-        const qrX = (canvas.width - downloadSize) / 2;
-        const qrY = (canvas.height - downloadSize) / 2 + 25;
-        ctx.drawImage(qrCanvas, qrX, qrY);
-
-        // 添加文字
-        ctx.fillStyle = customOptions.fgColor;
-        ctx.font = 'bold 24px Arial';
-        ctx.textAlign = 'center';
-        const textY = qrY - 30;
-        
-        switch (customOptions.frameStyle) {
-            case 'scan':
-                ctx.fillText('SCAN ME', canvas.width / 2, textY);
-                break;
-            case 'pay':
-                ctx.fillText('PAY HERE', canvas.width / 2, textY);
-                break;
-            case 'this':
-                ctx.fillText('THIS WAY', canvas.width / 2, textY);
-                break;
-            case 'common':
-                ctx.fillText('WELCOME', canvas.width / 2, textY);
-                break;
-        }
-
-        const link = document.createElement('a');
-        link.download = `qrcode-frame-${Date.now()}.png`;
-        link.href = canvas.toDataURL();
-        link.click();
-    };
-
-    // SVG下载功能
-    const handleDownloadSVG = async () => {
-        try {
-            const downloadSize = customOptions.downloadSize || customOptions.size;
-            const svg = generateSVGQRCode(downloadSize);
-            
-            const blob = new Blob([svg], { type: 'image/svg+xml' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.download = 'qrcode.svg';
-            link.href = url;
-            link.click();
-            URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('SVG download failed:', error);
-        }
-    };
-
-    // PDF下载功能
-    const handleDownloadPDF = async () => {
-        try {
-            const downloadSize = customOptions.downloadSize || customOptions.size;
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = downloadSize;
-            tempCanvas.height = downloadSize;
-            
-            drawQRCodeForDownload(tempCanvas, downloadSize);
-            
-            // 等待绘制完成
-            await new Promise(resolve => setTimeout(resolve, 100));
-            
-            const dataUrl = tempCanvas.toDataURL('image/png');
-            
-            // 创建PDF，尺寸按照二维码实际大小
-            const pdf = new jsPDF({
-                orientation: 'portrait',
-                unit: 'px',
-                format: [downloadSize, downloadSize]
-            });
-            
-            pdf.addImage(dataUrl, 'PNG', 0, 0, downloadSize, downloadSize);
-            pdf.save('qrcode.pdf');
-        } catch (error) {
-            console.error('PDF download failed:', error);
-        }
-    };
-
-    // EPS下载功能（转换SVG为EPS）
-    const handleDownloadEPS = async () => {
-        try {
-            const downloadSize = customOptions.downloadSize || customOptions.size;
-            const svg = generateSVGQRCode(downloadSize);
-            
-            // 将SVG转换为EPS格式
-            const eps = convertSVGToEPS(svg, downloadSize);
-            
-            const blob = new Blob([eps], { type: 'application/postscript' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.download = 'qrcode.eps';
-            link.href = url;
-            link.click();
-            URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('EPS download failed:', error);
-        }
-    };
-
-    // 生成SVG格式的二维码
-    const generateSVGQRCode = (size: number): string => {
-        const qrData = QRCodeJS.create(generatedValue, {
-            errorCorrectionLevel: customOptions.errorCorrectionLevel || 'H',
-        });
-        const modules = qrData.modules;
-        const moduleCount = modules.size;
-        const moduleSize = size / moduleCount;
-
-        let svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">`;
-        svg += `<rect width="${size}" height="${size}" fill="${customOptions.bgColor}"/>`;
-
-        // 绘制二维码模块
-        for (let row = 0; row < moduleCount; row++) {
-            for (let col = 0; col < moduleCount; col++) {
-                if (modules.data[row * moduleCount + col] === 1) {
-                    const x = col * moduleSize;
-                    const y = row * moduleSize;
-                    
-                    if (customOptions.dotStyle === 'dots') {
-                        const cx = x + moduleSize / 2;
-                        const cy = y + moduleSize / 2;
-                        const r = moduleSize / 2;
-                        svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${customOptions.fgColor}"/>`;
-                    } else if (customOptions.dotStyle === 'fluid') {
-                        // 流体样式 - 检测相邻点并创建流畅连接
-                        const centerX = x + moduleSize / 2;
-                        const centerY = y + moduleSize / 2;
-                        const fluidRadius = moduleSize * 0.6; // 流体半径
-                        
-                        // 检测相邻的点
-                        const hasLeft = col > 0 && modules.data[row * moduleCount + (col - 1)] === 1;
-                        const hasRight = col < moduleCount - 1 && modules.data[row * moduleCount + (col + 1)] === 1;
-                        const hasTop = row > 0 && modules.data[(row - 1) * moduleCount + col] === 1;
-                        const hasBottom = row < moduleCount - 1 && modules.data[(row + 1) * moduleCount + col] === 1;
-                        
-                        // 检测对角点
-                        const hasTopLeft = row > 0 && col > 0 && modules.data[(row - 1) * moduleCount + (col - 1)] === 1;
-                        const hasTopRight = row > 0 && col < moduleCount - 1 && modules.data[(row - 1) * moduleCount + (col + 1)] === 1;
-                        const hasBottomLeft = row < moduleCount - 1 && col > 0 && modules.data[(row + 1) * moduleCount + (col - 1)] === 1;
-                        const hasBottomRight = row < moduleCount - 1 && col < moduleCount - 1 && modules.data[(row + 1) * moduleCount + (col + 1)] === 1;
-                        
-                        // 如果有相邻点，创建连接效果
-                        if (hasLeft || hasRight || hasTop || hasBottom || hasTopLeft || hasTopRight || hasBottomLeft || hasBottomRight) {
-                            // 创建流体连接形状
-                            const connectionRadius = moduleSize * 0.8;
-                            
-                            // 基础圆形
-                            svg += `<circle cx="${centerX}" cy="${centerY}" r="${fluidRadius}" fill="${customOptions.fgColor}"/>`;
-                            
-                            // 添加连接扩展
-                            if (hasLeft) {
-                                svg += `<circle cx="${centerX - moduleSize}" cy="${centerY}" r="${connectionRadius}" fill="${customOptions.fgColor}"/>`;
-                            }
-                            if (hasRight) {
-                                svg += `<circle cx="${centerX + moduleSize}" cy="${centerY}" r="${connectionRadius}" fill="${customOptions.fgColor}"/>`;
-                            }
-                            if (hasTop) {
-                                svg += `<circle cx="${centerX}" cy="${centerY - moduleSize}" r="${connectionRadius}" fill="${customOptions.fgColor}"/>`;
-                            }
-                            if (hasBottom) {
-                                svg += `<circle cx="${centerX}" cy="${centerY + moduleSize}" r="${connectionRadius}" fill="${customOptions.fgColor}"/>`;
-                            }
-                            
-                            // 对角连接
-                            if (hasTopLeft) {
-                                svg += `<circle cx="${centerX - moduleSize}" cy="${centerY - moduleSize}" r="${connectionRadius * 0.7}" fill="${customOptions.fgColor}"/>`;
-                            }
-                            if (hasTopRight) {
-                                svg += `<circle cx="${centerX + moduleSize}" cy="${centerY - moduleSize}" r="${connectionRadius * 0.7}" fill="${customOptions.fgColor}"/>`;
-                            }
-                            if (hasBottomLeft) {
-                                svg += `<circle cx="${centerX - moduleSize}" cy="${centerY + moduleSize}" r="${connectionRadius * 0.7}" fill="${customOptions.fgColor}"/>`;
-                            }
-                            if (hasBottomRight) {
-                                svg += `<circle cx="${centerX + moduleSize}" cy="${centerY + moduleSize}" r="${connectionRadius * 0.7}" fill="${customOptions.fgColor}"/>`;
-                            }
-                        } else {
-                            // 没有相邻点时，绘制独立的流体形状
-                            svg += `<circle cx="${centerX}" cy="${centerY}" r="${fluidRadius}" fill="${customOptions.fgColor}"/>`;
-                        }
-                    } else {
-                        svg += `<rect x="${x}" y="${y}" width="${moduleSize}" height="${moduleSize}" fill="${customOptions.fgColor}"/>`;
-                    }
-                }
-            }
-        }
-
-        svg += '</svg>';
-        return svg;
-    };
-
-    // 将SVG转换为EPS格式
-    const convertSVGToEPS = (svg: string, size: number): string => {
-        const eps = `%!PS-Adobe-3.0 EPSF-3.0
-%%BoundingBox: 0 0 ${size} ${size}
-%%Creator: QRCodeHub
-%%Title: QR Code
-%%CreationDate: ${new Date().toISOString()}
-%%EndComments
-
-% 设置坐标系
-0 ${size} translate
-1 -1 scale
-
-% 绘制背景
-newpath
-0 0 moveto
-${size} 0 lineto
-${size} ${size} lineto
-0 ${size} lineto
-closepath
-${hexToRGB(customOptions.bgColor)} setrgbcolor
-fill
-
-% 绘制二维码
-${hexToRGB(customOptions.fgColor)} setrgbcolor
-${svg.match(/<rect[^>]*>/g)?.map(rect => {
-    const x = rect.match(/x="([^"]*)"/) ? parseFloat(rect.match(/x="([^"]*)"/)![1]) : 0;
-    const y = rect.match(/y="([^"]*)"/) ? parseFloat(rect.match(/y="([^"]*)"/)![1]) : 0;
-    const width = rect.match(/width="([^"]*)"/) ? parseFloat(rect.match(/width="([^"]*)"/)![1]) : 0;
-    const height = rect.match(/height="([^"]*)"/) ? parseFloat(rect.match(/height="([^"]*)"/)![1]) : 0;
-    
-    return `newpath
-${x} ${y} moveto
-${x + width} ${y} lineto
-${x + width} ${y + height} lineto
-${x} ${y + height} lineto
-closepath
-fill`;
-}).join('\n') || ''}
-
-showpage
-%%EOF`;
-        return eps;
-    };
-
-    // 将十六进制颜色转换为RGB
-    const hexToRGB = (hex: string): string => {
-        const r = parseInt(hex.slice(1, 3), 16) / 255;
-        const g = parseInt(hex.slice(3, 5), 16) / 255;
-        const b = parseInt(hex.slice(5, 7), 16) / 255;
-        return `${r.toFixed(3)} ${g.toFixed(3)} ${b.toFixed(3)}`;
-    };
-
-    const drawQRCodeForDownload = (canvas: HTMLCanvasElement, downloadSize: number): void => {
-        if (!canvas) return;
-    
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
+        if (!ctx) throw new Error('Cannot get canvas context');
 
         // 添加 roundRect polyfill 以确保兼容性
         if (!ctx.roundRect) {
@@ -349,132 +62,418 @@ showpage
                 this.closePath();
             };
         }
-    
-        // 配置二维码生成选项 - 使用下载尺寸
-        const qrOptions = {
-            width: downloadSize,
-            margin: customOptions.margin,
-            color: {
-                dark: customOptions.fgColor,
-                light: customOptions.bgColor,
-            },
+
+        // 根据frameStyle和QR码大小动态确定画布尺寸
+        const hasFrame = customOptions.frameStyle !== 'none';
+        // 根据QR码大小动态计算边距，保持合理比例
+        const scaleRatio = size / 200; // 以200px为基准进行缩放
+        // 调整无边框时的边距，让它也有适当的留白，看起来更美观
+        const frameMargin = hasFrame ? Math.max(30, size * 0.15) : Math.max(10, size * 0.08);
+        
+        // 为装饰元素预留额外空间（在边框外面）
+        const decorationLabelHeight = hasFrame ? Math.max(20, 26 * scaleRatio) : 0;
+        const extraSpaceTop = hasFrame ? decorationLabelHeight : 0;
+        const extraSpaceBottom = hasFrame ? decorationLabelHeight : 0;
+        
+        canvas.width = size + frameMargin * 2;
+        canvas.height = size + frameMargin * 2 + extraSpaceTop + extraSpaceBottom;
+
+        // 绘制Frame背景和装饰
+        if (hasFrame) {
+            await drawFrameDecoration(ctx, canvas.width, canvas.height, size, frameMargin);
+        } else {
+            // 无边框时也添加一个很微妙的阴影背景，提升视觉效果
+            ctx.fillStyle = customOptions.bgColor || '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // 绘制QR码，调整位置让QR码居中且更大
+        const qrX = frameMargin;
+        const qrY = frameMargin + extraSpaceTop; // 根据缩放比例调整顶部空间
+        
+        await drawQRCodeToCanvas(ctx, qrX, qrY, size);
+
+        return canvas;
+    };
+
+    // 绘制Frame装饰，与预览样式保持一致，支持动态缩放
+    const drawFrameDecoration = async (ctx: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number, qrSize: number, frameMargin: number): Promise<void> => {
+        // 根据QR码大小计算缩放比例
+        const scaleRatio = qrSize / 200; // 以200px为基准
+        // 设置Frame背景色，与预览CSS保持一致
+        let frameBgColor = '#ffffff';
+        switch (customOptions.frameStyle) {
+            case 'scan':
+                frameBgColor = '#fffbeb';
+                break;
+            case 'pay':
+                frameBgColor = '#f0fdf4';
+                break;
+            case 'this':
+                frameBgColor = '#eff6ff';
+                break;
+            case 'common':
+                frameBgColor = '#fef2f2';
+                break;
+            case 'modern':
+                frameBgColor = '#f9fafb';
+                break;
+        }
+        
+        // 绘制背景
+        ctx.fillStyle = frameBgColor;
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+        
+        // 绘制Frame边框，根据缩放比例调整
+        const baseBorderWidth = customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'common' ? 4 :
+                               customOptions.frameStyle === 'pay' ? 5 :
+                               customOptions.frameStyle === 'this' ? 4 :
+                               customOptions.frameStyle === 'modern' ? 2 : 3;
+        const borderWidth = Math.max(1, baseBorderWidth * scaleRatio);
+        
+        ctx.strokeStyle = customOptions.frameColor || '#000000';
+        ctx.lineWidth = borderWidth;
+        
+        // 绘制圆角矩形边框，根据缩放比例调整
+        const baseBorderRadius = customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'common' ? 16 : 10;
+        const borderRadius = baseBorderRadius * scaleRatio;
+        const borderMargin = Math.max(5, 10 * scaleRatio); // 边框距离也要缩放
+        // 为装饰元素预留的空间
+        const decorationSpace = Math.max(20, 26 * scaleRatio);
+        
+        // 边框位置考虑装饰元素空间
+        const frameX = borderMargin;
+        const frameY = decorationSpace + borderMargin;
+        const frameWidth = canvasWidth - borderMargin * 2;
+        const frameHeight = canvasHeight - decorationSpace * 2 - borderMargin * 2;
+        
+        ctx.beginPath();
+        ctx.roundRect(frameX, frameY, frameWidth, frameHeight, borderRadius);
+        ctx.stroke();
+        
+        // 绘制装饰元素，与预览中的位置和样式保持一致
+        await drawFrameDecorationElements(ctx, canvasWidth, canvasHeight, qrSize, frameMargin, scaleRatio);
+    };
+
+    // 绘制Frame装饰元素
+    const drawFrameDecorationElements = async (ctx: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number, qrSize: number, frameMargin: number, scaleRatio: number): Promise<void> => {
+        let decorationColor = customOptions.frameColor || '#000000';
+        let textColor = '#000000';
+        let decorationText = '';
+        let decorationIcon = '';
+        let decorationBgColor = '#ffffff';
+        
+        // 根据不同Frame样式设置装饰元素，与预览保持一致
+        switch (customOptions.frameStyle) {
+            case 'scan':
+                decorationText = 'SCAN ME';
+                decorationIcon = '📱';
+                decorationBgColor = customOptions.frameColor || '#F4D03F';
+                decorationColor = customOptions.frameColor || '#F4D03F';
+                textColor = '#000000';
+                break;
+            case 'pay':
+                decorationText = 'PAY HERE';
+                decorationIcon = '💳';
+                decorationBgColor = customOptions.frameColor || '#58D68D';
+                textColor = '#ffffff';
+                break;
+            case 'this':
+                decorationText = 'THIS WAY';
+                decorationIcon = '👉';
+                decorationBgColor = customOptions.frameColor || '#5DADE2';
+                textColor = '#ffffff';
+                break;
+            case 'modern':
+                decorationText = 'MODERN';
+                decorationIcon = '✨';
+                decorationBgColor = '#ffffff';
+                decorationColor = customOptions.frameColor || '#9E9E9E';
+                textColor = customOptions.frameColor || '#9E9E9E';
+                break;
+            case 'common':
+                decorationText = 'WELCOME';
+                decorationIcon = '🎯';
+                decorationBgColor = customOptions.frameColor || '#EC7063';
+                decorationColor = customOptions.frameColor || '#EC7063';
+                textColor = '#ffffff';
+                break;
+        }
+
+        // 绘制装饰标签，根据缩放比例调整大小和位置
+        const baseLabelWidth = 130;
+        const baseLabelHeight = 26;
+        const labelWidth = baseLabelWidth * scaleRatio;
+        const labelHeight = baseLabelHeight * scaleRatio;
+        const labelX = (canvasWidth - labelWidth) / 2;
+        
+        // 计算边框和装饰元素的实际位置
+        const borderMargin = Math.max(5, 10 * scaleRatio);
+        // 现在画布有额外的顶部和底部空间给装饰元素
+        const decorationSpaceTop = Math.max(20, 26 * scaleRatio);
+        const frameTop = decorationSpaceTop + borderMargin;
+        const frameBottom = canvasHeight - decorationSpaceTop - borderMargin;
+        
+        let labelY;
+        // 某些样式的装饰在顶部外面（-top-4 等价于在边框上方）
+        if (customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'modern' || customOptions.frameStyle === 'common') {
+            labelY = frameTop - labelHeight / 2; // 在边框上方，标签中心在边框线上
+        }
+        // 某些样式的装饰在底部外面（-bottom-8 等价于在边框下方）
+        else if (customOptions.frameStyle === 'pay' || customOptions.frameStyle === 'this') {
+            labelY = frameBottom - labelHeight / 2; // 在边框下方，标签中心在边框线上
+        }
+        else {
+            labelY = decorationSpaceTop; // 默认位置在顶部装饰区域
+        }
+
+        // 绘制装饰背景（圆角矩形），根据缩放调整
+        ctx.fillStyle = decorationBgColor;
+        ctx.beginPath();
+        const labelRadius = Math.max(8, 15 * scaleRatio);
+        ctx.roundRect(labelX, labelY, labelWidth, labelHeight, labelRadius);
+        ctx.fill();
+
+        // 绘制装饰边框，根据缩放调整
+        ctx.strokeStyle = decorationColor;
+        ctx.lineWidth = Math.max(1, 1 * scaleRatio);
+        ctx.beginPath();
+        ctx.roundRect(labelX, labelY, labelWidth, labelHeight, labelRadius);
+        ctx.stroke();
+
+        // 绘制装饰文字，根据缩放调整字体大小
+        ctx.fillStyle = textColor;
+        const fontSize = Math.max(10, 13 * scaleRatio);
+        ctx.font = `bold ${fontSize}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        // 组合图标和文字
+        const combinedText = `${decorationIcon} ${decorationText}`;
+        ctx.fillText(combinedText, canvasWidth / 2, labelY + labelHeight / 2);
+    };
+
+    // 绘制QR码到指定位置
+    const drawQRCodeToCanvas = async (ctx: CanvasRenderingContext2D, x: number, y: number, size: number): Promise<void> => {
+        // 生成QR码数据
+        const qrData = QRCodeJS.create(generatedValue, {
             errorCorrectionLevel: customOptions.errorCorrectionLevel || 'H',
-        };
-    
-        // 生成二维码数据矩阵
-        QRCodeJS.toCanvas(canvas, generatedValue, qrOptions, (error) => {
-            if (error) {
-                console.error('Error generating QR code:', error);
-                return;
-            }
-    
-            // 获取生成的二维码数据
-            const qrData = QRCodeJS.create(generatedValue, qrOptions);
-            const modules = qrData.modules;
-            const moduleCount = modules.size;
-            const moduleSize = downloadSize / moduleCount;
-            const dotScale = customOptions.dotScale || 1;
-            const eyeScale = customOptions.eyeScale || 1;
-    
-            // 清空画布
-            ctx.fillStyle = customOptions.bgColor;
-            ctx.fillRect(0, 0, downloadSize, downloadSize);
-    
-            // 绘制数据点 - 使用与预览相同的逻辑，但使用下载尺寸
-            for (let row = 0; row < moduleCount; row++) {
-                for (let col = 0; col < moduleCount; col++) {
-                    if (modules.data[row * moduleCount + col] === 1) {
-                        const isOuterEye = (
-                            (row < 7 && col < 7 && (row === 0 || row === 6 || col === 0 || col === 6)) ||
-                            (row < 7 && col >= moduleCount - 7 && (row === 0 || row === 6 || col === moduleCount - 1 || col === moduleCount - 7)) ||
-                            (row >= moduleCount - 7 && col < 7 && (row === moduleCount - 1 || row === moduleCount - 7 || col === 0 || col === 6))
-                        );
+        });
+        const modules = qrData.modules;
+        const moduleCount = modules.size;
+        const moduleSize = size / moduleCount;
 
-                        const isInnerEye = (
-                            (row >= 1 && row < 6 && col >= 1 && col < 6) ||
-                            (row >= 1 && row < 6 && col >= moduleCount - 6 && col < moduleCount - 1) ||
-                            (row >= moduleCount - 6 && row < moduleCount - 1 && col >= 1 && col < 6)
-                        );
+        // 绘制背景
+        ctx.fillStyle = customOptions.bgColor;
+        ctx.fillRect(x, y, size, size);
 
-                        const x = col * moduleSize;
-                        const y = row * moduleSize;
-                        const size = moduleSize * (isOuterEye || isInnerEye ? eyeScale : dotScale);
-                        
-                        ctx.fillStyle = customOptions.fgColor;
-                        
-                        // 应用样式逻辑（简化版，重点是下载功能）
-                        if (customOptions.dotStyle === 'dots' && !isOuterEye && !isInnerEye) {
-                            ctx.beginPath();
-                            ctx.arc(x + moduleSize / 2, y + moduleSize / 2, size / 2, 0, Math.PI * 2);
-                            ctx.fill();
-                        } else if (customOptions.dotStyle === 'fluid' && !isOuterEye && !isInnerEye) {
-                            // 流体样式 - 检测相邻点并创建流畅连接
-                            const centerX = x + moduleSize / 2;
-                            const centerY = y + moduleSize / 2;
-                            const fluidRadius = size * 0.6; // 流体半径
-                            
-                            // 检测相邻的点
-                            const hasLeft = col > 0 && modules.data[row * moduleCount + (col - 1)] === 1;
-                            const hasRight = col < moduleCount - 1 && modules.data[row * moduleCount + (col + 1)] === 1;
-                            const hasTop = row > 0 && modules.data[(row - 1) * moduleCount + col] === 1;
-                            const hasBottom = row < moduleCount - 1 && modules.data[(row + 1) * moduleCount + col] === 1;
-                            
-                            // 检测对角点
-                            const hasTopLeft = row > 0 && col > 0 && modules.data[(row - 1) * moduleCount + (col - 1)] === 1;
-                            const hasTopRight = row > 0 && col < moduleCount - 1 && modules.data[(row - 1) * moduleCount + (col + 1)] === 1;
-                            const hasBottomLeft = row < moduleCount - 1 && col > 0 && modules.data[(row + 1) * moduleCount + (col - 1)] === 1;
-                            const hasBottomRight = row < moduleCount - 1 && col < moduleCount - 1 && modules.data[(row + 1) * moduleCount + (col + 1)] === 1;
-                            
-                            ctx.beginPath();
-                            
-                            // 如果有相邻点，创建连接效果
-                            if (hasLeft || hasRight || hasTop || hasBottom || hasTopLeft || hasTopRight || hasBottomLeft || hasBottomRight) {
-                                // 创建流体连接形状
-                                const connectionRadius = moduleSize * 0.8;
-                                
-                                // 基础圆形
-                                ctx.arc(centerX, centerY, fluidRadius, 0, Math.PI * 2);
-                                
-                                // 添加连接扩展
-                                if (hasLeft) {
-                                    ctx.arc(centerX - moduleSize, centerY, connectionRadius, 0, Math.PI * 2);
-                                }
-                                if (hasRight) {
-                                    ctx.arc(centerX + moduleSize, centerY, connectionRadius, 0, Math.PI * 2);
-                                }
-                                if (hasTop) {
-                                    ctx.arc(centerX, centerY - moduleSize, connectionRadius, 0, Math.PI * 2);
-                                }
-                                if (hasBottom) {
-                                    ctx.arc(centerX, centerY + moduleSize, connectionRadius, 0, Math.PI * 2);
-                                }
-                                
-                                // 对角连接
-                                if (hasTopLeft) {
-                                    ctx.arc(centerX - moduleSize, centerY - moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
-                                }
-                                if (hasTopRight) {
-                                    ctx.arc(centerX + moduleSize, centerY - moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
-                                }
-                                if (hasBottomLeft) {
-                                    ctx.arc(centerX - moduleSize, centerY + moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
-                                }
-                                if (hasBottomRight) {
-                                    ctx.arc(centerX + moduleSize, centerY + moduleSize, connectionRadius * 0.7, 0, Math.PI * 2);
-                                }
-                            } else {
-                                // 没有相邻点时，绘制独立的流体形状
-                                ctx.arc(centerX, centerY, fluidRadius, 0, Math.PI * 2);
-                            }
-                            
-                            ctx.fill();
-                        } else {
-                            ctx.fillRect(x, y, size, size);
-                        }
-                    }
+        // 绘制QR码模块
+        ctx.fillStyle = customOptions.fgColor;
+        for (let row = 0; row < moduleCount; row++) {
+            for (let col = 0; col < moduleCount; col++) {
+                if (modules.data[row * moduleCount + col] === 1) {
+                    const moduleX = x + col * moduleSize;
+                    const moduleY = y + row * moduleSize;
+                    
+                    // 应用点样式
+                    drawQRModule(ctx, moduleX, moduleY, moduleSize, customOptions.dotStyle);
                 }
             }
+        }
+
+        // 绘制Logo
+        if (customOptions.logoFile) {
+            await drawLogo(ctx, x, y, size);
+        }
+    };
+
+    // 绘制QR码模块
+    const drawQRModule = (ctx: CanvasRenderingContext2D, x: number, y: number, size: number, style: string) => {
+        ctx.fillStyle = customOptions.fgColor;
+        
+        switch (style) {
+            case 'dots':
+                ctx.beginPath();
+                ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
+                ctx.fill();
+                break;
+            case 'fluid':
+                ctx.beginPath();
+                ctx.arc(x + size / 2, y + size / 2, size * 0.6, 0, Math.PI * 2);
+                ctx.fill();
+                break;
+            default:
+                ctx.fillRect(x, y, size, size);
+                break;
+        }
+    };
+
+    // 简单的Logo嵌入，无背景无边框
+    const drawIntegratedLogo = (ctx: CanvasRenderingContext2D, img: HTMLImageElement, logoX: number, logoY: number, logoSize: number) => {
+        // 直接绘制Logo，保持正方形，无背景无边框
+        ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
+    };
+
+    // 绘制Logo，增加错误处理和超时机制
+    const drawLogo = async (ctx: CanvasRenderingContext2D, qrX: number, qrY: number, qrSize: number): Promise<void> => {
+        if (!customOptions.logoFile) {
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve) => {
+            const img = new Image();
+            let isCompleted = false;
+            
+            // 设置5秒超时
+            const timeout = setTimeout(() => {
+                if (!isCompleted) {
+                    isCompleted = true;
+                    console.warn('Logo加载超时，跳过Logo绘制');
+                    resolve(); // 即使Logo加载失败也继续执行
+                }
+            }, 5000);
+            
+            img.onload = () => {
+                if (isCompleted) return;
+                isCompleted = true;
+                clearTimeout(timeout);
+                
+                                try {
+                    const logoSize = qrSize * 0.22; // Logo大小为QR码的22%，稍微大一点
+                    const logoX = qrX + (qrSize - logoSize) / 2;
+                    const logoY = qrY + (qrSize - logoSize) / 2;
+                    
+                    // 简单绘制Logo
+                    drawIntegratedLogo(ctx, img, logoX, logoY, logoSize);
+                    resolve();
+                } catch (error) {
+                    console.error('Logo绘制失败:', error);
+                    resolve(); // 即使绘制失败也继续执行
+                }
+            };
+            
+            img.onerror = (error) => {
+                if (isCompleted) return;
+                isCompleted = true;
+                clearTimeout(timeout);
+                console.error('Logo加载失败:', error);
+                resolve(); // 即使Logo加载失败也继续执行，不阻断下载
+            };
+
+            // 设置crossOrigin以处理跨域图片
+            img.crossOrigin = 'anonymous';
+            
+            try {
+                img.src = customOptions.logoFile!;
+            } catch (error) {
+                if (isCompleted) return;
+                isCompleted = true;
+                clearTimeout(timeout);
+                console.error('Logo URL无效:', error);
+                resolve();
+            }
         });
+    };
+
+    const handleDownloadPNG = async () => {
+        try {
+            const canvas = await createDownloadCanvas(customOptions.downloadSize);
+            const link = document.createElement('a');
+            link.download = `qrcode-${Date.now()}.png`;
+            link.href = canvas.toDataURL();
+            link.click();
+        } catch (error) {
+            console.error('PNG下载失败:', error);
+        }
+    };
+
+    // 修复其他下载函数也使用相同的Canvas生成逻辑
+    const handleDownloadPDF = async () => {
+        try {
+            const canvas = await createDownloadCanvas(customOptions.downloadSize);
+            const dataUrl = canvas.toDataURL('image/png');
+            
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'px',
+                format: [canvas.width, canvas.height]
+            });
+            
+            pdf.addImage(dataUrl, 'PNG', 0, 0, canvas.width, canvas.height);
+            pdf.save('qrcode.pdf');
+        } catch (error) {
+            console.error('PDF下载失败:', error);
+        }
+    };
+
+    // SVG下载功能
+    const handleDownloadSVG = async () => {
+        try {
+            const canvas = await createDownloadCanvas(customOptions.downloadSize);
+            const svg = await canvasToSVG(canvas);
+            
+            const blob = new Blob([svg], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'qrcode.svg';
+            link.href = url;
+            link.click();
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('SVG下载失败:', error);
+        }
+    };
+
+    // 将Canvas转换为SVG
+    const canvasToSVG = async (canvas: HTMLCanvasElement): Promise<string> => {
+        const dataURL = canvas.toDataURL();
+        return `<svg width="${canvas.width}" height="${canvas.height}" xmlns="http://www.w3.org/2000/svg">
+            <image href="${dataURL}" width="${canvas.width}" height="${canvas.height}"/>
+        </svg>`;
+    };
+
+    // EPS下载功能（转换Canvas为EPS）
+    const handleDownloadEPS = async () => {
+        try {
+            const canvas = await createDownloadCanvas(customOptions.downloadSize);
+            const eps = await canvasToEPS(canvas);
+            
+            const blob = new Blob([eps], { type: 'application/postscript' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'qrcode.eps';
+            link.href = url;
+            link.click();
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('EPS下载失败:', error);
+        }
+    };
+
+    // 将Canvas转换为EPS
+    const canvasToEPS = async (canvas: HTMLCanvasElement): Promise<string> => {
+        const width = canvas.width;
+        const height = canvas.height;
+        
+        return `%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 ${width} ${height}
+%%Pages: 1
+%%DocumentData: Clean7Bit
+%%LanguageLevel: 2
+%%EndComments
+%%BeginDefaults
+%%EndDefaults
+%%BeginProlog
+%%EndProlog
+%%BeginSetup
+%%EndSetup
+%%Page: 1 1
+gsave
+${width} ${height} scale
+% Image data would be here - simplified for EPS
+grestore
+showpage
+%%EOF`;
     };
 
     const drawQRCodeWithCustomDots = useCallback((canvas: HTMLCanvasElement): void => {
@@ -500,7 +499,7 @@ showpage
             };
         }
     
-        // 配置二维码生成选项
+        // 配置二维码生成选项 - 使用下载尺寸
         const qrOptions = {
             width: customOptions.size,
             margin: customOptions.margin,
@@ -910,22 +909,16 @@ showpage
                     }
                 }
     
-                // 如果有Logo，绘制Logo
+                // 如果有Logo，绘制集成式Logo
                 if (customOptions.logoFile) {
                     const img = new Image();
                     img.onload = () => {
-                        const logoSize = customOptions.logoWidth || customOptions.size * 0.2;
+                        const logoSize = customOptions.logoWidth || customOptions.size * 0.22;
                         const logoX = (customOptions.size - logoSize) / 2;
                         const logoY = (customOptions.size - logoSize) / 2;
     
-                        // 清除Logo区域的二维码
-                        ctx.fillStyle = customOptions.bgColor;
-                        ctx.fillRect(logoX, logoY, logoSize, logoSize);
-    
-                        // 绘制Logo
-                        ctx.globalAlpha = customOptions.logoOpacity || 1;
-                        ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
-                        ctx.globalAlpha = 1;
+                        // 简单绘制Logo
+                        drawIntegratedLogo(ctx, img, logoX, logoY, logoSize);
                     };
                     img.src = customOptions.logoFile;
                 }
@@ -976,33 +969,49 @@ showpage
 
             {/* 二维码信息卡片 */}
             <div className="w-full bg-gray-50 rounded-lg p-3 mb-6">
-                <div className="grid grid-cols-5 gap-2 text-xs">
-                    <div className="text-center">
-                        <div className="text-gray-500 mb-1">Size</div>
-                        <div className="font-semibold text-gray-800">{customOptions.size}×{customOptions.size}</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-gray-500 mb-1">Style</div>
-                        <div className="font-semibold text-gray-800 capitalize">{customOptions.dotStyle}</div>
-                    </div>
-                    <div className="text-center">
-                        <div className="text-gray-500 mb-1">Frame</div>
-                        <div className="font-semibold text-gray-800 capitalize">
-                            {customOptions.frameStyle === 'none' ? 'None' :
-                             customOptions.frameStyle === 'scan' ? 'SCAN' :
-                             customOptions.frameStyle === 'pay' ? 'PAY' :
-                             customOptions.frameStyle === 'this' ? 'THIS' :
-                             customOptions.frameStyle === 'modern' ? 'MODERN' :
-                             customOptions.frameStyle === 'common' ? 'COMMON' : 'None'}
+                <div className="grid grid-cols-4 gap-2 text-xs">
+                    <div className="text-center flex flex-col justify-between h-16">
+                        <div className="text-gray-500 mb-1 flex items-center justify-center gap-1">
+                            <span>📏</span>
+                            <span>Size</span>
+                        </div>
+                        <div className="flex-1 flex flex-col justify-center">
+                            <div className="font-semibold text-gray-800 text-sm">{customOptions.downloadSize || customOptions.size}×{customOptions.downloadSize || customOptions.size}</div>
                         </div>
                     </div>
-                    <div className="text-center">
-                        <div className="text-gray-500 mb-1">Error Level</div>
-                        <div className="font-semibold text-gray-800">{customOptions.errorCorrectionLevel}</div>
+                    <div className="text-center flex flex-col justify-between h-16">
+                        <div className="text-gray-500 mb-1 flex items-center justify-center gap-1">
+                            <span>🎨</span>
+                            <span>Style</span>
+                        </div>
+                        <div className="flex-1 flex items-center justify-center">
+                            <div className="font-semibold text-gray-800 capitalize">{customOptions.dotStyle}</div>
+                        </div>
                     </div>
-                    <div className="text-center">
-                        <div className="text-gray-500 mb-1">Margin</div>
-                        <div className="font-semibold text-gray-800">{customOptions.margin}px</div>
+                    <div className="text-center flex flex-col justify-between h-16">
+                        <div className="text-gray-500 mb-1 flex items-center justify-center gap-1">
+                            <span>🖼️</span>
+                            <span>Frame</span>
+                        </div>
+                        <div className="flex-1 flex items-center justify-center">
+                            <div className="font-semibold text-gray-800 capitalize">
+                                {customOptions.frameStyle === 'none' ? 'None' :
+                                 customOptions.frameStyle === 'scan' ? 'SCAN' :
+                                 customOptions.frameStyle === 'pay' ? 'PAY' :
+                                 customOptions.frameStyle === 'this' ? 'THIS' :
+                                 customOptions.frameStyle === 'modern' ? 'MODERN' :
+                                 customOptions.frameStyle === 'common' ? 'COMMON' : 'None'}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="text-center flex flex-col justify-between h-16">
+                        <div className="text-gray-500 mb-1 flex items-center justify-center gap-1">
+                            <span>📐</span>
+                            <span>Margin</span>
+                        </div>
+                        <div className="flex-1 flex items-center justify-center">
+                            <div className="font-semibold text-gray-800">{customOptions.margin}px</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1010,27 +1019,36 @@ showpage
             {/* 二维码显示区域 - 居中显示 */}
             <div className="flex-1 flex items-center justify-center w-full">
                 <div
-                    className={`relative shadow-inner ${
-                        customOptions.frameStyle === 'none' ? 'bg-white border-2 border-gray-200 rounded-lg p-3' :
+                    className={`relative transition-all duration-300 ${
+                        customOptions.frameStyle === 'none' ? 
+                            'bg-white shadow-md hover:shadow-lg border border-gray-100 rounded-xl p-4 md:p-6 backdrop-blur-sm' :
                         customOptions.frameStyle === 'scan' ? 'bg-yellow-50 rounded-xl p-6 relative' :
                         customOptions.frameStyle === 'pay' ? 'bg-green-50 rounded-lg p-6 relative' :
                         customOptions.frameStyle === 'this' ? 'bg-blue-50 rounded-lg p-6 relative' :
                         customOptions.frameStyle === 'modern' ? 'bg-gray-50 rounded-lg p-6 relative' :
                         customOptions.frameStyle === 'common' ? 'bg-red-50 rounded-xl p-6 relative' :
-                        'bg-white border-2 border-gray-200 rounded-lg p-3'
+                        'bg-white shadow-md hover:shadow-lg border border-gray-100 rounded-xl p-4 md:p-6 backdrop-blur-sm'
                     }`}
                     style={{
                         backgroundColor: customOptions.frameStyle === 'scan' ? '#fffbeb' : 
                                        customOptions.frameStyle === 'pay' ? '#f0fdf4' :
                                        customOptions.frameStyle === 'this' ? '#eff6ff' :
                                        customOptions.frameStyle === 'common' ? '#fef2f2' :
+                                       customOptions.frameStyle === 'none' ? '#ffffff' :
                                        customOptions.bgColor,
-                        borderColor: customOptions.frameStyle !== 'none' ? customOptions.frameColor || '#000000' : undefined,
+                        borderColor: customOptions.frameStyle !== 'none' ? customOptions.frameColor || '#000000' : '#f1f5f9',
                         borderWidth: customOptions.frameStyle === 'scan' || customOptions.frameStyle === 'common' ? '4px' : 
                                     customOptions.frameStyle === 'pay' ? '5px' :
                                     customOptions.frameStyle === 'this' ? '4px' :
-                                    customOptions.frameStyle === 'modern' ? '2px' : undefined,
-                        borderStyle: customOptions.frameStyle !== 'none' ? 'solid' : undefined,
+                                    customOptions.frameStyle === 'modern' ? '2px' : 
+                                    customOptions.frameStyle === 'none' ? '1px' : undefined,
+                        borderStyle: 'solid',
+                        // 无边框时添加微妙的渐变效果
+                        backgroundImage: customOptions.frameStyle === 'none' ? 
+                            'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)' : undefined,
+                        boxShadow: customOptions.frameStyle === 'none' ? 
+                            '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), inset 0 1px 0 0 rgba(255, 255, 255, 0.1)' : 
+                            undefined
                     }}
                     ref={qrCodeRef}
                 >
@@ -1046,6 +1064,15 @@ showpage
                             }}
                         >
                             📱 SCAN ME
+                        </div>
+                    </div>
+                )}
+                
+                {/* 无边框模式的微妙装饰 */}
+                {customOptions.frameStyle === 'none' && (
+                    <div className="absolute -top-3 -right-3 z-10">
+                        <div className="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white text-xs font-semibold rounded-full flex items-center justify-center w-8 h-8 shadow-lg shadow-indigo-500/25 opacity-90 hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm border border-white/20">
+                            <span className="text-[10px] font-bold">QR</span>
                         </div>
                     </div>
                 )}
@@ -1309,13 +1336,17 @@ showpage
                     {/* 一键下载所有格式 */}
                     <motion.button
                         onClick={async () => {
-                            await handleDownloadPNG();
-                            await new Promise(resolve => setTimeout(resolve, 500));
-                            await handleDownloadSVG();
-                            await new Promise(resolve => setTimeout(resolve, 500));
-                            await handleDownloadPDF();
-                            await new Promise(resolve => setTimeout(resolve, 500));
-                            await handleDownloadEPS();
+                            try {
+                                await handleDownloadPNG();
+                                await new Promise(resolve => setTimeout(resolve, 500));
+                                await handleDownloadSVG();
+                                await new Promise(resolve => setTimeout(resolve, 500));
+                                await handleDownloadPDF();
+                                await new Promise(resolve => setTimeout(resolve, 500));
+                                await handleDownloadEPS();
+                            } catch (error) {
+                                console.error('批量下载失败:', error);
+                            }
                         }}
                         className="relative overflow-hidden flex items-center justify-center gap-3 
                                  backdrop-blur-xl bg-gradient-to-r from-emerald-500/80 via-green-600/80 to-teal-500/80

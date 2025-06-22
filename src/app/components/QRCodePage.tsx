@@ -110,7 +110,9 @@ export default function QRCodePage() {
         size: 200,
         downloadSize: 200,
         margin: 4,
-        errorCorrectionLevel: 'H'
+        errorCorrectionLevel: 'H',
+        frameStyle: 'none',
+        frameColor: '#000000'
     });
 
     // QR code generation callback

@@ -644,12 +644,17 @@ const QRCard: React.FC<QRCardProps> = ({
                                     <div className="w-10 h-10 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm flex-shrink-0">
                                         <FaRulerCombined className="w-5 h-5 text-indigo-600" />
                                     </div>
-                                    <div className="text-left">
+                                    <div className="text-left flex-1">
                                         <div className="text-sm font-semibold text-gray-800 group-hover:text-gray-900">Size</div>
                                         <div className="text-xs text-gray-500">Download size</div>
                                     </div>
+                                    <div className="text-right">
+                                        <div className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded">
+                                            {customOptions.downloadSize || customOptions.size}px
+                                        </div>
+                                    </div>
                                 </div>
-                                                            </motion.button>
+                            </motion.button>
                         </div>
                         
                         {/* Left Tips Section */}
