@@ -1,0 +1,26 @@
+# 简化版Dockerfile - 解决架构兼容性问题
+FROM --platform=linux/amd64 node:18-alpine
+
+WORKDIR /app
+
+# 复制package文件
+COPY package*.json ./
+
+# 安装依赖
+RUN npm ci
+
+# 复制源代码
+COPY . .
+
+# 构建应用
+RUN npm run build
+
+# 暴露端口
+EXPOSE 8100
+
+# 设置环境变量
+ENV PORT=8100
+ENV HOSTNAME="0.0.0.0"
+
+# 启动应用
+CMD ["npm", "start"] 
