@@ -143,6 +143,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
     return (
         <html lang="en">
             <head>
+                {/* Google AdSense */}
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7152647568736288"
+                        crossOrigin="anonymous"></script>
                 {/* iPad专用视口优化 */}
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
