@@ -49,9 +49,9 @@ export const metadata: Metadata = {
         canonical: "https://qrcodehub.net",
     },
     other: {
-        "google-site-verification": "your-google-verification-code-here",
         "msapplication-TileColor": "#2563eb",
         "theme-color": "#2563eb",
+        "google-adsense-account": "ca-pub-7152647568736288",
     },
     metadataBase: new URL('https://qrcodehub.net'),
     category: 'technology',
@@ -146,14 +146,29 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 {/* Google AdSense */}
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7152647568736288"
                         crossOrigin="anonymous"></script>
+                
+                {/* 确保Google能正确访问 */}
+                <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+                <meta name="bingbot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+                <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+                <meta name="google-adsense-account" content="ca-pub-7152647568736288" />
+                
                 {/* iPad专用视口优化 */}
                 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
                 <meta name="format-detection" content="telephone=no" />
                 <meta name="apple-mobile-web-app-title" content="QRCodeHub" />
+                
+                {/* 网站验证和识别 */}
+                <link rel="canonical" href="https://qrcodehub.net" />
                 <link rel="icon" href="/qr-icon.svg" type="image/svg+xml" />
                 <link rel="apple-touch-icon" href="/qr-icon.svg" />
+                
+                {/* DNS预解析优化 */}
+                <link rel="dns-prefetch" href="//pagead2.googlesyndication.com" />
+                <link rel="dns-prefetch" href="//www.googletagservices.com" />
+                <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
