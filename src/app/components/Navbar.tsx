@@ -74,13 +74,6 @@ const Navbar: React.FC = () => {
                             <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                             <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-cyan-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-xl blur-sm"></div>
                         </Link>
-                        
-                        <Link href="/pro" className="btn-primary text-white px-5 py-2.5 lg:px-6 lg:py-3 rounded-xl lg:rounded-2xl font-bold hover:scale-105 transition-all duration-200 shadow-lg flex items-center gap-2 text-tablet-sm lg:text-base btn-tablet-optimized relative overflow-hidden group">
-                            <svg className="w-4 h-4 lg:w-5 lg:h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                            </svg>
-                            <span className="relative z-10">Pro</span>
-                        </Link>
                     </div>
 
                     {/* 移动端菜单按钮 - 现代化设计 */}
@@ -153,18 +146,6 @@ const Navbar: React.FC = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 <span className="font-medium">FAQ</span>
-                            </Link>
-                            <Link 
-                                href="/pro" 
-                                className="btn-primary block text-center text-white px-6 py-4 rounded-2xl font-bold shadow-lg mt-4 btn-mobile-optimized relative overflow-hidden group"
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                <div className="flex items-center justify-center gap-2">
-                                    <svg className="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                                    </svg>
-                                    <span>Pro</span>
-                                </div>
                             </Link>
                         </div>
                     </div>

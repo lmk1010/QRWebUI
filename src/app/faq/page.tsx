@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Navbar from '../components/Navbar';
 import Link from 'next/link';
-import { FaRocket, FaQuestionCircle, FaArrowRight, FaCheck, FaLock } from 'react-icons/fa';
+import { FaRocket, FaQuestionCircle, FaArrowRight, FaCheck } from 'react-icons/fa';
 
 export const metadata: Metadata = {
     title: 'QR Code Generator FAQ - Frequently Asked Questions | QRCodeHub',
@@ -65,7 +65,7 @@ export default function FAQPage() {
                 "name": "Do I need to register or create an account?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "No registration required! You can start creating QR codes immediately without providing any personal information. Simply visit our homepage and begin generating QR codes right away. For advanced features and Pro version, login will be required."
+                    "text": "No registration required! You can start creating QR codes immediately without providing any personal information. Simply visit our homepage and begin generating QR codes right away."
                 }
             }
         ]
@@ -170,15 +170,7 @@ export default function FAQPage() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="mt-8 p-6 bg-yellow-50/80 border border-yellow-200/50 rounded-2xl">
-                                        <div className="flex items-center">
-                                            <FaLock className="text-yellow-600 mr-3 text-xl" />
-                                            <p className="text-yellow-800 font-medium">
-                                                <strong>Pro Version:</strong> Advanced features like analytics, dynamic QR codes, 
-                                                bulk generation, and team collaboration require login and Pro subscription.
-                                            </p>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </section>
 
@@ -265,7 +257,7 @@ export default function FAQPage() {
                                         </h3>
                                         <p className="text-gray-600 leading-relaxed">
                                             No registration required! You can start creating QR codes immediately without providing any personal information. 
-                                            Simply visit our homepage and begin generating QR codes right away. For advanced Pro features, an account will be required.
+                                            Simply visit our homepage and begin generating QR codes right away.
                                         </p>
                                     </div>
 
