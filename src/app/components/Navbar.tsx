@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* 桌面端导航链接 - 增强版设计 */}
+                    {/* 桌面端导航链接 - 优化版设计 */}
                     <div className="hidden md:flex items-center space-x-1 lg:space-x-2 nav-links">
                         <Link href="/" className="nav-link-enhanced group flex items-center gap-2 px-4 py-2.5 lg:px-5 lg:py-3 text-gray-700 hover:text-white transition-all duration-300 rounded-xl relative overflow-hidden text-tablet-sm lg:text-base font-medium">
                             <svg className="w-4 h-4 lg:w-5 lg:h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,6 +74,58 @@ const Navbar: React.FC = () => {
                             <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
                             <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-cyan-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-xl blur-sm"></div>
                         </Link>
+                        
+                        {/* 更多链接下拉菜单 */}
+                        <div className="relative group">
+                            <button className="nav-link-enhanced flex items-center gap-2 px-4 py-2.5 lg:px-5 lg:py-3 text-gray-700 hover:text-white transition-all duration-300 rounded-xl relative overflow-hidden text-tablet-sm lg:text-base font-medium">
+                                <svg className="w-4 h-4 lg:w-5 lg:h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                                <span className="relative z-10">More</span>
+                                <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                                <div className="absolute inset-0 bg-gradient-to-r from-gray-400 to-gray-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-xl blur-sm"></div>
+                            </button>
+                            
+                            {/* 下拉菜单内容 */}
+                            <div className="absolute top-full left-0 mt-2 w-48 bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform scale-95 group-hover:scale-100 z-50">
+                                <div className="p-2 space-y-1">
+                                    <Link href="/about" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-pink-500 hover:to-rose-600 rounded-xl transition-all duration-300 group/item">
+                                        <svg className="w-4 h-4 transition-transform group-hover/item:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span className="font-medium">About</span>
+                                    </Link>
+                                    
+                                    <Link href="/contact" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 rounded-xl transition-all duration-300 group/item">
+                                        <svg className="w-4 h-4 transition-transform group-hover/item:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                        </svg>
+                                        <span className="font-medium">Contact</span>
+                                    </Link>
+                                    
+                                    <Link href="/privacy" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-600 rounded-xl transition-all duration-300 group/item">
+                                        <svg className="w-4 h-4 transition-transform group-hover/item:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                        </svg>
+                                        <span className="font-medium">Privacy</span>
+                                    </Link>
+                                    
+                                    <Link href="/terms" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-600 rounded-xl transition-all duration-300 group/item">
+                                        <svg className="w-4 h-4 transition-transform group-hover/item:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        </svg>
+                                        <span className="font-medium">Terms</span>
+                                    </Link>
+                                    
+                                    <Link href="/sitemap" className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white hover:bg-gradient-to-r hover:from-slate-500 hover:to-gray-600 rounded-xl transition-all duration-300 group/item">
+                                        <svg className="w-4 h-4 transition-transform group-hover/item:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                                        </svg>
+                                        <span className="font-medium">Sitemap</span>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* 移动端菜单按钮 - 现代化设计 */}
@@ -146,6 +198,56 @@ const Navbar: React.FC = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 <span className="font-medium">FAQ</span>
+                            </Link>
+                            <Link 
+                                href="/about" 
+                                className="mobile-nav-link group flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white transition-all duration-300 rounded-xl hover:bg-gradient-to-r hover:from-pink-500 hover:to-rose-600 btn-mobile-optimized relative overflow-hidden"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span className="font-medium">About</span>
+                            </Link>
+                            <Link 
+                                href="/privacy" 
+                                className="mobile-nav-link group flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white transition-all duration-300 rounded-xl hover:bg-gradient-to-r hover:from-emerald-500 hover:to-teal-600 btn-mobile-optimized relative overflow-hidden"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                                <span className="font-medium">Privacy</span>
+                            </Link>
+                            <Link 
+                                href="/terms" 
+                                className="mobile-nav-link group flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white transition-all duration-300 rounded-xl hover:bg-gradient-to-r hover:from-amber-500 hover:to-orange-600 btn-mobile-optimized relative overflow-hidden"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <span className="font-medium">Terms</span>
+                            </Link>
+                            <Link 
+                                href="/sitemap" 
+                                className="mobile-nav-link group flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white transition-all duration-300 rounded-xl hover:bg-gradient-to-r hover:from-slate-500 hover:to-gray-600 btn-mobile-optimized relative overflow-hidden"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m-6 3l6-3" />
+                                </svg>
+                                <span className="font-medium">Sitemap</span>
+                            </Link>
+                            <Link 
+                                href="/contact" 
+                                className="mobile-nav-link group flex items-center gap-3 px-4 py-3 text-gray-700 hover:text-white transition-all duration-300 rounded-xl hover:bg-gradient-to-r hover:from-cyan-500 hover:to-blue-600 btn-mobile-optimized relative overflow-hidden"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <svg className="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <span className="font-medium">Contact</span>
                             </Link>
                         </div>
                     </div>

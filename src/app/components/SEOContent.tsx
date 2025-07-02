@@ -296,6 +296,364 @@ const SEOContent: React.FC<SEOContentProps> = ({ showOnlyContent }) => {
                         </div>
                     </div>
                 </section>
+
+                {/* 新增：行业应用案例 */}
+                <section>
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
+                            QR Code Applications Across Industries
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                            Discover how businesses and organizations use QR codes to enhance their operations and customer experience
+                        </p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                        <div className="glass-effect rounded-2xl p-6 group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-3xl">🏢</span>
+                            </div>
+                            <h3 className="font-bold text-blue-800 mb-4 text-lg">Business & Marketing</h3>
+                            <p className="text-gray-600 leading-relaxed text-sm mb-4">
+                                QR codes revolutionize business operations by enabling instant access to product information, 
+                                contactless payments, and seamless customer engagement. Businesses use QR codes for:
+                            </p>
+                            <ul className="text-gray-600 text-sm space-y-1">
+                                <li>• Product catalogs and pricing</li>
+                                <li>• Customer feedback collection</li>
+                                <li>• Loyalty program integration</li>
+                                <li>• Event registration and check-ins</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-6 group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-3xl">🏥</span>
+                            </div>
+                            <h3 className="font-bold text-green-800 mb-4 text-lg">Healthcare & Safety</h3>
+                            <p className="text-gray-600 leading-relaxed text-sm mb-4">
+                                In healthcare settings, QR codes provide quick access to patient information, 
+                                medication details, and safety protocols. Applications include:
+                            </p>
+                            <ul className="text-gray-600 text-sm space-y-1">
+                                <li>• Patient identification systems</li>
+                                <li>• Medication tracking and verification</li>
+                                <li>• Emergency contact information</li>
+                                <li>• Health and safety guidelines</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-6 group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-3xl">🎓</span>
+                            </div>
+                            <h3 className="font-bold text-purple-800 mb-4 text-lg">Education & Training</h3>
+                            <p className="text-gray-600 leading-relaxed text-sm mb-4">
+                                Educational institutions leverage QR codes to enhance learning experiences 
+                                and streamline administrative processes. Common uses include:
+                            </p>
+                            <ul className="text-gray-600 text-sm space-y-1">
+                                <li>• Interactive learning materials</li>
+                                <li>• Student attendance tracking</li>
+                                <li>• Library resource access</li>
+                                <li>• Campus navigation assistance</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-6 group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-3xl">🚚</span>
+                            </div>
+                            <h3 className="font-bold text-orange-800 mb-4 text-lg">Logistics & Supply Chain</h3>
+                            <p className="text-gray-600 leading-relaxed text-sm mb-4">
+                                QR codes optimize supply chain operations by providing real-time tracking 
+                                and inventory management capabilities. Key applications:
+                            </p>
+                            <ul className="text-gray-600 text-sm space-y-1">
+                                <li>• Package tracking and delivery</li>
+                                <li>• Inventory management systems</li>
+                                <li>• Quality control documentation</li>
+                                <li>• Asset tracking and maintenance</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-6 group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-3xl">🎫</span>
+                            </div>
+                            <h3 className="font-bold text-red-800 mb-4 text-lg">Events & Entertainment</h3>
+                            <p className="text-gray-600 leading-relaxed text-sm mb-4">
+                                Event organizers use QR codes to streamline ticketing, enhance attendee 
+                                experience, and gather valuable data. Popular implementations:
+                            </p>
+                            <ul className="text-gray-600 text-sm space-y-1">
+                                <li>• Digital ticket validation</li>
+                                <li>• Event information access</li>
+                                <li>• Networking and contact sharing</li>
+                                <li>• Interactive event experiences</li>
+                            </ul>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-6 group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-16 h-16 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-3xl">🏠</span>
+                            </div>
+                            <h3 className="font-bold text-teal-800 mb-4 text-lg">Smart Home & IoT</h3>
+                            <p className="text-gray-600 leading-relaxed text-sm mb-4">
+                                QR codes enable seamless integration of smart home devices and IoT systems, 
+                                providing convenient access to device controls and information:
+                            </p>
+                            <ul className="text-gray-600 text-sm space-y-1">
+                                <li>• Device setup and configuration</li>
+                                <li>• WiFi network sharing</li>
+                                <li>• Smart appliance controls</li>
+                                <li>• Home automation triggers</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 新增：技术深度内容 */}
+                <section>
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
+                            Understanding QR Code Technology
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                            Learn about the technical aspects of QR codes and how they work
+                        </p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-8 mb-12">
+                        <div className="glass-effect rounded-2xl p-8">
+                            <h3 className="text-2xl font-bold mb-6 gradient-text">How QR Codes Work</h3>
+                            <div className="space-y-4 text-gray-600">
+                                <p className="leading-relaxed">
+                                    QR codes (Quick Response codes) are two-dimensional barcodes that can store 
+                                    significantly more information than traditional barcodes. They use a matrix 
+                                    of black and white squares arranged in a square grid.
+                                </p>
+                                <p className="leading-relaxed">
+                                    The technology behind QR codes includes error correction capabilities, 
+                                    allowing them to remain readable even when partially damaged or obscured. 
+                                    This makes them highly reliable for various applications.
+                                </p>
+                                <p className="leading-relaxed">
+                                    Modern QR codes can store up to 2,953 bytes of data, including text, 
+                                    URLs, contact information, and even binary data. This versatility makes 
+                                    them suitable for countless use cases.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-8">
+                            <h3 className="text-2xl font-bold mb-6 gradient-text">QR Code Standards & Compatibility</h3>
+                            <div className="space-y-4 text-gray-600">
+                                <p className="leading-relaxed">
+                                    QR codes follow international standards (ISO/IEC 18004) ensuring 
+                                    compatibility across different devices and applications worldwide. 
+                                    This standardization guarantees that QR codes work consistently 
+                                    regardless of the scanning device or software used.
+                                </p>
+                                <p className="leading-relaxed">
+                                    The error correction levels in QR codes (L, M, Q, H) determine how 
+                                    much damage the code can sustain while remaining readable. Higher 
+                                    error correction levels allow for more customization but reduce data capacity.
+                                </p>
+                                <p className="leading-relaxed">
+                                    Our generator automatically optimizes error correction levels based on 
+                                    your content and customization choices, ensuring the best balance 
+                                    between reliability and visual appeal.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 新增：最佳实践指南 */}
+                <section>
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
+                            QR Code Best Practices
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                            Follow these guidelines to create effective and user-friendly QR codes
+                        </p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                        <div className="glass-effect rounded-2xl p-6 text-center group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-xl">📏</span>
+                            </div>
+                            <h3 className="font-bold text-gray-800 mb-3">Optimal Size</h3>
+                            <p className="text-gray-600 text-sm leading-relaxed">
+                                Ensure QR codes are at least 1 inch (2.5 cm) in size for easy scanning. 
+                                Larger codes are more reliable and user-friendly.
+                            </p>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-6 text-center group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-xl">🎨</span>
+                            </div>
+                            <h3 className="font-bold text-gray-800 mb-3">Color Contrast</h3>
+                            <p className="text-gray-600 text-sm leading-relaxed">
+                                Maintain high contrast between QR code elements and background. 
+                                Dark codes on light backgrounds work best for optimal scanning.
+                            </p>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-6 text-center group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-xl">📍</span>
+                            </div>
+                            <h3 className="font-bold text-gray-800 mb-3">Strategic Placement</h3>
+                            <p className="text-gray-600 text-sm leading-relaxed">
+                                Position QR codes where users naturally look and can easily access. 
+                                Consider lighting conditions and accessibility factors.
+                            </p>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-6 text-center group hover:shadow-2xl transition-all duration-300">
+                            <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                                <span className="text-xl">📱</span>
+                            </div>
+                            <h3 className="font-bold text-gray-800 mb-3">Mobile Optimization</h3>
+                            <p className="text-gray-600 text-sm leading-relaxed">
+                                Ensure linked content is mobile-friendly. Most QR code scans happen 
+                                on smartphones, so optimize for mobile viewing experience.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 新增：SEO和营销价值内容 */}
+                <section>
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
+                            QR Codes for Digital Marketing & SEO
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                            Discover how QR codes can enhance your digital marketing strategy and improve SEO performance
+                        </p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-8 mb-12">
+                        <div className="glass-effect rounded-2xl p-8">
+                            <h3 className="text-2xl font-bold mb-6 gradient-text">Digital Marketing Benefits</h3>
+                            <div className="space-y-4 text-gray-600">
+                                <p className="leading-relaxed">
+                                    QR codes bridge the gap between offline and online marketing, providing 
+                                    measurable engagement metrics and enhanced customer interaction opportunities.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Trackable Analytics:</strong> Monitor scan rates, user behavior, and 
+                                    conversion metrics to optimize your marketing campaigns and understand 
+                                    customer preferences.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Enhanced Customer Experience:</strong> Provide instant access to 
+                                    product information, reviews, and purchasing options, reducing friction 
+                                    in the customer journey.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Cost-Effective Marketing:</strong> Once created, QR codes require 
+                                    no ongoing costs and can be used across multiple marketing channels 
+                                    and materials.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-8">
+                            <h3 className="text-2xl font-bold mb-6 gradient-text">SEO and Web Traffic</h3>
+                            <div className="space-y-4 text-gray-600">
+                                <p className="leading-relaxed">
+                                    QR codes can significantly impact your website&apos;s SEO performance by 
+                                    driving targeted traffic and improving user engagement metrics.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Direct Traffic Generation:</strong> QR codes create direct pathways 
+                                    to your website, increasing organic traffic and reducing bounce rates 
+                                    through targeted content delivery.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Mobile-First Optimization:</strong> Since most QR code scans occur 
+                                    on mobile devices, they naturally drive mobile traffic, which is 
+                                    increasingly important for SEO rankings.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Content Distribution:</strong> Use QR codes to distribute 
+                                    high-value content, landing pages, and promotional materials, 
+                                    improving overall site engagement and time-on-site metrics.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 新增：安全性和隐私保护 */}
+                <section>
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold mb-6 gradient-text">
+                            QR Code Security & Privacy
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                            Understanding security considerations and best practices for safe QR code usage
+                        </p>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-8 mb-12">
+                        <div className="glass-effect rounded-2xl p-8">
+                            <h3 className="text-2xl font-bold mb-6 gradient-text">Security Best Practices</h3>
+                            <div className="space-y-4 text-gray-600">
+                                <p className="leading-relaxed">
+                                    While QR codes themselves are secure, it&apos;s important to follow best 
+                                    practices to protect users and maintain trust in your brand.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>URL Verification:</strong> Always verify that QR codes link to 
+                                    legitimate, secure websites (HTTPS) and avoid suspicious or 
+                                    unfamiliar domains.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Content Validation:</strong> Regularly check that your QR codes 
+                                    still point to active, relevant content and haven&apos;t been 
+                                    compromised or redirected.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>User Education:</strong> Inform users about safe scanning practices 
+                                    and encourage them to preview URLs before visiting linked content.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div className="glass-effect rounded-2xl p-8">
+                            <h3 className="text-2xl font-bold mb-6 gradient-text">Privacy Protection</h3>
+                            <div className="space-y-4 text-gray-600">
+                                <p className="leading-relaxed">
+                                    Our platform prioritizes user privacy and data protection in all 
+                                    QR code generation processes.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>No Data Storage:</strong> We never store your QR code content 
+                                    or personal information on our servers. All generation happens 
+                                    locally when possible.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Secure Processing:</strong> Our platform uses industry-standard 
+                                    security measures to protect any temporary data during the 
+                                    generation process.
+                                </p>
+                                <p className="leading-relaxed">
+                                    <strong>Transparent Practices:</strong> We maintain complete transparency 
+                                    about our data handling practices and provide users with full 
+                                    control over their information.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         );
     }
