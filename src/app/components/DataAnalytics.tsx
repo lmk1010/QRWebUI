@@ -9,8 +9,8 @@ export default function DataAnalytics() {
       <Script
         defer
         data-domain="qrcodehub.net"
-        src="http://172.245.62.112:8200/js/script.js"
-        strategy="afterInteractive"
+        data-api="https://vince.charitydoing.com/api/event"
+        src="https://vince.charitydoing.com/js/script.js"
       />
     </>
   );
