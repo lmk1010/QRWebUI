@@ -171,6 +171,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7152647568736288"
                         crossOrigin="anonymous"></script>
                 
+                {/* Ahrefs Analytics */}
+                <script src="https://analytics.ahrefs.com/analytics.js" data-key="vzjBLH2knXReEXmaYyLAmw" async></script>
+                
                 {/* 确保Google能正确访问 */}
                 <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
                 <meta name="bingbot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
