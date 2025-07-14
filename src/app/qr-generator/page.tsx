@@ -54,10 +54,10 @@ export default function QRGeneratorPage() {
                 </div>
 
                 {/* Content */}
-                <div className="relative z-10 fade-in-up">
+                <div className="relative z-10">
                     <QRGeneratorClient />
                 </div>
             </main>
         </div>
     );
-} 
+}

@@ -37,7 +37,15 @@ function QRCodeContent({ onGenerateResult, onCustomOptionsChange, customOptions 
 
     return (
         <>
-
+            {/* Page Title */}
+            <div className="text-center mb-8">
+                <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
+                    QR Code Generator
+                </h1>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Create professional QR codes instantly with advanced customization options
+                </p>
+            </div>
 
             {/* Main content area - iPad优化布局 */}
             <div className="flex flex-col xl:flex-row gap-4 items-stretch qr-layout-tablet mt-8">

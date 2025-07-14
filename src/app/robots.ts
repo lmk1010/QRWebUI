@@ -19,11 +19,9 @@ export default function robots(): MetadataRoute.Robots {
         ],
         disallow: [
           '/api/',
-          '/_next/static/chunks/',
           '/_next/webpack-hmr',
           '/admin/',
           '/tmp/',
-          '/*.json',
           '/server-manage.sh',
           '/deploy*.sh',
         ],
@@ -39,10 +37,10 @@ export default function robots(): MetadataRoute.Robots {
           '/*.js',
           '/assets/',
           '/public/',
+          '/_next/static/',
         ],
         disallow: [
           '/api/',
-          '/_next/static/chunks/',
           '/_next/webpack-hmr',
           '/admin/',
           '/tmp/',
@@ -70,10 +68,11 @@ export default function robots(): MetadataRoute.Robots {
           '/ads.txt',
           '/*.css',
           '/*.js',
+          '/_next/static/',
         ],
         disallow: [
           '/api/',
-          '/_next/',
+          '/_next/webpack-hmr',
         ],
       },
       {
@@ -84,10 +83,11 @@ export default function robots(): MetadataRoute.Robots {
           '/sitemap.xml',
           '/*.css',
           '/*.js',
+          '/_next/static/',
         ],
         disallow: [
           '/api/',
-          '/_next/',
+          '/_next/webpack-hmr',
           '/admin/',
         ],
       },
@@ -95,4 +95,4 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: `${baseUrl}/sitemap.xml`,
     host: baseUrl,
   }
-} 
+}

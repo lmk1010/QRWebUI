@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { FaFileAlt, FaLink, FaAddressBook, FaPalette, FaClone, FaRulerCombined, FaFile, FaEnvelope, FaWifi, FaSquare, FaLayerGroup, FaEdit } from 'react-icons/fa';
 
 import FeatureCard from './FeatureCard';
@@ -255,15 +254,15 @@ const QRCard: React.FC<QRCardProps> = ({
         setSelectedMainType(mainType);
     };
 
-    const handleContactInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleContactInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setContactInfo((prevState) => ({
             ...prevState,
             [name]: value,
         }));
-    };
+    }, []);
 
-    const handleTwitterInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleTwitterInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value, type } = e.target;
         
         if (type === 'checkbox') {
@@ -295,23 +294,23 @@ const QRCard: React.FC<QRCardProps> = ({
                 [name]: value,
             }));
         }
-    };
+    }, []);
 
-    const handleEmailInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleEmailInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setEmailInfo((prevState) => ({
             ...prevState,
             [name]: value,
         }));
-    };
+    }, []);
 
-    const handleWifiInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleWifiInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value, type, checked } = e.target;
         setWifiInfo((prevState) => ({
             ...prevState,
             [name]: type === 'checkbox' ? checked : value,
         }));
-    };
+    }, []);
 
     const handleGenerate = () => {
         if (!selectedMainType) {
@@ -468,8 +467,6 @@ const QRCard: React.FC<QRCardProps> = ({
         // 将生成的值传递给父组件
         onGenerateResult(value);
     };
-    
-
 
     const handleLogoConfirm = (newLogo: string | null) => {
         setLogoFile(newLogo);
@@ -505,22 +502,16 @@ const QRCard: React.FC<QRCardProps> = ({
     };
 
     return (
-        <motion.div
-            className="w-full h-full"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.5 }}
-        >
+        <div className="w-full h-full">
             {/* Main Layout Container */}
             <div className="flex flex-col lg:flex-row gap-4 h-full">
                 {/* Left Sidebar - Customization Panel */}
                 <div className="w-full lg:w-64 flex-shrink-0">
                     {/* Advanced Customization Panel */}
-                    <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-white/5 border border-white/20 rounded-2xl p-4 shadow-2xl h-full flex flex-col">
-                        {/* Background Glow Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 rounded-2xl"></div>
-                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgb3BhY2l0eT0iMC4wNSI+CjxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHN2Zz4K')] opacity-20"></div>
+                    <div className="relative bg-white/80 backdrop-blur-xl border border-white/20 shadow-2xl rounded-xl p-4 h-full flex flex-col overflow-hidden">
+                        {/* 玻璃效果光晕 */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-orange-500/10 pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-tl from-transparent via-white/5 to-white/10 pointer-events-none" />
                         
                         {/* Header */}
                         <div className="relative mb-4 flex-shrink-0">
@@ -538,11 +529,9 @@ const QRCard: React.FC<QRCardProps> = ({
                         {/* Vertical Layout for Customization Options - 从上向下布局 */}
                         <div className="relative flex-1 flex flex-col justify-start space-y-3">
                             {/* Dot Style */}
-                            <motion.button
+                            <button
                                 onClick={() => setIsDotStyleModalOpen(true)}
                                 className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
-                                whileHover={{ x: 2, scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                                 <div className="relative flex items-center space-x-3">
@@ -554,14 +543,12 @@ const QRCard: React.FC<QRCardProps> = ({
                                         <div className="text-xs text-gray-500">Customize patterns</div>
                                     </div>
                                 </div>
-                            </motion.button>
+                            </button>
 
                             {/* Logo */}
-                            <motion.button
+                            <button
                                 onClick={() => setIsLogoModalOpen(true)}
                                 className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
-                                whileHover={{ x: 2, scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                                 <div className="relative flex items-center space-x-3">
@@ -573,14 +560,12 @@ const QRCard: React.FC<QRCardProps> = ({
                                         <div className="text-xs text-gray-500">Add brand logo</div>
                                     </div>
                                 </div>
-                            </motion.button>
+                            </button>
 
                             {/* Colors */}
-                            <motion.button
+                            <button
                                 onClick={() => setIsColorModalOpen(true)}
                                 className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
-                                whileHover={{ x: 2, scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 via-rose-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                                 <div className="relative flex items-center space-x-3">
@@ -592,14 +577,12 @@ const QRCard: React.FC<QRCardProps> = ({
                                         <div className="text-xs text-gray-500">Theme colors</div>
                                     </div>
                                 </div>
-                            </motion.button>
+                            </button>
 
                             {/* Frame */}
-                            <motion.button
+                            <button
                                 onClick={() => setIsFrameModalOpen(true)}
                                 className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
-                                whileHover={{ x: 2, scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                                 <div className="relative flex items-center space-x-3">
@@ -611,14 +594,12 @@ const QRCard: React.FC<QRCardProps> = ({
                                         <div className="text-xs text-gray-500">Border styles</div>
                                     </div>
                                 </div>
-                            </motion.button>
+                            </button>
 
                             {/* Template */}
-                            <motion.button
+                            <button
                                 onClick={() => setIsTemplateModalOpen(true)}
                                 className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
-                                whileHover={{ x: 2, scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                                 <div className="relative flex items-center space-x-3">
@@ -630,14 +611,12 @@ const QRCard: React.FC<QRCardProps> = ({
                                         <div className="text-xs text-gray-500">Quick presets</div>
                                     </div>
                                 </div>
-                            </motion.button>
+                            </button>
 
                             {/* Size */}
-                            <motion.button
+                            <button
                                 onClick={() => setIsSizeModalOpen(true)}
                                 className="group relative overflow-hidden backdrop-blur-lg bg-white/25 hover:bg-white/35 border border-white/30 hover:border-white/50 rounded-lg p-3 transition-all duration-300 shadow-md hover:shadow-lg w-full"
-                                whileHover={{ x: 2, scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"></div>
                                 <div className="relative flex items-center space-x-3">
@@ -654,7 +633,7 @@ const QRCard: React.FC<QRCardProps> = ({
                                         </div>
                                     </div>
                                 </div>
-                            </motion.button>
+                            </button>
                         </div>
                         
                         {/* Left Tips Section */}
@@ -679,10 +658,9 @@ const QRCard: React.FC<QRCardProps> = ({
 
                 {/* Right Content Area - QR Type & Form */}
                 <div className="flex-1">
-                    <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/20 via-white/10 to-white/5 border border-white/20 rounded-2xl p-4 shadow-2xl h-full flex flex-col">
-                        {/* Background Glow Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-orange-500/5 rounded-2xl"></div>
-                        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgb3BhY2l0eT0iMC4wNSI+CjxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjEiIGZpbGw9IndoaXRlIi8+CjwvZz4KPHN2Zz4K')] opacity-20"></div>
+                    <div className="relative backdrop-blur-xl bg-white/80 border border-white/30 rounded-2xl p-4 shadow-2xl h-full flex flex-col">
+                        {/* Glass Effect Glow */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 rounded-2xl pointer-events-none"></div>
                         
                         {/* QR Type Selection - Horizontal */}
                         <div className="relative mb-6">
@@ -745,7 +723,9 @@ const QRCard: React.FC<QRCardProps> = ({
                                                             className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                                                             placeholder="Enter First Name"
                                                             value={contactInfo.firstName}
-                                                            onChange={(e) => handleContactInputChange(e)}
+                                                            onChange={handleContactInputChange}
+                                                            autoComplete="off"
+                                                            spellCheck="false"
                                                         />
                                                     </div>
                                                     <div>
@@ -756,7 +736,9 @@ const QRCard: React.FC<QRCardProps> = ({
                                                             className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                                                             placeholder="Enter Last Name"
                                                             value={contactInfo.lastName}
-                                                            onChange={(e) => handleContactInputChange(e)}
+                                                            onChange={handleContactInputChange}
+                                                            autoComplete="off"
+                                                            spellCheck="false"
                                                         />
                                                     </div>
                                                 </div>
@@ -770,7 +752,9 @@ const QRCard: React.FC<QRCardProps> = ({
                                                             className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                                                             placeholder="Enter Phone"
                                                             value={contactInfo.phone}
-                                                            onChange={(e) => handleContactInputChange(e)}
+                                                            onChange={handleContactInputChange}
+                                                            autoComplete="off"
+                                                            spellCheck="false"
                                                         />
                                                     </div>
                                                     <div>
@@ -781,7 +765,9 @@ const QRCard: React.FC<QRCardProps> = ({
                                                             className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                                                             placeholder="Enter Email"
                                                             value={contactInfo.email}
-                                                            onChange={(e) => handleContactInputChange(e)}
+                                                            onChange={handleContactInputChange}
+                                                            autoComplete="off"
+                                                            spellCheck="false"
                                                         />
                                                     </div>
                                                 </div>
@@ -794,7 +780,9 @@ const QRCard: React.FC<QRCardProps> = ({
                                                         className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                                                         placeholder="Enter Company"
                                                         value={contactInfo.company}
-                                                        onChange={(e) => handleContactInputChange(e)}
+                                                        onChange={handleContactInputChange}
+                                                        autoComplete="off"
+                                                        spellCheck="false"
                                                     />
                                                 </div>
                                             </div>
@@ -939,128 +927,30 @@ const QRCard: React.FC<QRCardProps> = ({
                                     
                                     {/* Generate Button */}
                                     <div className="mt-3">
-                                        <motion.button
+                                        <button
                                             className="w-full relative overflow-hidden
                                                      backdrop-blur-2xl bg-gradient-to-r from-blue-500/80 via-indigo-500/80 to-purple-500/80 
                                                      text-white px-6 py-4 rounded-2xl font-bold text-base
                                                      shadow-2xl hover:shadow-blue-500/40 border border-white/30
-                                                     transition-all duration-500 ease-out
+                                                     transition-all duration-300 ease-out
                                                      hover:from-blue-400/85 hover:via-indigo-400/85 hover:to-purple-400/85
                                                      active:scale-95 group"
                                             onClick={handleGenerate}
-                                            whileHover={{ 
-                                                y: -4,
-                                                scale: 1.02,
-                                                boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 2px 4px rgba(255, 255, 255, 0.2)"
-                                            }}
-                                            whileTap={{ 
-                                                scale: 0.96,
-                                                y: -1,
-                                                transition: { duration: 0.1 }
-                                            }}
-                                            animate={{
-                                                boxShadow: [
-                                                    "0 10px 30px -8px rgba(59, 130, 246, 0.3)",
-                                                    "0 15px 35px -8px rgba(139, 92, 246, 0.3)",
-                                                    "0 10px 30px -8px rgba(59, 130, 246, 0.3)"
-                                                ]
-                                            }}
-                                            transition={{
-                                                boxShadow: {
-                                                    duration: 3,
-                                                    repeat: Infinity,
-                                                    ease: "easeInOut"
-                                                }
-                                            }}
                                         >
-                                            {/* 主要玻璃背景层 */}
+                                            {/* Glass Background */}
                                             <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-white/10 to-white/5 rounded-2xl"></div>
                                             
-                                            {/* 内层光效 */}
-                                            <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-transparent rounded-2xl"></div>
-                                            
-                                            {/* 动态光线效果 */}
-                                            <motion.div 
-                                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                                                initial={{ opacity: 0 }}
-                                                whileHover={{ opacity: 1 }}
-                                            >
-                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent transform -skew-x-12 animate-pulse rounded-2xl"></div>
-                                            </motion.div>
-                                            
-                                            {/* 闪烁光效 */}
-                                            <motion.div
-                                                className="absolute top-2 left-4 w-2 h-2 bg-white/60 rounded-full"
-                                                animate={{
-                                                    opacity: [0.3, 1, 0.3],
-                                                    scale: [1, 1.2, 1]
-                                                }}
-                                                transition={{
-                                                    duration: 2,
-                                                    repeat: Infinity,
-                                                    ease: "easeInOut"
-                                                }}
-                                            />
-                                            
-                                            {/* 边框高光 */}
-                                            <div className="absolute inset-0 rounded-2xl border border-white/20 group-hover:border-white/40 transition-colors duration-300"></div>
-                                            
-                                            {/* 悬浮时的额外光晕 */}
-                                            <motion.div
-                                                className="absolute -inset-1 bg-gradient-to-r from-blue-400/30 via-indigo-400/30 to-purple-400/30 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm -z-10"
-                                                whileHover={{
-                                                    scale: 1.05,
-                                                    opacity: 0.6
-                                                }}
-                                            />
-                                            
-                                            {/* 按钮内容 */}
+                                            {/* Button Content */}
                                             <div className="relative flex items-center justify-center space-x-3 z-10">
-                                                {/* 图标动画容器 */}
-                                                <motion.div
-                                                    whileHover={{ rotate: 360 }}
-                                                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                                                    className="flex items-center justify-center"
-                                                >
-                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v6h6V4H4zM4 14v6h6v-6H4zM17 17h3v3h-3v-3z" />
-                                                    </svg>
-                                                </motion.div>
-                                                
-                                                {/* 文字 */}
-                                                <motion.span
-                                                    className="font-bold tracking-wide"
-                                                    whileHover={{ 
-                                                        textShadow: "0 0 8px rgba(255, 255, 255, 0.5)" 
-                                                    }}
-                                                >
-                                                    Generate QR Code
-                                                </motion.span>
-                                                
-                                                {/* 箭头图标 */}
-                                                <motion.div
-                                                    whileHover={{ x: 3 }}
-                                                    transition={{ duration: 0.2 }}
-                                                >
-                                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                                    </svg>
-                                                </motion.div>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v6h6V4H4zM4 14v6h6v-6H4zM17 17h3v3h-3v-3z" />
+                                                </svg>
+                                                <span className="font-bold tracking-wide">Generate QR Code</span>
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                                </svg>
                                             </div>
-                                            
-                                            {/* 点击波纹效果 */}
-                                            <motion.div
-                                                className="absolute inset-0 bg-white/20 rounded-2xl opacity-0"
-                                                whileTap={{
-                                                    opacity: [0, 0.3, 0],
-                                                    scale: [1, 1.05, 1],
-                                                }}
-                                                transition={{ duration: 0.3 }}
-                                            />
-                                            
-                                            {/* 底部反射光 */}
-                                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-b-2xl"></div>
-                                        </motion.button>
+                                        </button>
                                         
                                         {/* Tips Section */}
                                         <div className="mt-3 p-3 backdrop-blur-sm bg-white/10 border border-white/20 rounded-lg flex-1 flex flex-col justify-center">
@@ -1090,44 +980,29 @@ const QRCard: React.FC<QRCardProps> = ({
             </div>
             {/* Alert Message */}
             {showAlert && (
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="fixed left-0 right-0 top-4 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out"
-                >
+                <div className="fixed left-0 right-0 top-4 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out">
                     <div className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg text-lg font-semibold transform transition-transform duration-300 ease-in-out hover:scale-105">
                         Please enter content first
                     </div>
-                </motion.div>
+                </div>
             )}
 
             {/* Alert for URL Input */}
             {showUrlAlert && (
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="fixed left-0 right-0 top-4 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out"
-                >
+                <div className="fixed left-0 right-0 top-4 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out">
                     <div className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg text-lg font-semibold transform transition-transform duration-300 ease-in-out hover:scale-105">
                         The URL format is incorrect. Please enter a valid URL format, such as starting with http:// or https://.
                     </div>
-                </motion.div>
+                </div>
             )}
 
             {/* Alert for Email Format */}
             {showEmailAlert && (
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    className="fixed left-0 right-0 top-4 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out"
-                >
+                <div className="fixed left-0 right-0 top-4 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out">
                     <div className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg text-lg font-semibold transform transition-transform duration-300 ease-in-out hover:scale-105">
                         Invalid email format. Please enter a valid email address, e.g.: example@gmail.com
                     </div>
-                </motion.div>
+                </div>
             )}
 
             {/* Color Modal */}
@@ -1175,7 +1050,7 @@ const QRCard: React.FC<QRCardProps> = ({
                 currentFrameStyle={customOptions.frameStyle}
                 currentFrameColor={customOptions.frameColor}
             />
-        </motion.div>
+        </div>
     );
 };
 

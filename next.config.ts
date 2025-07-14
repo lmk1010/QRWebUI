@@ -2,7 +2,11 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  // 启用压缩
+  compress: true,
+  // 图片优化
   images: {
+    formats: ['image/webp', 'image/avif'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -24,6 +28,49 @@ const nextConfig: NextConfig = {
       }
     ],
   },
+  // Webpack优化配置 - 暂时简化
+  // webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+  //   // 优化分包策略
+  //   if (!dev) {
+  //     config.optimization = {
+  //       ...config.optimization,
+  //       splitChunks: {
+  //         chunks: 'all',
+  //         cacheGroups: {
+  //           vendor: {
+  //             test: /[\\/]node_modules[\\/]/,
+  //             name: 'vendors',
+  //             chunks: 'all',
+  //           },
+  //           qr: {
+  //             test: /[\\/]node_modules[\\/](qrcode|qr-code-styling|qrcode\.react)[\\/]/,
+  //             name: 'qr-libs',
+  //             chunks: 'all',
+  //             priority: 10,
+  //           },
+  //           icons: {
+  //             test: /[\\/]node_modules[\\/](react-icons|@heroicons)[\\/]/,
+  //             name: 'icons',
+  //             chunks: 'all',
+  //             priority: 10,
+  //           },
+  //           animation: {
+  //             test: /[\\/]node_modules[\\/](framer-motion|gsap)[\\/]/,
+  //             name: 'animation',
+  //             chunks: 'all',
+  //             priority: 10,
+  //           }
+  //         }
+  //       }
+  //     };
+  //   }
+
+  //   // Tree shaking优化
+  //   config.optimization.usedExports = true;
+  //   config.optimization.sideEffects = false;
+
+  //   return config;
+  // },
   async headers() {
     return [
       {
@@ -44,6 +91,28 @@ const nextConfig: NextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/assets/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
         ],
       },
